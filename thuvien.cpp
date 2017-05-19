@@ -5,6 +5,7 @@
 #include <time.h>
 #include <string>
 #include <sstream>
+#include <fstream>
 #include "dohoa.h"
 #include "thuvien.h"
 //luu dohoa.h o dau thi chi duong dan toi do
@@ -128,7 +129,7 @@ void in(){
 //x,y la toa do bat dau doc du lieu tu ban phim
 void xulichuoi(string &s,char a,int &x,int y,int maxlen){
 	char ch;
-	int M=x+maxlen,m=x+1;		//chuoi chi co 30 ki tu la dai nhat
+	int M=x+maxlen-s.length(),m=x+1-s.length();	//chuoi chi co 30 ki tu la dai nhat
 	textcolor(15*16);
 	gotoxy(x,y);
 	do{
@@ -202,7 +203,7 @@ void indangki(){
 }
 void nhapngay(int&x,int&y,int&z,short&a,short&b,short&d){
 	string ng,th,n;
-	int X[3]={x-1,y-1,z-1};
+	int X[3]={21,36,50};
 	int thoat=1,cv=1;
 	while (thoat){
 		textcolor(59);
@@ -213,9 +214,9 @@ void nhapngay(int&x,int&y,int&z,short&a,short&b,short&d){
 		if (c=='P'||c=='M'){cv++;}
 		if (cv==0) {cv=3;}
 		if (cv==4) {cv=1;}
-		if ((cv==3)&&(c==13)) {xulichuoi(n,'y',z,15,3);stringstream(n)>>d;}
-		if ((cv==1)&&(c==13)) {xulichuoi(ng,'y',x,15,1);stringstream(ng)>>a;}
-		if ((cv==2)&&(c==13)) {xulichuoi(th,'y',y,15,1);stringstream(th)>>b;}
+		if ((cv==3)&&(c==13)) {xulichuoi(n,'y',z,15,3-z+51);stringstream(n)>>d;}
+		if ((cv==1)&&(c==13)) {xulichuoi(ng,'y',x,15,1-x+22);stringstream(ng)>>a;}
+		if ((cv==2)&&(c==13)) {xulichuoi(th,'y',y,15,1-y+37);stringstream(th)>>b;}
 		if (c==27){thoat=0;}
 		gotoxy(X[cv1-1],15) ;cout<<" ";gotoxy(X[cv1-1]+5,15) ;cout<<" ";
 	}
@@ -267,8 +268,19 @@ void dangki(){
 		if ((cv==6) && (c==13)){xulichuoi(A.Tendangnhap,'y',x1,36);}
 		if ((cv==7) && (c==13)){xulichuoi(A.matkhau,'n',x2,43);}
 		if ((cv==8) && (c==13)){xulichuoi(xnmk,'n',x9,50);}
+		if (cv==9){
+			ofstream outfile;
+			outfile.open("user.txt",ios::app);
+			outfile<<A.giotinh<<endl
+			<<A.email<<endl
+			<<A.hovaten<<endl
+			<<A.matkhau<<endl
+			<<A.ngaysinh.ngay<<"  "<<A.ngaysinh.thang<<"  "<<A.ngaysinh.nam<<endl
+			<<A.sodienthoai<<endl
+			<<A.Tendangnhap<<endl;
+			outfile.close();
+			thoat=0;}
 		if (((cv==10) && (c==13))||(c==27)){thoat=0;}
-		if (((cv==9) && (c==13))||(c==27)){thoat=0;}
 		textcolor(48);
 		if (cv1<5) {gotoxy(12,cv1*7);cout<<"  ";}
 		else if (cv1==5){gotoxy(42,28);cout<<"  "; }
@@ -276,13 +288,8 @@ void dangki(){
 		else if (cv1==9){hinhchunhat(32,11,54,13,2);}
 		else {hinhchunhat(32,39,54,9,2);}
 	}
-	/*cout<<A.giotinh<<endl
-		<<A.email<<endl
-		<<A.hovaten<<endl
-		<<A.matkhau<<endl
-		<<A.ngaysinh.ngay<<"  "<<A.ngaysinh.thang<<"  "<<A.ngaysinh.nam<<endl
-		<<A.sodienthoai<<endl
-		<<A.Tendangnhap;
-	getch();*/
+	
 };
+
+
 
