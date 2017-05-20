@@ -240,13 +240,14 @@ void GT(bool &X){
 	}
 };
 void dangki(){
-	user A={"","","","",{0,0,0},"",true};
-	string xnmk="";
-	int x1=15,x2=15,x3=15,x4=15,x5=22,x6=37,x7=51,x8=15,x9=15;
+	user A={"","","","",{0,0,0},"",true};//khoi tao 1 user moi
+	string xnmk="";//bien luu mat khau xac nhan xem co trung voi mat khau da nhap hay ko
+	int x1=15,x2=15,x3=15,x4=15,x5=22,x6=37,x7=51,x8=15,x9=15;//hoang do nhap chuoi thong tin cua cac du lieu
 	indangki();
-	int thoat=1,cv=1;
+	int thoat=1,cv=1;//thoat khoi man hinh DANGKI khi thoat=0 | cv dung de dieu khien chuong trinh
 	while(thoat){
 		textcolor(59);
+		//dong lenh dieu chinh vi tri phu hop cho con tro
 		if (cv<5) {gotoxy(12,cv*7);cout<<"\20\20";}
 		else if (cv==5){gotoxy(42,28);cout<<"\20\20"; }
 		else if (cv<=8){hinhchunhat(219,9,cv*7-9,40,5);}
@@ -259,29 +260,31 @@ void dangki(){
 		if (c=='P'||c=='M'){cv++;}
 		if (cv==0){cv=10;}
 		if (cv==11){cv=1;}
-
-		if ((cv==1) && (c==13)){xulichuoi(A.hovaten,'y',x3,8);}
-		if ((cv==2) && (c==13)){nhapngay(x5,x6,x7,A.ngaysinh.ngay,A.ngaysinh.thang,A.ngaysinh.nam);}
-		if ((cv==5) && (c==13)){GT(A.giotinh);}
-		if ((cv==3) && (c==13)){xulichuoi(A.email,'y',x4,22);}
-		if ((cv==4) && (c==13)){xulichuoi(A.sodienthoai,'y',x8,29,19);}
-		if ((cv==6) && (c==13)){xulichuoi(A.Tendangnhap,'y',x1,36);}
-		if ((cv==7) && (c==13)){xulichuoi(A.matkhau,'n',x2,43);}
-		if ((cv==8) && (c==13)){xulichuoi(xnmk,'n',x9,50);}
-		if (cv==9){
+		//thuc hien cong viec ung voi cv= va khi nhan Enter
+		if ((cv==1) && (c==13)){xulichuoi(A.hovaten,'y',x3,8);}//nhap ten
+		if ((cv==2) && (c==13)){nhapngay(x5,x6,x7,A.ngaysinh.ngay,A.ngaysinh.thang,A.ngaysinh.nam);}//nhap ngay than nam sinh
+		if ((cv==5) && (c==13)){GT(A.giotinh);}//nhap gioi tinh
+		if ((cv==3) && (c==13)){xulichuoi(A.email,'y',x4,22);}//nhap email lien lac
+		if ((cv==4) && (c==13)){xulichuoi(A.sodienthoai,'y',x8,29,19);}//nhap so dien thoai
+		if ((cv==6) && (c==13)){xulichuoi(A.Tendangnhap,'y',x1,36);}//nhap ten dang nhap
+		if ((cv==7) && (c==13)){xulichuoi(A.matkhau,'n',x2,43);}//nhap mat khau
+		if ((cv==8) && (c==13)){xulichuoi(xnmk,'n',x9,50);}//nhap mat khau xac nhan
+		if ((cv==9) && (c==13)){//in ra file luu nguoi dung
 			ofstream outfile;
-			outfile.open("user.txt",ios::app);
-			outfile<<A.giotinh<<endl
+			outfile.open("user.dat",ios::app|ios::binary);
+			outfile.write(reinterpret_cast<char*>(&A), sizeof(user));//ma hoa thanh nhi phan ma ko bit co tac dung ko(chua thanh thao) co khi cu xai o duoi truoc
+			/*outfile<<A.giotinh<<endl
 			<<A.email<<endl
 			<<A.hovaten<<endl
 			<<A.matkhau<<endl
 			<<A.ngaysinh.ngay<<"  "<<A.ngaysinh.thang<<"  "<<A.ngaysinh.nam<<endl
 			<<A.sodienthoai<<endl
-			<<A.Tendangnhap<<endl;
+			<<A.Tendangnhap<<endl;*/
 			outfile.close();
 			thoat=0;}
-		if (((cv==10) && (c==13))||(c==27)){thoat=0;}
+		if (((cv==10) && (c==13))||(c==27)){thoat=0;}//thoat ra man hinh chinh
 		textcolor(48);
+		//xoa vi tri con tro truoc khi chuyen sang cho khac
 		if (cv1<5) {gotoxy(12,cv1*7);cout<<"  ";}
 		else if (cv1==5){gotoxy(42,28);cout<<"  "; }
 		else if (cv1<=8){hinhchunhat(32,9,cv1*7-9,40,5);}
