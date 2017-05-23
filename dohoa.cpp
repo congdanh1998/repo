@@ -6,25 +6,24 @@
 using namespace std;
 
 // Hàm thay đổi kích cỡ của khung cmd với tham số truyền vào là chiều cao, chiều rộng.
-void resizeConsole(int width, int height)
-{
-	HWND console = GetConsoleWindow();
-	RECT r;
-	GetWindowRect(console, &r);
-	MoveWindow(console, r.left, r.top, width, height, TRUE);
+void resizeConsole(int width, int height){
+	HANDLE wHnd = GetStdHandle(STD_OUTPUT_HANDLE);
+	HANDLE rHnd = GetStdHandle(STD_INPUT_HANDLE);
+	SMALL_RECT windowSize = {0, 0, width, height};
+	COORD bufferSize = {100, 60};
+	SetConsoleScreenBufferSize(wHnd, bufferSize);
+	SetConsoleWindowInfo(wHnd, TRUE, &windowSize);
 }
 
 // Hàm tô màu.
-void textcolor(int x)
-{
+void textcolor(int x){
 	HANDLE mau;
 	mau=GetStdHandle(STD_OUTPUT_HANDLE);
 	SetConsoleTextAttribute(mau,x);
 }
 
 // Hàm dịch chuyển con trỏ đến tọa độ x, y.
-void gotoxy(int x, int y)
-{
+void gotoxy(int x, int y){
   static HANDLE h = NULL;
   if(!h)
     h = GetStdHandle(STD_OUTPUT_HANDLE);
@@ -74,3 +73,45 @@ void HCN2(int mau,int x,int y,int a,int b){
 		gotoxy(x,y+i+1);
 	}
 }
+void ngang(int x,int y,int len){
+	gotoxy(x,y);
+	for (int i=0;i<len;i++) cout<<char(196);
+};
+
+void doc(int x,int y,int len){
+	for (int i=0;i<len;i++) {gotoxy(x,y+i);cout<<char(179);}
+};
+void inbang(string a,string b,string c){
+	int x=(30-a.length())/2,y=(15-b.length())/2,z=(25-a.length())/2;
+	gotoxy(30,5);
+	cout<<char(218);ngang(31,5,28);
+	cout<<char(194);ngang(60,5,13);
+	cout<<char(194);ngang(74,5,23);
+	cout<<char(191);
+	gotoxy(30,6);cout<<char(179);
+	gotoxy(59,6);cout<<char(179);
+	gotoxy(73,6);cout<<char(179);
+	gotoxy(97,6);cout<<char(179);
+	gotoxy(30,7);
+	cout<<char(195);ngang(31,7,28);
+	cout<<char(197);ngang(60,7,13);
+	cout<<char(197);ngang(74,7,23);
+	cout<<char(180);
+	doc(30,8,20);
+	doc(59,8,20);
+	doc(73,8,20);
+	doc(97,8,20);
+	gotoxy(30,28);
+	cout<<char(192);ngang(31,28,28);
+	cout<<char(193);ngang(60,28,13);
+	cout<<char(193);ngang(74,28,23);
+	cout<<char(217);
+	gotoxy(30+x,6);cout<<a;
+	gotoxy(59+y,6);cout<<b;;
+	gotoxy(73+z,6);cout<<c;
+}
+  /*cout<<" (_)        (_)  (_)(_)(_)     (_)(_)(_)    (_)(_)(_)       (_)(_)      "<<endl
+        <<" (_)        (_)  (_)     (_)   (_)     (_)  (_)     (_)  (_)      (_)   "<<endl
+	    <<" (_)        (_)  (_)(_)(_)     (_)(_)(_)    (_)(_)(_)    (_)      (_)   "<<endl
+	    <<" (_)        (_)  (_)     (_)   (_)          (_)   (_)    (_)      (_)   "<<endl
+	    <<" (_)(_)(_)  (_)  (_)(_)(_)     (_)          (_)     (_)     (_)(_)      "<<endl;*/

@@ -15,7 +15,7 @@ typedef struct {
 	int sothutu;
 	string hovaten;
 	date ngaysinh;
-	string sodienthoai;
+	string MSSV;
 	string email;
 	bool giotinh;
 	string vaitro;
@@ -26,5 +26,7 @@ void dangnhap();
 void in();
 void indangki();
 void dangki();
+void manhinhthongbao(string s);
+void manhinhlamviec();
 void xulichuoi(string &s, char a, int &x, int y, int maxlen = 29);
 #endif
