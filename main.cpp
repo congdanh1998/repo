@@ -12,27 +12,27 @@ using namespace std;
 
 int main()
 {
-	
+	system("chcp 437");
 	in();
-	int thoat=1,cv=1;
-	while (thoat){
-		
+	int thoat = 1, cv = 1;
+	while (thoat) {
+
 		textcolor(9);
-		hinhchunhat(178,18,cv*7+9,29,4);
-	//dieu khien
-			char c=_getch();
-			int cv1=cv;
-			if (c=='H'){cv--;}
-			if (c=='P'){cv++;}
-			if (cv==0) {cv=3;}
-			if (cv==4) {cv=1;}
-			if ((cv==3)&&(c==13)) {thoat=0;}
-			if ((cv==1)&&(c==13)) {dangnhap();in();}
-			if ((cv==2)&&(c==13)){dangki();in();}
-			if (c==27){thoat=0;}
-	
-			textcolor(102);
-			hinhchunhat(32,18,cv1*7+9,29,4);
+		hinhchunhat(178, 18, cv * 7 + 9, 29, 4);
+		//dieu khien
+		char c = _getch();
+		int cv1 = cv;
+		if (c == 'H') { cv--; }
+		if (c == 'P') { cv++; }
+		if (cv == 0) { cv = 3; }
+		if (cv == 4) { cv = 1; }
+		if ((cv == 3) && (c == 13)) { thoat = 0; }
+		if ((cv == 1) && (c == 13)) { dangnhap();in(); }
+		if ((cv == 2) && (c == 13)) { dangki();in(); }
+		if (c == 27) { thoat = 0; }
+
+		textcolor(102);
+		hinhchunhat(32, 18, cv1 * 7 + 9, 29, 4);
 	}
 	return(0);
 }
