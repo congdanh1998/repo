@@ -97,15 +97,14 @@ void dangnhap() {
 			bool bOutOfLoop = false;
 			for (int i = 0;i < num_of_accounts && !bOutOfLoop;i++) {
 				if ((TDN == list_accounts[i].tendangnhap) && (MK == list_accounts[i].matkhau)) {
-					manhinhthongbao("dang nhap thang cong");
-					_getch();
+					manhinhthongbao("DANG DANG NHAP ...");
 					manhinhlamviec();
 					thoat = 0;
 					bOutOfLoop = true;
 				}
 			}
 			if (bOutOfLoop == false) {
-				manhinhthongbao("DANG NHAP LAI");
+				manhinhthongbao("SAI TEN DANG NHAP HOAC MAT KHAU");
 				indangnhap(TDN, MK);
 			}
 		}
@@ -129,7 +128,7 @@ void in() {
 	textcolor(255);
 	system("cls");
 	//char a=219;
-	cout << "nhan Enter de chon,EsC de thoat khoi cua so" << endl;
+	cout << "nhan Enter de chon, EsC de thoat khoi cua so" << endl;
 	textcolor(254);
 	cout << "      (_)        (_)  (_)(_)(_)     (_)(_)(_)    (_)(_)(_)       (_)(_)        " << endl
 		<< "      (_)        (_)  (_)     (_)   (_)     (_)  (_)     (_)  (_)      (_)     " << endl
@@ -239,7 +238,7 @@ void indangki() {//ham in ra man hinh dang ki
 	ToMau(12, 55, " GUI DANG KI ", 126, 7);
 	ToMau(40, 55, " TRO LAI ", 126, 7);
 }
-void nhapngay(int&x, int&y, int&z, short&a, short&b, short&d) {//ham nhap ngay thang nam sinh
+void nhapngay(int&x, int&y, int&z, string&a, string&b, string&d) {//ham nhap ngay thang nam sinh
 	string ng, th, n;//cac chuoi ung voi ngay thang nam
 	int X[3] = { 21,36,50 };//vi tri nhap chuoi(da biet truoc)
 	int thoat = 1, cv = 1;
@@ -280,6 +279,10 @@ void GT(bool &X) {//ham nhap gioi tinh
 void dangki() {
 	S_user A_user;//khoi tao 1 user moi
 	S_account A_account;
+
+	string ngay, thang, nam;
+	A_user.ngaysinh.ngay = A_user.ngaysinh.thang = A_user.ngaysinh.nam = 0;
+
 	string xnmk = "";//bien luu mat khau xac nhan xem co trung voi mat khau da nhap hay ko
 	int x1 = 15, x2 = 15, x3 = 15, x4 = 15, x5 = 22, x6 = 37, x7 = 51, x8 = 15, x9 = 15;//hoang do nhap chuoi thong tin cua cac du lieu
 	indangki();
@@ -301,46 +304,148 @@ void dangki() {
 		if (cv == 11) { cv = 1; }
 		//thuc hien cong viec ung voi cv= va khi nhan Enter
 		if ((cv == 1) && (c == 13)) { xulichuoi(A_user.hovaten, 'y', x3, 8); }//nhap ten
-		if ((cv == 2) && (c == 13)) { nhapngay(x5, x6, x7, A_user.ngaysinh.ngay, A_user.ngaysinh.thang, A_user.ngaysinh.nam); }//nhap ngay thang nam sinh
-		if ((cv == 5) && (c == 13)) { GT(A_user.giotinh); }//nhap gioi tinh
+		if ((cv == 2) && (c == 13)) { nhapngay(x5, x6, x7, ngay, thang, nam); }//nhap ngay thang nam sinh
+		if ((cv == 5) && (c == 13)) { GT(A_user.gioitinh); }//nhap gioi tinh
 		if ((cv == 3) && (c == 13)) { xulichuoi(A_user.email, 'y', x4, 22); }//nhap email lien lac
-		if ((cv == 4) && (c == 13)) { xulichuoi(A_user.mssv, 'y', x8, 29, 19); }//nhap so dien thoai
+		if ((cv == 4) && (c == 13)) { xulichuoi(A_user.mssv, 'y', x8, 29, 19); }//nhap mssv
 		if ((cv == 6) && (c == 13)) { xulichuoi(A_account.tendangnhap, 'y', x1, 36); }//nhap ten dang nhap
 		if ((cv == 7) && (c == 13)) { xulichuoi(A_account.matkhau, 'n', x2, 43); }//nhap mat khau
 		if ((cv == 8) && (c == 13)) { xulichuoi(xnmk, 'n', x9, 50); }//nhap mat khau xac nhan
 		if ((cv == 9) && (c == 13)) {//in ra file luu nguoi dung
-			fstream f;
-			int num_of_users;
-			string ignore_str, data;
-			f.open("users_infor.txt", ios::in);
-			getline(f, data); stringstream scin(data);
-			scin >> ignore_str; scin >> num_of_users;
-			f.close();
+			//gan va kiem tra xem ngay thang nam co phai la so khong
+			int num_ngay = -1, num_thang = -1, num_nam = -1;
+			bool no_error_age = true, no_error_date = true, no_error_all = true;
+			stringstream scin1(ngay);
+			do {
+				num_ngay++;
+				scin1 >> A_user.ngaysinh.ngay;
+			} while (!scin1.fail());
+			stringstream scin2(thang);
+			do {
+				num_thang++;
+				scin2 >> A_user.ngaysinh.thang;
+			} while (!scin2.fail());
+			stringstream scin3(nam);
+			do {
+				num_nam++;
+				scin3 >> A_user.ngaysinh.nam;
+			} while (!scin3.fail());
+			//
+			if (num_ngay != 1 || num_thang != 1 || num_nam != 1) {
+				no_error_date = false;
+			}
+			else {
+				if (A_user.ngaysinh.thang == 2 && A_user.ngaysinh.ngay == 29) {
+					float ti_le = (float)(2004 - A_user.ngaysinh.nam) / 4;
+					if (ti_le != round(ti_le)) no_error_date = false;
+				}
+				else {
+					if ((A_user.ngaysinh.thang == 1 || A_user.ngaysinh.thang == 3 || A_user.ngaysinh.thang == 5 || A_user.ngaysinh.thang == 7 || A_user.ngaysinh.thang == 8
+						|| A_user.ngaysinh.thang == 10 || A_user.ngaysinh.thang == 12) && A_user.ngaysinh.ngay != 31) {
+						no_error_date = false;
+					}
+					else {
+						if ((A_user.ngaysinh.thang == 4 || A_user.ngaysinh.thang == 6 || A_user.ngaysinh.thang == 9 || A_user.ngaysinh.thang == 11) && A_user.ngaysinh.ngay != 31) {
+							no_error_date = false;
+						}
+					}
+				}
+			}
+			//
+			if (A_user.hovaten == "" || ngay == "" || thang == "" || nam == "" || A_user.gioitinh == RONG ||
+				A_user.email == "" || A_user.mssv == "" || A_account.tendangnhap == "" || A_account.matkhau == "" || xnmk == "") {
+				//#define RONG 204        hinh nhu khong chon gi het thi gioi tinh bang 204 hay sao y
+				no_error_all = false;
+				gotoxy(0, 60);
+				cout << "* NHAP THIEU THONG TIN";
+			}
+			else {
+				if (no_error_date == false) {
+					no_error_all = false;
+					gotoxy(0, 60);
+					cout << "* NGAY THANG NAM SINH KHONG HOP LE";
+				}
+				else {
+					if (A_user.ngaysinh.nam < 1867) {
+						no_error_age = false;
+						gotoxy(0, 60);
+						cout << "* BAN QUA LON TUOI DE DANG KI SU DUNG THU VIEN (>150 TUOI)";
+					}
+					else {
+						if (A_user.ngaysinh.nam > 2007) {
+							no_error_age = false;
+							gotoxy(0, 60);
+							cout << "* BAN CHUA DU TUOI DE DANG KI SU DUNG THU VIEN (<15 TUOI)";
+						}
+					}
+				}
+			}
+			if (A_account.matkhau != xnmk) {
+				no_error_all = false;
+				gotoxy(0, 61);
+				cout << "* XAC NHAN SAI MAT KHAU";
+			}
+			for (int i = 0;i < A_account.matkhau.length();i++) {
+				if (A_account.matkhau.length() < 5 || A_account.matkhau.length() > 15 || ((int)A_account.matkhau[i] < 48) || ((int)A_account.matkhau[i] > 57 && (int)A_account.matkhau[i] < 65) || ((int)A_account.matkhau[i] > 90 && (int)A_account.matkhau[i] < 97) || ((int)A_account.matkhau[i] > 122)) {
+					no_error_all = false;
+					gotoxy(0, 62);
+					cout << "* MAT KHAU PHAI DAI TU 5 DEN 15 KI TU CHI CHUA CHU CAI HOAC SO";
+				}
+			}
+			for (int i = 0;i < A_account.tendangnhap.length();i++) {
+				if (A_account.tendangnhap.length() < 5 | A_account.tendangnhap.length() > 20 || ((int)A_account.tendangnhap[i] < 48) || ((int)A_account.tendangnhap[i] > 57 && (int)A_account.tendangnhap[i] < 65) || ((int)A_account.tendangnhap[i] > 90 && (int)A_account.tendangnhap[i] < 97) || ((int)A_account.tendangnhap[i] > 122)) {
+					no_error_all = false;
+					gotoxy(0, 63);
+					cout << "* TEN DANG NHAP PHAI DAI TU 5 DEN 20 KI TU CHI CHUA CHU CAI HOAC SO";
+				}
+			}
+			if (no_error_all == true && no_error_date == true && no_error_age == true) {
+				fstream f;
+				int num_of_users;
+				string ignore_str, data;
+				f.open("users_infor.txt", ios::in);
+				getline(f, data); stringstream scin(data);
+				scin >> ignore_str; scin >> num_of_users;
+				f.close();
 
-			A_user.id = num_of_users + 1;
-			A_user.vaitro = "doc_gia";
+				num_of_users++;
+				A_user.id = num_of_users;
+				A_user.vaitro = "doc_gia";
+				string connect;
+				stringstream word(A_user.hovaten);
+				A_user.hovaten = "";
+				int skip_1st = 0;
+				word >> connect;
+				do {
+					if (skip_1st != 0) A_user.hovaten += "_";
+					skip_1st++;
+					A_user.hovaten += connect;
+					word >> connect;
+				} while (!word.fail());
 
-			f.open("users_infor.txt", ios::app);
-			//outfile.write(reinterpret_cast<char*>(&A_user), sizeof(S_user));//ma hoa thanh nhi phan ma ko bit co tac dung ko(chua thanh thao) co khi cu xai o duoi truoc
-			f << setw(5) << left << A_user.id
-				<< setw(30) << left << A_user.hovaten;
-			if (A_user.ngaysinh.ngay >= 10) f << A_user.ngaysinh.ngay << "/";
-			else f << "0" << A_user.ngaysinh.ngay << "/";
-			if (A_user.ngaysinh.thang >= 10)f << A_user.ngaysinh.thang << "/";
-			else f << "0" << A_user.ngaysinh.thang << "/";
-			f << setw(10) << left << A_user.ngaysinh.nam
-				<< setw(10) << left << A_user.mssv
-				<< setw(50) << left << A_user.email
-				<< setw(5) << left << A_user.giotinh
-				<< setw(10) << left << A_user.vaitro << endl;
-			f.close();
-			A_account.id = A_user.id;
-			f.open("accounts_infor.txt", ios::app);
-			f << setw(5) << A_account.id
-				<< setw(30) << left << A_account.tendangnhap
-				<< setw(20) << left << A_account.matkhau << endl;
-			f.close();
-			thoat = 0;
+				f.open("users_infor.txt", ios::app);
+				//outfile.write(reinterpret_cast<char*>(&A_user), sizeof(S_user));//ma hoa thanh nhi phan ma ko bit co tac dung ko(chua thanh thao) co khi cu xai o duoi truoc
+				f << setw(5) << left << A_user.id
+					<< setw(35) << left << A_user.hovaten;
+				if (A_user.ngaysinh.ngay >= 10) f << A_user.ngaysinh.ngay << "/";
+				else f << "0" << A_user.ngaysinh.ngay << "/";
+				if (A_user.ngaysinh.thang >= 10)f << A_user.ngaysinh.thang << "/";
+				else f << "0" << A_user.ngaysinh.thang << "/";
+				f << setw(10) << left << A_user.ngaysinh.nam
+					<< setw(15) << left << A_user.mssv
+					<< setw(35) << left << A_user.email
+					<< setw(5) << left << A_user.gioitinh
+					<< setw(10) << left << A_user.vaitro << endl;
+				f.close();
+				A_account.id = A_user.id;
+				f.open("accounts_infor.txt", ios::app);
+				f << setw(5) << A_account.id
+					<< setw(25) << left << A_account.tendangnhap
+					<< setw(20) << left << A_account.matkhau << endl;
+				f.close();
+				thoat = 0;
+			}
+			else { _getch();dangki(); }
 		}
 		if (((cv == 10) && (c == 13)) || (c == 27)) { thoat = 0; }//thoat ra man hinh chinh
 		textcolor(48);
@@ -358,7 +463,7 @@ void manhinhthongbao(string s) {
 	textcolor(49);
 	int a = (40 - s.length()) / 2;
 	gotoxy(20 + a, 12);cout << s;
-	_getch();
+	Sleep(2000);
 };
 void manhinhlamviec() {
 	textcolor(240);
