@@ -12,7 +12,7 @@ using namespace std;
 
 int main()
 {
-	system("chcp 437");
+	//system("chcp 437");
 	in();
 	int thoat = 1, cv = 1;
 	while (thoat) {
