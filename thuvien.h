@@ -1,27 +1,27 @@
-#pragma once
-#if !defined(THU_VIEN_H)
 #include <string>
 #define THU_VIEN_H
-#define MAX_ACCOUNTS 5
+<<<<<<< HEAD
+#define RONG 204
+=======
+>>>>>>> f40226975e51e165769440aca02a3ef3c3a2e22e
 using namespace std;
 typedef struct {
 	short ngay, thang, nam;
 } date;
 typedef struct {
-	string Tendangnhap;
+	int id;
+	string tendangnhap;
 	string matkhau;
-} S_dangnhap;
+} S_account;
 typedef struct {
-	int sothutu;
+	int id;
 	string hovaten;
 	date ngaysinh;
-	string MSSV;
+	string mssv;
 	string email;
-	bool giotinh;
+	bool gioitinh;
 	string vaitro;
-	int sotaikhoan;
-	S_dangnhap taikhoan_matkhau[MAX_ACCOUNTS];
-}user;
+} S_user;
 void dangnhap();
 void in();
 void indangki();
@@ -29,4 +29,9 @@ void dangki();
 void manhinhthongbao(string s);
 void manhinhlamviec();
 void xulichuoi(string &s, char a, int &x, int y, int maxlen = 29);
+<<<<<<< HEAD
+int get_F_N(string File);//dem so dong cua 1 file
 #endif
+=======
+#endif
+>>>>>>> f40226975e51e165769440aca02a3ef3c3a2e22e
