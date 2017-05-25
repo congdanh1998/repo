@@ -32,6 +32,7 @@ void indangnhap(string TDN, string MK) {
 	gotoxy(20, 7);
 	cout << "TEN DANG NHAP:";
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 	gotoxy(20, 12);
 	cout << "  MAT KHAU:   ";
@@ -39,6 +40,15 @@ void indangnhap(string TDN, string MK) {
 	gotoxy(10, 22);
 	cout << " DANG NHAP ";
 
+=======
+
+	gotoxy(20, 12);
+	cout << "  MAT KHAU:   ";
+
+	gotoxy(10, 22);
+	cout << " DANG NHAP ";
+
+>>>>>>> f40226975e51e165769440aca02a3ef3c3a2e22e
 =======
 
 	gotoxy(20, 12);
@@ -57,12 +67,21 @@ void dangnhap() {
 
 	fstream f;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	string data;//, ignore_str;
 	int num_of_accounts=get_F_N("accounts_infor.txt")+1;
 
 	f.open("accounts_infor.txt", ios::in);
 	//getline(f, data); stringstream scin(data);
 	//scin >> ignore_str; scin >> num_of_accounts;
+=======
+	string data, ignore_str;
+	int num_of_accounts;
+
+	f.open("accounts_infor.txt", ios::in);
+	getline(f, data); stringstream scin(data);
+	scin >> ignore_str; scin >> num_of_accounts;
+>>>>>>> f40226975e51e165769440aca02a3ef3c3a2e22e
 =======
 	string data, ignore_str;
 	int num_of_accounts;
@@ -260,7 +279,10 @@ void indangki() {//ham in ra man hinh dang ki
 void nhapngay(int&x, int&y, int&z, string&a, string&b, string&d) {//ham nhap ngay thang nam sinh
 	string ng, th, n;//cac chuoi ung voi ngay thang nam
 <<<<<<< HEAD
+<<<<<<< HEAD
 	
+=======
+>>>>>>> f40226975e51e165769440aca02a3ef3c3a2e22e
 =======
 >>>>>>> f40226975e51e165769440aca02a3ef3c3a2e22e
 	int X[3] = { 21,36,50 };//vi tri nhap chuoi(da biet truoc)
@@ -275,9 +297,15 @@ void nhapngay(int&x, int&y, int&z, string&a, string&b, string&d) {//ham nhap nga
 		if (cv == 0) { cv = 3; }
 		if (cv == 4) { cv = 1; }
 <<<<<<< HEAD
+<<<<<<< HEAD
 		if ((cv == 3) && (c == 13)) { xulichuoi(d, 'y', z, 15, 3 - z + 51); }
 		if ((cv == 1) && (c == 13)) { xulichuoi(a, 'y', x, 15, 1 - x + 22); }
 		if ((cv == 2) && (c == 13)) { xulichuoi(b, 'y', y, 15, 1 - y + 37); }
+=======
+		if ((cv == 3) && (c == 13)) { xulichuoi(n, 'y', z, 15, 3 - z + 51);stringstream(n) >> d; }
+		if ((cv == 1) && (c == 13)) { xulichuoi(ng, 'y', x, 15, 1 - x + 22);stringstream(ng) >> a; }
+		if ((cv == 2) && (c == 13)) { xulichuoi(th, 'y', y, 15, 1 - y + 37);stringstream(th) >> b; }
+>>>>>>> f40226975e51e165769440aca02a3ef3c3a2e22e
 =======
 		if ((cv == 3) && (c == 13)) { xulichuoi(n, 'y', z, 15, 3 - z + 51);stringstream(n) >> d; }
 		if ((cv == 1) && (c == 13)) { xulichuoi(ng, 'y', x, 15, 1 - x + 22);stringstream(ng) >> a; }
@@ -367,6 +395,7 @@ void dangki() {
 				if (A_user.ngaysinh.thang == 2 && A_user.ngaysinh.ngay == 29) {
 					float ti_le = (float)(2004 - A_user.ngaysinh.nam) / 4;
 <<<<<<< HEAD
+<<<<<<< HEAD
 					if (ti_le != int(ti_le)) no_error_date = false;
 				}
 				else {
@@ -377,6 +406,8 @@ void dangki() {
 					else {
 						if ((A_user.ngaysinh.thang == 4 || A_user.ngaysinh.thang == 6 || A_user.ngaysinh.thang == 9 || A_user.ngaysinh.thang == 11) && A_user.ngaysinh.ngay > 30) {
 =======
+=======
+>>>>>>> f40226975e51e165769440aca02a3ef3c3a2e22e
 					if (ti_le != round(ti_le)) no_error_date = false;
 				}
 				else {
@@ -386,6 +417,9 @@ void dangki() {
 					}
 					else {
 						if ((A_user.ngaysinh.thang == 4 || A_user.ngaysinh.thang == 6 || A_user.ngaysinh.thang == 9 || A_user.ngaysinh.thang == 11) && A_user.ngaysinh.ngay != 31) {
+<<<<<<< HEAD
+>>>>>>> f40226975e51e165769440aca02a3ef3c3a2e22e
+=======
 >>>>>>> f40226975e51e165769440aca02a3ef3c3a2e22e
 							no_error_date = false;
 						}
@@ -435,7 +469,11 @@ void dangki() {
 			}
 			for (int i = 0;i < A_account.tendangnhap.length();i++) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 				if (A_account.tendangnhap.length() < 5 || A_account.tendangnhap.length() > 20 || ((int)A_account.tendangnhap[i] < 48) || ((int)A_account.tendangnhap[i] > 57 && (int)A_account.tendangnhap[i] < 65) || ((int)A_account.tendangnhap[i] > 90 && (int)A_account.tendangnhap[i] < 97) || ((int)A_account.tendangnhap[i] > 122)) {
+=======
+				if (A_account.tendangnhap.length() < 5 | A_account.tendangnhap.length() > 20 || ((int)A_account.tendangnhap[i] < 48) || ((int)A_account.tendangnhap[i] > 57 && (int)A_account.tendangnhap[i] < 65) || ((int)A_account.tendangnhap[i] > 90 && (int)A_account.tendangnhap[i] < 97) || ((int)A_account.tendangnhap[i] > 122)) {
+>>>>>>> f40226975e51e165769440aca02a3ef3c3a2e22e
 =======
 				if (A_account.tendangnhap.length() < 5 | A_account.tendangnhap.length() > 20 || ((int)A_account.tendangnhap[i] < 48) || ((int)A_account.tendangnhap[i] > 57 && (int)A_account.tendangnhap[i] < 65) || ((int)A_account.tendangnhap[i] > 90 && (int)A_account.tendangnhap[i] < 97) || ((int)A_account.tendangnhap[i] > 122)) {
 >>>>>>> f40226975e51e165769440aca02a3ef3c3a2e22e
@@ -447,9 +485,12 @@ void dangki() {
 			if (no_error_all == true && no_error_date == true && no_error_age == true) {
 				fstream f;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	
 				A_user.id = get_F_N("users_infor.txt")+1;
 =======
+=======
+>>>>>>> f40226975e51e165769440aca02a3ef3c3a2e22e
 				int num_of_users;
 				string ignore_str, data;
 				f.open("users_infor.txt", ios::in);
@@ -459,6 +500,9 @@ void dangki() {
 
 				num_of_users++;
 				A_user.id = num_of_users;
+<<<<<<< HEAD
+>>>>>>> f40226975e51e165769440aca02a3ef3c3a2e22e
+=======
 >>>>>>> f40226975e51e165769440aca02a3ef3c3a2e22e
 				A_user.vaitro = "doc_gia";
 				string connect;
@@ -487,6 +531,7 @@ void dangki() {
 					<< setw(5) << left << A_user.gioitinh
 					<< setw(10) << left << A_user.vaitro << endl;
 <<<<<<< HEAD
+<<<<<<< HEAD
 				
 				
 				f.close();
@@ -496,10 +541,15 @@ void dangki() {
 				f.close();
 				A_account.id = A_user.id;
 >>>>>>> f40226975e51e165769440aca02a3ef3c3a2e22e
+=======
+				f.close();
+				A_account.id = A_user.id;
+>>>>>>> f40226975e51e165769440aca02a3ef3c3a2e22e
 				f.open("accounts_infor.txt", ios::app);
 				f << setw(5) << A_account.id
 					<< setw(25) << left << A_account.tendangnhap
 					<< setw(20) << left << A_account.matkhau << endl;
+<<<<<<< HEAD
 <<<<<<< HEAD
 			
 				f.close();
@@ -507,10 +557,15 @@ void dangki() {
 			}
 			else { _getch(); }
 =======
+=======
+>>>>>>> f40226975e51e165769440aca02a3ef3c3a2e22e
 				f.close();
 				thoat = 0;
 			}
 			else { _getch();dangki(); }
+<<<<<<< HEAD
+>>>>>>> f40226975e51e165769440aca02a3ef3c3a2e22e
+=======
 >>>>>>> f40226975e51e165769440aca02a3ef3c3a2e22e
 		}
 		if (((cv == 10) && (c == 13)) || (c == 27)) { thoat = 0; }//thoat ra man hinh chinh
@@ -544,6 +599,7 @@ void manhinhlamviec() {
 	_getch();
 };
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 int get_F_N(string File){
 	fstream f;
@@ -553,5 +609,7 @@ int get_F_N(string File){
 	while(!f.eof()){getline(f,line);num_of_users++;}
 	return num_of_users;
 };
+=======
+>>>>>>> f40226975e51e165769440aca02a3ef3c3a2e22e
 =======
 >>>>>>> f40226975e51e165769440aca02a3ef3c3a2e22e
