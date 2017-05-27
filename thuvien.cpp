@@ -9,6 +9,7 @@
 #include <fstream>
 #include "dohoa.h"
 #include "thuvien.h"
+#include "xulifile.h"
 //luu dohoa.h o dau thi chi duong dan toi do
 using namespace std;
 //ham xu li trong man hinh dang nhap
@@ -45,21 +46,22 @@ void dangnhap() {
 	string TDN = "", MK = "";//bien luu ten dang va mat khau
 	indangnhap(TDN, MK);
 
-	fstream f;
+	//fstream f;
 	string data;//, ignore_str;
 	int num_of_accounts=get_F_N("accounts_infor.txt")+1;
 	int the_choosen_one=-1;
-	f.open("accounts_infor.txt", ios::in);
+	//f.open("accounts_infor.txt", ios::in);
 	//getline(f, data); stringstream scin(data);
 	//scin >> ignore_str; scin >> num_of_accounts;
 	S_account* list_accounts = new S_account[num_of_accounts];
-	for (int i = 0;i < num_of_accounts;i++) {
-		getline(f, data); stringstream scin(data);
-		scin >> list_accounts[i].id;
-		scin >> list_accounts[i].tendangnhap;
-		scin >> list_accounts[i].matkhau;
-	}
-	f.close();
+	//for (int i = 0;i < num_of_accounts;i++) {
+	//	getline(f, data); stringstream scin(data);
+	//	scin >> list_accounts[i].id;
+	//	scin >> list_accounts[i].tendangnhap;
+	//	scin >> list_accounts[i].matkhau;
+	//}
+	//f.close();
+	GetFileAccountsData(list_accounts,num_of_accounts);
 
 	int x = 20, xo = 20;//vi tri bat dau nhap ten va mat khau(hoang do)
 	int thoat = 1, cv = 1;
@@ -440,7 +442,8 @@ void dangki() {
 				f.open("accounts_infor.txt", ios::app);
 				f << setw(5) << A_account.id
 					<< setw(25) << left << A_account.tendangnhap
-					<< setw(20) << left << A_account.matkhau << endl;
+					<< setw(20) << left << A_account.matkhau <<
+					" 0 0 0 0 0 "<<endl;
 			
 				f.close();
 				thoat = 0;
@@ -469,31 +472,58 @@ void manhinhlamviec() {
 	textcolor(240);
 	system("cls");
 	resizeConsole(99, 60);
-	inbang("Ten Sach", "Con Lai", "Tac Gia");
+	inbang("Ten Sach", "The loai", "Tac Gia");
 	hinhchunhat(219, 0, 5, 28, 20);
-	ToMau(5, 6, "Thong tin chi tiet", 243, 240);
+	ToMau(5, 6, "Thong tin nguoi dung", 243, 240);
 	ToMau(0, 28, "Cac chuc nang chinh", 15, 240);
 	hinhchunhat(219, 0, 29, 50, 17);
 	hinhchunhat(219, 52, 29, 45, 17);
 };
 
-int get_F_N(string File){
-	fstream f;
-	string line;
-	int num_of_users=-2;
-	f.open(File, ios::in);
-	while(!f.eof()){getline(f,line);num_of_users++;}
-	return num_of_users;
-};
+
 
 void manhinhdocgia(S_account& TAIKHOAN){
 	manhinhlamviec();
+	S_account * list_account;
+	int sotaikhoan=get_F_N("accounts_infor.txt")+1;
+	list_account=new S_account[sotaikhoan];
+	GetFileAccountsData(list_account,sotaikhoan);
+	fstream f;
+	f.open("users_infor.txt",ios::in);
+	string data,NTNS,GT[2]={"nu","nam"};
+	S_user choosen_user;
+	do{
+		getline(f,data);
+		stringstream scin(data);
+		scin>>choosen_user.id;
+		if(choosen_user.id==TAIKHOAN.id){
+			scin>>choosen_user.hovaten;
+			scin>>NTNS;
+			scin>>choosen_user.mssv;
+			scin>>choosen_user.email;
+			scin>>choosen_user.gioitinh;
+			scin>>choosen_user.vaitro;
+
+		}
+	}
+	while(choosen_user.id!=TAIKHOAN.id);
+	
+	f.close();
+	gotoxy(3,7);cout<<"ho va ten: ";
+	gotoxy(3,8);cout<<choosen_user.hovaten;
+	gotoxy(3,12);cout<<"ngay thang nam sinh: ";
+	gotoxy(3,13);cout<<NTNS;
+	gotoxy(3,15);cout<<"Email: ";
+	gotoxy(3,16);cout<<choosen_user.email;
+	gotoxy(3,18);cout<<"gioi tinh: "<<GT[choosen_user.gioitinh];
+	gotoxy(3,21);cout<<"ma so: "<<choosen_user.mssv;
+
 	gotoxy(15,31);cout<<"      tim sach       ";
 	gotoxy(15,33);cout<<"    lua chon sach    ";
 	gotoxy(15,35);cout<<"    xem thong bao    ";
 	gotoxy(15,37);cout<<"    xem thong tin    ";
 	gotoxy(15,39);cout<<"    doi mat khau     ";
-	gotoxy(15,41);cout<<" them tai khoan moi  ";
+	gotoxy(15,41);cout<<"      tra sach       ";
 	gotoxy(15,43);cout<<"        thoat        ";
 	int cv=1,thoat=1;
 	while(thoat){
@@ -509,7 +539,7 @@ void manhinhdocgia(S_account& TAIKHOAN){
 		if (cv == 0) { cv = 7; }
 		if (cv == 8) { cv = 1; }
 
-		if((cv==2)&&(c==13)){luachonsach();}
+		if((cv==2)&&(c==13)){luachonsach(list_account,sotaikhoan,TAIKHOAN.id);}
 		if((c==27)||(cv==7)&&(c==13)){thoat=0;}
 
 		gotoxy(13,29+2*cv1);
@@ -517,18 +547,21 @@ void manhinhdocgia(S_account& TAIKHOAN){
 		gotoxy(36,29+2*cv1);
 		cout<<" ";
 	}
+	delete[] list_account; list_account=NULL;
 };
 void inDS(S_book A[],int n){
 	for (int i=0;i<MAX_cot;i++){
 		gotoxy(31,8+i);cout<<"                            ";
+		gotoxy(60,8+i);cout<<"            ";
 		gotoxy(74,8+i);cout<<"                      ";
 	}
 	for (int i=0;i<n;i++){
 		gotoxy(31,8+i);cout<<A[i].tensach;
+		gotoxy(60,8+i);cout<<A[i].theloai;
 		gotoxy(74,8+i);cout<<A[i].tacgia;
 	}
 };
-void luachonsach(){
+void luachonsach(S_account A[],int n,int CSO){
 	int file_len=get_F_N("book_infor.txt");
 	int sotrang=file_len/MAX_cot+1;
 	gotoxy(57,45);cout<<"XAC NHAN";
@@ -544,9 +577,12 @@ void luachonsach(){
 		scin>>list[i].id;
 		scin>>list[i].tensach;
 		scin>>list[i].tacgia;
+		scin>>list[i].theloai;
 	}
 	inDS(list,MAX_cot);
 	int cv=0,trang=1,thoat=1,chon=0;
+	while(A[CSO-1].DS_muon[chon]>0) chon++; // chi duoc chon 5 cuon sach
+	int flag=chon;//danh dau so sach da duoc muon
 	while(thoat){
 		textcolor(250);
 		gotoxy(31,8+cv);cout<<list[cv].tensach;
@@ -570,8 +606,9 @@ void luachonsach(){
 				scin>>list[i].id;
 				scin>>list[i].tensach;
 				scin>>list[i].tacgia;
+				scin>>list[i].theloai;
 			}
-			for(int i=n;i<MAX_cot;i++){list[i].tacgia="------------";list[i].tensach="------------";}
+			for(int i=n;i<MAX_cot;i++){list[i].tacgia="------------";list[i].theloai="--------";list[i].tensach="------------";}
 			inDS(list,MAX_cot);
 		}
 		if (c == 'M' ) {
@@ -586,11 +623,14 @@ void luachonsach(){
 				scin>>list[i].id;
 				scin>>list[i].tensach;
 				scin>>list[i].tacgia;
+				scin>>list[i].theloai;
 			}
-			for(int i=n;i<MAX_cot;i++){list[i].tacgia="------------";list[i].tensach="------------";}
+			for(int i=n;i<MAX_cot;i++){list[i].tacgia="------------";list[i].theloai="--------";list[i].tensach="------------";}
 			inDS(list,MAX_cot);
 		}
-		if(c==13) {gotoxy(62,31+chon);cout<<list[cv].tensach;chon++;}
+		if(c==13 && chon <5) {gotoxy(62,31+chon);cout<<list[cv].tensach;A[CSO-1].DS_muon[chon]=list[cv].id;chon++;}
+		//chon mot cuon sach o hang thu cv
+		else if(c==13 && chon >=5){ToMau(60,43,"chi muon duoc 5 cuon tren 1 lan",58,240);}
 		if(c==27) {
 			int da_XN=1,XN=0;
 			while(da_XN){
@@ -601,9 +641,17 @@ void luachonsach(){
 				if (ch == 'P' || ch == 'M') { XN++; }
 				if ( XN== -1) {  XN= 1; }
 				if ( XN== 2) {  XN= 0; }
-				if (XN==0 && ch==13){gotoxy(60,43);cout<<"DA MUON XONG SACH ,THANH TOAN 1000$";da_XN=0;}
-				if ((XN==1 && ch==13)||ch==23){da_XN=0;HCN2(15,53,30,45,16);}
+				if (XN==0 && ch==13){
+					ToMau(60,43,"Da muon xong sach thanh, toan 1000$",58,240);
+					_getch();da_XN=0;HCN2(15,53,30,45,16);
+					OverWriteAccount(A,n);
+				}
+				if ((XN==1 && ch==13)||ch==23){
+					da_XN=0;HCN2(15,53,30,45,16);
+					for (int i=flag;i<chon;i++) A[CSO-1].DS_muon[i]=0;
+				}
 				textcolor(240);
+
 				gotoxy(55+XN1*23,45);cout<<"  ";
 				thoat=0;
 			}

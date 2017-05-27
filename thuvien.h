@@ -12,6 +12,7 @@ typedef struct {
 	int id;
 	string tendangnhap;
 	string matkhau;
+	int DS_muon[5];
 } S_account;
 typedef struct {
 	int id;
@@ -26,6 +27,7 @@ typedef struct {
 	int id;
 	string tensach;
 	string tacgia;
+	string theloai;
 } S_book;
 void dangnhap();
 void in();
@@ -34,7 +36,6 @@ void dangki();
 void manhinhthongbao(string s);
 void manhinhlamviec();
 void manhinhdocgia(S_account& TAIKHOAN);
-void luachonsach();
+void luachonsach(S_account A[],int n,int CSO);
 void xulichuoi(string &s, char a, int &x, int y, int maxlen = 29);
-int get_F_N(string File);//dem so dong cua 1 file
 #endif
