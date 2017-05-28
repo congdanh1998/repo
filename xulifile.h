@@ -6,4 +6,5 @@
 	int get_F_N(string File);//dem so dong cua 1 file
 	void GetFileAccountsData(S_account A[],int & N);//luu het thong tin trong file tai khoan vao mang A voi do dai file la N
 	void OverWriteAccount(S_account A[],int N);
+	void GetFileBookData(S_book A[],int N);
 #endif

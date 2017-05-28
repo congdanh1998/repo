@@ -407,7 +407,7 @@ void dangki() {
 			if (no_error_all == true && no_error_date == true && no_error_age == true) {
 				fstream f;
 	
-				A_user.id = get_F_N("users_infor.txt")+1;
+				A_user.id = get_F_N("users_infor.txt")+2;
 				A_user.vaitro = "doc_gia";
 				string connect;
 				stringstream word(A_user.hovaten);
@@ -539,7 +539,8 @@ void manhinhdocgia(S_account& TAIKHOAN){
 		if (cv == 0) { cv = 7; }
 		if (cv == 8) { cv = 1; }
 
-		if((cv==2)&&(c==13)){luachonsach(list_account,sotaikhoan,TAIKHOAN.id);}
+		if((cv==2)&&(c==13)){luachonsach(list_account,sotaikhoan,TAIKHOAN.id);}//lo sua trong code roi
+		if((cv==6)&&(c==13)){trasach(list_account,TAIKHOAN.id-1,sotaikhoan);}//vi chi so trong mang nho hon 1 so voi dong
 		if((c==27)||(cv==7)&&(c==13)){thoat=0;}
 
 		gotoxy(13,29+2*cv1);
@@ -660,4 +661,56 @@ void luachonsach(S_account A[],int n,int CSO){
 		gotoxy(74,8+cv1);cout<<list[cv1].tacgia;
 	}
 	f.close();
+};
+void sapxepgiam(int a[],int n){
+	for (int i=0;i<n;i++)
+		for(int j=i;j<n;j++){
+			if(a[i]<a[j]){
+				int t=a[i];
+				a[i]=a[j];
+				a[j]=t;
+			}
+		}
+}
+void trasach(S_account A[],int CSO,int N){
+	int sosach=get_F_N("book_infor.txt"),chon=0;
+	S_book *SACH=new S_book[sosach];
+	GetFileBookData( SACH, sosach);
+	for(int i=0;i<5;i++){
+		if (A[CSO].DS_muon[i]!=0){
+			chon++;
+			gotoxy(67,31+i*2);cout<<SACH[A[CSO].DS_muon[i]-1].tensach;//vi so trong mang bat dau tu 0 trong file bat dau tu 1 nen phai tru 1
+		}
+	}
+	int danh_dau[5]={A[CSO].DS_muon[0],A[CSO].DS_muon[1],A[CSO].DS_muon[2],A[CSO].DS_muon[3],A[CSO].DS_muon[4]};
+	gotoxy(67,31+chon*2);cout<<"Xac nhan";
+	char* luachon[2]={"tra_sach","Huy_tra"};
+	int cv=0,thoat=1;
+	while(thoat){
+		if(cv<chon){
+			ToMau(55,31+cv*2,luachon[danh_dau[cv]==0],58,240);
+		}else{gotoxy(64,31+cv*2);cout<<"\20\20";}
+		char c = _getch();
+		int cv1 = cv;
+		if (c == 'H' ) { cv--; }
+		if (c == 'P' ) { cv++; }
+		if (cv == -1) { cv = chon; }
+		if (cv == chon+1) { cv = 0; }
+		if (cv<chon && c==13){
+			if(danh_dau[cv]!=0) {danh_dau[cv]=0;}
+			else {danh_dau[cv]=A[CSO].DS_muon[cv];}
+		}
+		if (cv==chon && c==13) {
+			thoat=0;
+			sapxepgiam(danh_dau,5);
+			for (int i=0;i<5;i++) A[CSO].DS_muon[i]=danh_dau[i];
+			OverWriteAccount(A,N);
+			ToMau(60,44,"da tra xong sach",58,240);
+			_getch();HCN2(15,53,30,45,16);
+		}
+		if(cv1<chon){
+			ToMau(55,31+cv1*2,"         ",240,240);
+		}else{textcolor(240);gotoxy(64,31+cv1*2);cout<<"  ";}
+	}
+	delete []SACH; SACH=NULL;
 };

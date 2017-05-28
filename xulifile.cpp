@@ -49,3 +49,19 @@ void OverWriteAccount(S_account A[],int N){
 	};
 	f.close();
 };
+
+void GetFileBookData(S_book A[],int N){
+	ifstream f;
+	//A=new S_account[N];
+	string data;
+	
+	f.open("book_infor.txt");
+	for (int i=0;i<N;i++){
+		getline(f, data); stringstream scin(data);
+		scin >> A[i].id;
+		scin >> A[i].tensach;
+		scin >> A[i].tacgia;
+		scin >> A[i].theloai;
+	}
+	f.close();
+};
