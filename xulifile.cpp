@@ -7,21 +7,21 @@
 #include "xulifile.h"
 using namespace std;
 
-int get_F_N(string File){
+int get_F_N(string File) {
 	fstream f;
 	string line;
-	int num_of_users=-2;
+	int num_of_users = -1;
 	f.open(File, ios::in);
-	while(!f.eof()){getline(f,line);num_of_users++;}
+	while (!f.eof()) { getline(f, line);num_of_users++; }
 	return num_of_users;
 };
-void GetFileAccountsData(S_account A[] ,int &N){
+void GetFileAccountsData(S_account A[], int &N) {
 	ifstream f;
 	//A=new S_account[N];
 	string data;
-	
+
 	f.open("accounts_infor.txt");
-	for (int i=0;i<=N;i++){
+	for (int i = 0;i <= N;i++) {
 		getline(f, data); stringstream scin(data);
 		scin >> A[i].id;
 		scin >> A[i].tendangnhap;
@@ -35,28 +35,28 @@ void GetFileAccountsData(S_account A[] ,int &N){
 	f.close();
 };
 
-void OverWriteAccount(S_account A[],int N){
+void OverWriteAccount(S_account A[], int N) {
 	ofstream f;
-	
+
 	f.open("accounts_infor.txt");
-	for (int i=0;i<N;i++){//???????????????
-		f << setw(5) <<left<< A[i].id
+	for (int i = 0;i<N;i++) {//???????????????
+		f << setw(5) << left << A[i].id
 			<< setw(25) << left << A[i].tendangnhap
 			<< setw(20) << left << A[i].matkhau <<
-			A[i].DS_muon[0]<<" "<<A[i].DS_muon[1]<<" "
-			<<A[i].DS_muon[2]<<" "<<A[i].DS_muon[3]<<" "
-			<<A[i].DS_muon[4]<<" "<<endl;
+			A[i].DS_muon[0] << " " << A[i].DS_muon[1] << " "
+			<< A[i].DS_muon[2] << " " << A[i].DS_muon[3] << " "
+			<< A[i].DS_muon[4] << " " << endl;
 	};
 	f.close();
 };
 
-void GetFileBookData(S_book A[],int N){
+void GetFileBookData(S_book A[], int N) {
 	ifstream f;
 	//A=new S_account[N];
 	string data;
-	
-	f.open("book_infor.txt");
-	for (int i=0;i<N;i++){
+
+	f.open("books_infor.txt");
+	for (int i = 0;i<N;i++) {
 		getline(f, data); stringstream scin(data);
 		scin >> A[i].id;
 		scin >> A[i].tensach;
