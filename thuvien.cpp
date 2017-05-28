@@ -571,7 +571,10 @@ void manhinhdocgia(S_account& TAIKHOAN) {
 		if (cv == 8) { cv = 1; }
 
 		if ((cv == 2) && (c == 13)) { luachonsach(list_account, sotaikhoan, TAIKHOAN.id); }
+
 		if ((cv == 6) && (c == 13)) { trasach(list_account, TAIKHOAN.id - 1, sotaikhoan); }
+
+
 		if ((c == 27) || (cv == 7) && (c == 13)) {
 			int cv2 = 0, thoat1 = 1;
 			while (thoat1) {
@@ -580,6 +583,7 @@ void manhinhdocgia(S_account& TAIKHOAN) {
 				cout << "\20";
 				gotoxy(41 + cv2 * 20, 63);
 				cout << "\21";
+
 
 				char c1 = _getch();
 				int cv3 = cv2;
@@ -596,6 +600,25 @@ void manhinhdocgia(S_account& TAIKHOAN) {
 				textcolor(240);
 			}
 		}
+
+
+
+				char c1 = _getch();
+				int cv3 = cv2;
+				if (c1 == 'H' || c1 == 'K') { cv2--; }
+				if (c1 == 'P' || c1 == 'M') { cv2++; }
+				if (cv2 == -1) { cv2 = 1; }
+				if (cv2 == 2) { cv2 = 0; }
+				if (cv2 == 0 && c1 == 13) { thoat1 = 0;thoat = 0; }
+				if ((cv2 == 1 && c1 == 13) || c1 == 27) {
+					thoat1 = 0;
+					HCN2(15, 27, 60, 40, 5);
+
+				}
+				textcolor(240);
+			}
+		}
+
 
 		gotoxy(13, 29 + 2 * cv1);
 		cout << " ";
@@ -620,7 +643,11 @@ void luachonsach(S_account A[], int n, int CSO) {
 	int file_len = get_F_N("books_infor.txt");
 	int sotrang = file_len / MAX_cot + 1;
 	gotoxy(57, 45);cout << "XAC NHAN";
+
 	gotoxy(80, 45);cout << " HUY BO ";
+
+	gotoxy(80, 45);cout << "HUY BO";
+
 	fstream f;
 	f.open("books_infor.txt", ios::in);
 	string data;
@@ -690,7 +717,11 @@ void luachonsach(S_account A[], int n, int CSO) {
 			int da_XN = 1, XN = 0;
 			while (da_XN) {
 				gotoxy(55 + XN * 23, 45);cout << "\20";
+
 				gotoxy(66 + XN * 23, 45);cout << "\21";
+
+				gotoxy(64 + XN * 23, 45);cout << "\20";
+
 				char ch = _getch();
 				int XN1 = XN;
 				if (ch == 'H' || ch == 'K') { XN--; }
@@ -708,8 +739,12 @@ void luachonsach(S_account A[], int n, int CSO) {
 				}
 				textcolor(240);
 
+
 				gotoxy(55 + XN1 * 23, 45);cout << " ";
 				gotoxy(66 + XN1 * 23, 45);cout << " ";
+
+				gotoxy(55 + XN1 * 23, 45);cout << "  ";
+
 				thoat = 0;
 			}
 		};
@@ -718,6 +753,7 @@ void luachonsach(S_account A[], int n, int CSO) {
 	}
 	f.close();
 };
+
 void sapxepgiam(int a[], int n) {
 	for (int i = 0;i<n;i++)
 		for (int j = i;j<n;j++) {
@@ -810,3 +846,4 @@ void trasach(S_account A[], int CSO, int N) {
 	}
 	delete[]SACH; SACH = NULL;
 };
+
