@@ -571,17 +571,10 @@ void manhinhdocgia(S_account& TAIKHOAN) {
 		if (cv == 8) { cv = 1; }
 
 		if ((cv == 2) && (c == 13)) { luachonsach(list_account, sotaikhoan, TAIKHOAN.id); }
-<<<<<<< HEAD
 		if ((cv == 5) && (c == 13)) { doimatkhau(list_account, TAIKHOAN.id - 1, sotaikhoan);}
 		if ((cv == 6) && (c == 13)) { trasach(list_account, TAIKHOAN.id - 1, sotaikhoan); }
 
 		
-=======
-
-		if ((cv == 6) && (c == 13)) { trasach(list_account, TAIKHOAN.id - 1, sotaikhoan); }
-
-
->>>>>>> ac8b4e9f58fdd22906d2182f08e1c6c0b174c14b
 		if ((c == 27) || (cv == 7) && (c == 13)) {
 			int cv2 = 0, thoat1 = 1;	
 			while (thoat1) {
@@ -592,8 +585,6 @@ void manhinhdocgia(S_account& TAIKHOAN) {
 				cout << "\21";
 
 
-<<<<<<< HEAD
-=======
 				char c1 = _getch();
 				int cv3 = cv2;
 				if (c1 == 'H' || c1 == 'K') { cv2--; }
@@ -611,32 +602,10 @@ void manhinhdocgia(S_account& TAIKHOAN) {
 		}
 
 
-
->>>>>>> ac8b4e9f58fdd22906d2182f08e1c6c0b174c14b
-				char c1 = _getch();
-				int cv3 = cv2;
-				if (c1 == 'H' || c1 == 'K') { cv2--; }
-				if (c1 == 'P' || c1 == 'M') { cv2++; }
-				if (cv2 == -1) { cv2 = 1; }
-				if (cv2 == 2) { cv2 = 0; }
-				if (cv2 == 0 && c1 == 13) { thoat1 = 0;thoat = 0; }
-				if ((cv2 == 1 && c1 == 13) || c1 == 27) {
-					thoat1 = 0;
-					HCN2(15, 27, 60, 40, 5);
-
-				}
-				textcolor(240);
-			}
-		}
-
-
-<<<<<<< HEAD
 
 				
 
 
-=======
->>>>>>> ac8b4e9f58fdd22906d2182f08e1c6c0b174c14b
 		gotoxy(13, 29 + 2 * cv1);
 		cout << " ";
 		gotoxy(36, 29 + 2 * cv1);
@@ -661,11 +630,6 @@ void luachonsach(S_account A[], int n, int CSO) {
 	int sotrang = file_len / MAX_cot + 1;
 	gotoxy(57, 45);cout << "XAC NHAN";
 
-<<<<<<< HEAD
-=======
-	gotoxy(80, 45);cout << " HUY BO ";
-
->>>>>>> ac8b4e9f58fdd22906d2182f08e1c6c0b174c14b
 	gotoxy(80, 45);cout << "HUY BO";
 
 	fstream f;
@@ -740,11 +704,7 @@ void luachonsach(S_account A[], int n, int CSO) {
 
 				gotoxy(66 + XN * 23, 45);cout << "\21";
 
-<<<<<<< HEAD
 			//	gotoxy(64 + XN * 23, 45);cout << "\20";????
-=======
-				gotoxy(64 + XN * 23, 45);cout << "\20";
->>>>>>> ac8b4e9f58fdd22906d2182f08e1c6c0b174c14b
 
 				char ch = _getch();
 				int XN1 = XN;
@@ -767,11 +727,7 @@ void luachonsach(S_account A[], int n, int CSO) {
 				gotoxy(55 + XN1 * 23, 45);cout << " ";
 				gotoxy(66 + XN1 * 23, 45);cout << " ";
 
-<<<<<<< HEAD
 				
-=======
-				gotoxy(55 + XN1 * 23, 45);cout << "  ";
->>>>>>> ac8b4e9f58fdd22906d2182f08e1c6c0b174c14b
 
 				thoat = 0;
 			}
@@ -875,7 +831,6 @@ void trasach(S_account A[], int CSO, int N) {
 	delete[]SACH; SACH = NULL;
 };
 
-<<<<<<< HEAD
 void doimatkhau(S_account A[], int CSO, int N){
 	HCN2(7, 53, 30, 45, 16);
 	textcolor(112);
@@ -921,5 +876,3 @@ void doimatkhau(S_account A[], int CSO, int N){
 	HCN2(15, 53, 30, 45, 16);
 	textcolor(240);
 };
-=======
->>>>>>> ac8b4e9f58fdd22906d2182f08e1c6c0b174c14b
