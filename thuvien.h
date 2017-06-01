@@ -35,9 +35,11 @@ void indangki();
 void dangki();
 void manhinhthongbao(string s);
 void manhinhlamviec();
+void sapxepgiam(int a[], int n);
 void manhinhdocgia(S_account& TAIKHOAN);
 void luachonsach(S_account A[],int n,int CSO);
 void xulichuoi(string &s, char a, int &x, int y, int maxlen = 29);
 void trasach(S_account A[],int CSO,int N);
 void doimatkhau(S_account A[], int CSO, int N);
+void timsach(S_account A[], int CSO, int N);
 #endif
