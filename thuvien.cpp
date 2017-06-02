@@ -571,7 +571,7 @@ void manhinhdocgia(S_account& TAIKHOAN) {
 		if (cv == 8) { cv = 1; }
 
 		if ((cv == 1) && (c == 13)) { timsach(list_account, TAIKHOAN.id - 1, sotaikhoan);}
-		if ((cv == 2) && (c == 13)) { luachonsach(list_account, sotaikhoan, TAIKHOAN.id); }
+		if ((cv == 2) && (c == 13)) { luachonsach(list_account, sotaikhoan, TAIKHOAN.id-1); }
 		if ((cv == 5) && (c == 13)) { doimatkhau(list_account, TAIKHOAN.id - 1, sotaikhoan);}
 		if ((cv == 6) && (c == 13)) { trasach(list_account, TAIKHOAN.id - 1, sotaikhoan); }
 
@@ -585,7 +585,6 @@ void manhinhdocgia(S_account& TAIKHOAN) {
 				gotoxy(41 + cv2 * 20, 63);
 				cout << "\21";
 
-
 				char c1 = _getch();
 				int cv3 = cv2;
 				if (c1 == 'H' || c1 == 'K') { cv2--; }
@@ -596,16 +595,10 @@ void manhinhdocgia(S_account& TAIKHOAN) {
 				if ((cv2 == 1 && c1 == 13) || c1 == 27) {
 					thoat1 = 0;
 					HCN2(15, 27, 60, 40, 5);
-
 				}
 				textcolor(240);
 			}
 		}
-
-
-
-				
-
 
 		gotoxy(13, 29 + 2 * cv1);
 		cout << " ";
@@ -627,117 +620,43 @@ void inDS(S_book A[], int n) {
 	}
 };
 void luachonsach(S_account A[], int n, int CSO) {
-	int file_len = get_F_N("books_infor.txt");
-	int sotrang = file_len / MAX_cot + 1;
-	gotoxy(57, 45);cout << "XAC NHAN";
+	int sosach = get_F_N("books_infor.txt")+1, chon = 0,flag=4;
+	S_book *SACH = new S_book[sosach];
+	GetFileBookData(SACH,sosach);
+	int *a=new int[sosach];
+	for (int i=0;i<sosach;i++){a[i]=i;}
+	gotoxy(58, 31);cout << "DANH SACH MUON :";
+	gotoxy(57,45);cout<<"XONG";
+	gotoxy(80,45);cout<<"HUY";
+	bangtim(SACH,a, sosach,A[CSO],flag);
 
-	gotoxy(80, 45);cout << "HUY BO";
-
-	fstream f;
-	f.open("books_infor.txt", ios::in);
-	string data;
-
-	S_book list[MAX_cot];
-	f.seekg(0);
-	for (int i = 0;i<MAX_cot;i++) {
-		getline(f, data);stringstream scin(data);
-		scin >> list[i].id;
-		scin >> list[i].tensach;
-		scin >> list[i].tacgia;
-		scin >> list[i].theloai;
-	}
-	inDS(list, MAX_cot);
-	int cv = 0, trang = 1, thoat = 1, chon = 0;
-	while (A[CSO - 1].DS_muon[chon]>0) chon++; // chi duoc chon 5 cuon sach
-	int flag = chon;//danh dau so sach da duoc muon
-	while (thoat) {
-		textcolor(250);
-		gotoxy(31, 8 + cv);cout << list[cv].tensach;
-		gotoxy(74, 8 + cv);cout << list[cv].tacgia;
+	int thoat=1,cv=1,x1=57;
+	while(thoat){
+		textcolor(243);
+		gotoxy(54+(cv-1)*23,45);cout<<"\20\20";
 		char c = _getch();
 		int cv1 = cv;
-		if (c == 'H') { cv--; }
-		if (c == 'P') { cv++; }
-		if (cv == -1) { cv = 19; }
-		if (cv == 20) { cv = 0; }
-		textcolor(240);
-		if (c == 'K') {
-			trang--;
-			if (trang == 0) trang = sotrang;
-			f.seekg(0, ios::beg);//duoi con tro doc file ve dau file
-			for (int i = 0;i<(trang - 1)*MAX_cot;i++) getline(f, data);
-			int n = file_len - (trang - 1)*MAX_cot + 2;
-			if (n>20) n = 20;
-			for (int i = 0;i<n;i++) {
-				getline(f, data);stringstream scin(data);
-				scin >> list[i].id;
-				scin >> list[i].tensach;
-				scin >> list[i].tacgia;
-				scin >> list[i].theloai;
-			}
-			for (int i = n;i<MAX_cot;i++) { list[i].tacgia = "------------";list[i].theloai = "--------";list[i].tensach = "------------"; }
-			inDS(list, MAX_cot);
+		if (c == 'H' || c=='K') { cv--; }
+		if (c == 'P' || c=='M') { cv++; }
+		if (cv == 0) { cv = 2; }
+		if (cv == 3) { cv = 1; }
+		if((cv==1)&& c==13){
+			ToMau(60, 43, "Da muon xong sach thanh, toan 1000$", 58, 240);
+			_getch();HCN2(15, 53, 30, 45, 16);
+			sapxepgiam(A[CSO].DS_muon,5);
+			OverWriteAccount(A, n);
+			thoat=0;
 		}
-		if (c == 'M') {
-			trang++;
-			if (trang == (sotrang + 1)) trang = 1;
-			f.seekg(0, ios::beg);
-			for (int i = 0;i<(trang - 1)*MAX_cot;i++) getline(f, data);
-			int n = file_len - (trang - 1)*MAX_cot + 2;
-			if (n>20) n = 20;
-			for (int i = 0;i<n;i++) {
-				getline(f, data);stringstream scin(data);
-				scin >> list[i].id;
-				scin >> list[i].tensach;
-				scin >> list[i].tacgia;
-				scin >> list[i].theloai;
-			}
-			for (int i = n;i<MAX_cot;i++) { list[i].tacgia = "------------";list[i].theloai = "--------";list[i].tensach = "------------";list[i].id=0; }
-			inDS(list, MAX_cot);
+		if((cv==2 && c==13)||c==27){
+			thoat=0;
+			for (int i = flag;i<5;i++) A[CSO].DS_muon[i] = 0;
 		}
-		if (c == 13 && chon <5) { gotoxy(62, 31 + chon);cout << list[cv].tensach;A[CSO - 1].DS_muon[chon] = list[cv].id;chon++; }
-		//chon mot cuon sach o hang thu cv
-		else if (c == 13 && chon >= 5) { ToMau(60, 43, "chi muon duoc 5 cuon tren 1 lan", 58, 240); }
-		if (c == 27) {
-			int da_XN = 1, XN = 0;
-			while (da_XN) {
-				gotoxy(55 + XN * 23, 45);cout << "\20";
-
-				gotoxy(66 + XN * 23, 45);cout << "\21";
-
-			//	gotoxy(64 + XN * 23, 45);cout << "\20";????
-
-				char ch = _getch();
-				int XN1 = XN;
-				if (ch == 'H' || ch == 'K') { XN--; }
-				if (ch == 'P' || ch == 'M') { XN++; }
-				if (XN == -1) { XN = 1; }
-				if (XN == 2) { XN = 0; }
-				if (XN == 0 && ch == 13) {
-					ToMau(60, 43, "Da muon xong sach thanh, toan 1000$", 58, 240);
-					_getch();da_XN = 0;HCN2(15, 53, 30, 45, 16);
-					sapxepgiam(A[CSO-1].DS_muon,5);
-					OverWriteAccount(A, n);
-				}
-				if ((XN == 1 && ch == 13) || ch == 27) {
-					da_XN = 0;HCN2(15, 53, 30, 45, 16);
-					for (int i = flag;i<chon;i++) A[CSO - 1].DS_muon[i] = 0;
-				}
-				textcolor(240);
-
-
-				gotoxy(55 + XN1 * 23, 45);cout << " ";
-				gotoxy(66 + XN1 * 23, 45);cout << " ";
-
-				
-
-				thoat = 0;
-			}
-		};
-		gotoxy(31, 8 + cv1);cout << list[cv1].tensach;
-		gotoxy(74, 8 + cv1);cout << list[cv1].tacgia;
+		gotoxy(54+(cv1-1)*23,45);cout<<"  ";
 	}
-	f.close();
+
+	HCN2(15, 53, 30, 45, 16);
+	textcolor(240);
+	delete []SACH;SACH=NULL;
 };
 
 void sapxepgiam(int a[], int n) {
@@ -879,7 +798,6 @@ void doimatkhau(S_account A[], int CSO, int N){
 	textcolor(240);
 };
 void bangtim(S_book A[],int a[],int n,S_account& S,int & flag){
-	
 	int sotrang = n / MAX_cot + 1;
 
 	S_book list[MAX_cot];
@@ -995,4 +913,5 @@ void timsach(S_account A[], int CSO, int N){
 
 	HCN2(15, 53, 30, 45, 16);
 	textcolor(240);
+	delete []SACH;SACH=NULL;
 }
