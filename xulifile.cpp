@@ -78,3 +78,23 @@ void OverWriteBook(S_book A[], int N){
 	};
 	f.close();
 };
+void GetfileOrderData(S_Book_Order A[],int n){
+	ifstream f;
+	f.open("abc.txt");
+	for (int i=0;i<n;i++){
+		f>>A[i].userid>>A[i].bookid>>A[i].day.ngay>>A[i].day.thang>>A[i].day.nam;
+	}
+	f.close();
+};
+void OverWriteOrder(S_Book_Order A[], int N){
+	ofstream f;
+	f.open("abc.txt");
+	for (int i = 0;i<N;i++) {
+		f<<setw(5)<<A[i].userid
+			<<setw(5)<<A[i].bookid
+			<<setw(5)<<A[i].day.ngay
+			<<setw(5)<<A[i].day.thang
+			<<setw(5)<<A[i].day.nam<<endl;
+	};
+	f.close();
+};

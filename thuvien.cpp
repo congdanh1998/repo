@@ -650,6 +650,20 @@ void luachonsach(S_account A[], int n, int CSO) {
 							SACH[A[CSO].DS_muon[i]-1].conlai--;
 				};
 			}
+			fstream f;
+			f.open("abc.txt",ios::app);
+				time_t baygio=time(0);
+				tm *abc=localtime(&baygio);
+				for (int i = flag;i<5;i++) {
+					if (A[CSO].DS_muon[i]!=0){
+						f<<setw(5)<<A[CSO].id
+							<<setw(5)<<A[CSO].DS_muon[i]
+							<<setw(5)<<abc->tm_mday
+							<<setw(5)<<abc->tm_mon+1
+							<<setw(5)<<abc->tm_year+1900<<endl;
+					};
+				}
+			f.close();
 			sapxepgiam(A[CSO].DS_muon,5);
 			OverWriteAccount(A, n);
 			OverWriteBook(SACH,sosach);
@@ -679,8 +693,11 @@ void sapxepgiam(int a[], int n) {
 }
 void trasach(S_account A[], int CSO, int N) {
 	int sosach = get_F_N("books_infor.txt"), chon = 0;
+	int sophieu = get_F_N("abc.txt");
 	S_book *SACH = new S_book[sosach];
+	S_Book_Order *PHIEU=new S_Book_Order[sophieu];
 	GetFileBookData(SACH, sosach);
+	GetfileOrderData(PHIEU,sophieu);
 	gotoxy(58, 31);cout << "Chon sach muon tra:";
 	for (int i = 0;i<5;i++) {
 		if (A[CSO].DS_muon[i] != 0) {
@@ -734,12 +751,22 @@ void trasach(S_account A[], int CSO, int N) {
 					for (int i = 0;i<5;i++) {
 						if (A[CSO].DS_muon[i]!=0 && danh_dau[i]==0){
 							SACH[A[CSO].DS_muon[i]-1].conlai++;
+							for (int j=0;j<sophieu;j++){
+								if (PHIEU[j].bookid==A[CSO].DS_muon[i] && PHIEU[j].userid==A[CSO].id){
+									for(int k=j+1;k<sophieu;k++){
+										PHIEU[k-1]=PHIEU[k];
+									}
+									sophieu--;
+									break;
+								}
+							}
 						};
 					}
 					sapxepgiam(danh_dau, 5);
 					for (int i = 0;i<5;i++) A[CSO].DS_muon[i] = danh_dau[i];
 					OverWriteAccount(A, N);
 					OverWriteBook(SACH,sosach);
+					OverWriteOrder(PHIEU,sophieu);
 					gotoxy(58, 45);cout << "TRA SACH THANH CONG !";
 					_getch();HCN2(15, 53, 30, 45, 16);
 				}
@@ -919,6 +946,20 @@ void timsach(S_account A[], int CSO, int N){
 							SACH[A[CSO].DS_muon[i]-1].conlai--;
 				};
 			}
+			fstream f;
+			f.open("abc.txt",ios::app);
+				time_t baygio=time(0);
+				tm *abc=localtime(&baygio);
+				for (int i = flag;i<5;i++) {
+					if (A[CSO].DS_muon[i]!=0){
+						f<<setw(5)<<A[CSO].id
+							<<setw(5)<<A[CSO].DS_muon[i]
+							<<setw(5)<<abc->tm_mday
+							<<setw(5)<<abc->tm_mon+1
+							<<setw(5)<<abc->tm_year+1900<<endl;
+					};
+				}
+			f.close();
 			sapxepgiam(A[CSO].DS_muon,5);
 			OverWriteAccount(A, N);
 			OverWriteBook(SACH,sosach);
@@ -928,6 +969,7 @@ void timsach(S_account A[], int CSO, int N){
 			thoat=0;
 			for (int i = flag;i<5;i++) A[CSO].DS_muon[i] = 0;
 		}
+		
 		textcolor(112);
 		gotoxy(cvX[cv1],cvY[cv1]);cout<<"  ";
 	}

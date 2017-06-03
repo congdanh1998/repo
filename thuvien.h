@@ -30,6 +30,10 @@ typedef struct {
 	string theloai;
 	int conlai;
 } S_book;
+typedef struct {
+	int userid,bookid;
+	date day;
+} S_Book_Order;
 void dangnhap();
 void in();
 void indangki();
