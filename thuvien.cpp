@@ -614,13 +614,15 @@ void inDS(S_book A[], int n) {
 		gotoxy(74, 8 + i);cout << "                      ";
 	}
 	for (int i = 0;i<n;i++) {
+		textcolor(240+(A[i].conlai<=0)*12);
 		gotoxy(31, 8 + i);cout << A[i].tensach;
 		gotoxy(60, 8 + i);cout << A[i].theloai;
 		gotoxy(74, 8 + i);cout << A[i].tacgia;
 	}
+	textcolor(240);
 };
 void luachonsach(S_account A[], int n, int CSO) {
-	int sosach = get_F_N("books_infor.txt")+1, chon = 0,flag=4;
+	int sosach = get_F_N("books_infor.txt"), chon = 0,flag=4;
 	S_book *SACH = new S_book[sosach];
 	GetFileBookData(SACH,sosach);
 	int *a=new int[sosach];
@@ -643,8 +645,14 @@ void luachonsach(S_account A[], int n, int CSO) {
 		if((cv==1)&& c==13){
 			ToMau(60, 43, "Da muon xong sach thanh, toan 1000$", 58, 240);
 			_getch();HCN2(15, 53, 30, 45, 16);
+			for (int i = flag;i<5;i++) {
+				if (A[CSO].DS_muon[i]!=0){
+							SACH[A[CSO].DS_muon[i]-1].conlai--;
+				};
+			}
 			sapxepgiam(A[CSO].DS_muon,5);
 			OverWriteAccount(A, n);
+			OverWriteBook(SACH,sosach);
 			thoat=0;
 		}
 		if((cv==2 && c==13)||c==27){
@@ -670,7 +678,7 @@ void sapxepgiam(int a[], int n) {
 		}
 }
 void trasach(S_account A[], int CSO, int N) {
-	int sosach = get_F_N("books_infor.txt")+1, chon = 0;
+	int sosach = get_F_N("books_infor.txt"), chon = 0;
 	S_book *SACH = new S_book[sosach];
 	GetFileBookData(SACH, sosach);
 	gotoxy(58, 31);cout << "Chon sach muon tra:";
@@ -723,9 +731,15 @@ void trasach(S_account A[], int CSO, int N) {
 				if (cv2 == 2) { cv2 = 0; }
 				if (cv2 == 0 && c1 == 13) {
 					thoat1 = 0;thoat = 0;
+					for (int i = 0;i<5;i++) {
+						if (A[CSO].DS_muon[i]!=0 && danh_dau[i]==0){
+							SACH[A[CSO].DS_muon[i]-1].conlai++;
+						};
+					}
 					sapxepgiam(danh_dau, 5);
 					for (int i = 0;i<5;i++) A[CSO].DS_muon[i] = danh_dau[i];
 					OverWriteAccount(A, N);
+					OverWriteBook(SACH,sosach);
 					gotoxy(58, 45);cout << "TRA SACH THANH CONG !";
 					_getch();HCN2(15, 53, 30, 45, 16);
 				}
@@ -850,18 +864,20 @@ void bangtim(S_book A[],int a[],int n,S_account& S,int & flag){
 			inDS(list, MAX_cot);
 		}
 		
-		if (c == 13 && chon <5) { gotoxy(62, 35 + chon);cout << list[cv].tensach;S.DS_muon[chon] = list[cv].id;chon++; }
+		if (c == 13 && chon <5 && list[cv].conlai>0) { gotoxy(62, 35 + chon);cout << list[cv].tensach;S.DS_muon[chon] = list[cv].id;chon++; }
 		//chon mot cuon sach o hang thu cv
 		else if (c == 13 && chon >= 5) { ToMau(60, 43, "chi muon duoc 5 cuon tren 1 lan", 58, 240); }
+		else if (c == 13 && list[cv].conlai<=0){ ToMau(60, 43, "sach nay da bi muon het", 58, 240); }
 		if (c == 27) {
 				thoat = 0;
 			}
+		textcolor(240+(list[cv1].conlai<=0)*12);
 		gotoxy(31, 8 + cv1);cout << list[cv1].tensach;
 		gotoxy(74, 8 + cv1);cout << list[cv1].tacgia;
 	}
 };
 void timsach(S_account A[], int CSO, int N){
-	int sosach = get_F_N("books_infor.txt")+1, chon = 0,flag=4;
+	int sosach = get_F_N("books_infor.txt"), chon = 0,flag=4;
 	S_book *SACH = new S_book[sosach];
 	int dstim[50],soluong=0;//tam thoi cho la 50
 	string fstring="";
@@ -898,15 +914,20 @@ void timsach(S_account A[], int CSO, int N){
 		if((cv==1)&& c==13){
 			ToMau(60, 43, "Da muon xong sach thanh, toan 1000$", 58, 240);
 			_getch();HCN2(15, 53, 30, 45, 16);
+			for (int i = flag;i<5;i++) {
+				if (A[CSO].DS_muon[i]!=0){
+							SACH[A[CSO].DS_muon[i]-1].conlai--;
+				};
+			}
 			sapxepgiam(A[CSO].DS_muon,5);
 			OverWriteAccount(A, N);
+			OverWriteBook(SACH,sosach);
 			thoat=0;
 		}
 		if((cv==2 && c==13)||c==27){
 			thoat=0;
 			for (int i = flag;i<5;i++) A[CSO].DS_muon[i] = 0;
 		}
-		
 		textcolor(112);
 		gotoxy(cvX[cv1],cvY[cv1]);cout<<"  ";
 	}

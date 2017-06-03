@@ -62,6 +62,19 @@ void GetFileBookData(S_book A[], int N) {
 		scin >> A[i].tensach;
 		scin >> A[i].tacgia;
 		scin >> A[i].theloai;
+		scin >> A[i].conlai;
 	}
+	f.close();
+};
+void OverWriteBook(S_book A[], int N){
+	ofstream f;
+	f.open("books_infor.txt");
+	for (int i = 0;i<N;i++) {//???????????????
+		f << setw(5) << left << A[i].id<<
+			 setw(25) << left << A[i].tensach<<
+			 setw(20) << left << A[i].tacgia <<
+			 setw(20)<<left<<A[i].theloai<<
+			 setw(5)<<right<<A[i].conlai<< endl;
+	};
 	f.close();
 };

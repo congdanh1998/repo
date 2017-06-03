@@ -28,6 +28,7 @@ typedef struct {
 	string tensach;
 	string tacgia;
 	string theloai;
+	int conlai;
 } S_book;
 void dangnhap();
 void in();
