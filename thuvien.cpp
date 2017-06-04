@@ -835,7 +835,7 @@ void doimatkhau(S_account A[], int CSO, int N){
 	HCN2(15, 53, 30, 45, 16);
 	textcolor(240);
 };
-void bangtim(S_book A[],int a[],int n,S_account& S,int & flag){
+void bangtim(S_book A[],int a[],int n,S_account& S,int & flag,bool cp){
 	int sotrang = n / MAX_cot + 1;
 
 	S_book list[MAX_cot];
@@ -888,10 +888,14 @@ void bangtim(S_book A[],int a[],int n,S_account& S,int & flag){
 			inDS(list, MAX_cot);
 		}
 		
-		if (c == 13 && chon <5 && list[cv].conlai>0) { gotoxy(62, 35 + chon);cout << list[cv].tensach;S.DS_muon[chon] = list[cv].id;chon++; }
+		if (c == 13 && chon <5 && (list[cv].conlai>0)&&cp) { gotoxy(62, 35 + chon);cout << list[cv].tensach;S.DS_muon[chon] = list[cv].id;chon++; }
 		//chon mot cuon sach o hang thu cv
-		else if (c == 13 && chon >= 5) { ToMau(60, 43, "chi muon duoc 5 cuon tren 1 lan", 58, 240); }
-		else if (c == 13 && list[cv].conlai<=0){ ToMau(60, 43, "sach nay da bi muon het", 58, 240); }
+		else if (c == 13 && chon >= 5&&cp) { ToMau(60, 43, "chi chon duoc 5 cuon tren 1 lan", 58, 240); }
+		else if (c == 13 && (list[cv].conlai<=0)&&cp ){ ToMau(60, 43, "sach nay da bi muon het", 58, 240); }
+		if (c == 13 && chon <5 &&!cp) { gotoxy(62, 35 + chon);cout << list[cv].tensach;S.DS_muon[chon] = list[cv].id;chon++; }
+		//chon mot cuon sach o hang thu cv
+		else if (c == 13 && chon >= 5 &&!cp) { ToMau(60, 43, "chi chon duoc 5 cuon tren 1 lan", 58, 240); }
+		
 		if (c == 27) {
 				thoat = 0;
 			}
@@ -1013,31 +1017,34 @@ void manhinhthuthu(S_account& TAIKHOAN){
 	gotoxy(3, 18);cout << "Gioi tinh: " << GT[choosen_user.gioitinh];
 	gotoxy(3, 21);cout << "MSSV: " << choosen_user.mssv;
 
-	gotoxy(15, 31);cout << "    XU LI SACH       ";
-	gotoxy(15, 35);cout << "    DANH SACH TRE    ";
+	gotoxy(15, 31);cout << "    CHINH SUA SACH   ";
+	gotoxy(15, 33);cout << "    THEM SACH        ";
+	gotoxy(15, 35);cout << "    XOA SACH         ";
+	gotoxy(15, 37);cout << "    DANH SACH TRE    ";
 	gotoxy(15, 39);cout << "    DANH SACH MUON   ";
-	gotoxy(15, 43);cout << "    DANG XUAT        ";
+	gotoxy(15, 41);cout << "    DANG XUAT        ";
 	int cv = 0, thoat = 1;
 	while (thoat) {
-		gotoxy(13, 31 + 4 * cv);
+		gotoxy(13, 31 + 2 * cv);
 		cout << "\20";
-		gotoxy(36, 31 + 4 * cv);
+		gotoxy(36, 31 + 2 * cv);
 		cout << "\21";
 
 		char c = _getch();
 		int cv1 = cv;
 		if (c == 'H' || c == 'K') { cv--; }
 		if (c == 'P' || c == 'M') { cv++; }
-		if (cv == -1) { cv = 3; }
-		if (cv == 4) { cv = 0; }
+		if (cv == -1) { cv = 5; }
+		if (cv == 6) { cv = 0; }
 
-		//if ((cv == 0) && (c == 13)) { timsach(list_account, TAIKHOAN.id - 1, sotaikhoan);}
-		if ((cv == 2) && (c == 13)) { inDSmuon(list_account, sotaikhoan); }
+		if ((cv == 1) && (c == 13)) { them_sach();}
+		if ((cv == 2) && (c == 13)) { xoasach(list_account,sotaikhoan,TAIKHOAN.id-1);}
+		if ((cv == 4) && (c == 13)) { inDSmuon(list_account, sotaikhoan); }
 		//if ((cv == 5) && (c == 13)) { doimatkhau(list_account, TAIKHOAN.id - 1, sotaikhoan);}
 		//if ((cv == 6) && (c == 13)) { trasach(list_account, TAIKHOAN.id - 1, sotaikhoan); }
 
 		
-		if ((c == 27) || (cv == 3) && (c == 13)) {
+		if ((c == 27) || (cv == 5) && (c == 13)) {
 			int cv2 = 0, thoat1 = 1;	
 			while (thoat1) {
 				manhinhluachon("Ban co muon dang xuat ?");
@@ -1061,9 +1068,9 @@ void manhinhthuthu(S_account& TAIKHOAN){
 			}
 		}
 
-		gotoxy(13, 31 + 4 * cv1);
+		gotoxy(13, 31 + 2 * cv1);
 		cout << " ";
-		gotoxy(36, 31 + 4 * cv1);
+		gotoxy(36, 31 + 2 * cv1);
 		cout << " ";
 	}
 	delete[] list_account; list_account = NULL;
@@ -1095,23 +1102,163 @@ void inDSmuon(S_account A[], int N){
 	int  bd=0,thoat = 1,sotrang=sophieu/MAX_cot+1,n;
 	if (sophieu-bd<MAX_cot){ n=sophieu-bd;}
 	else {n=MAX_cot;}
+	inDS2(SACH,ND,PHIEU,A,bd,n);
 	while(thoat){
-		inDS2(SACH,ND,PHIEU,A,bd,n);
 		char c=_getch();
 		if (c == 'K') {
 			bd-=MAX_cot;
 			if (bd < 0) bd = (sotrang-1)*20;
 			if (sophieu-bd<MAX_cot){ n=sophieu-bd;}
 			else {n=MAX_cot;}
+			inDS2(SACH,ND,PHIEU,A,bd,n);
 		}
 		if (c == 'M') {
 			bd+=MAX_cot;
 			if (bd > sophieu) bd = 0;
 			if (sophieu-bd<MAX_cot){ n=sophieu-bd;}
-			else {n=MAX_cot;}		}
+			else {n=MAX_cot;}
+			inDS2(SACH,ND,PHIEU,A,bd,n);		
+		}
 		if (c== 27) thoat=0;
 	}
 	delete[]SACH; SACH = NULL;
 	delete[]PHIEU;PHIEU = NULL;
 	delete[]ND;ND=NULL;
 };
+void them_sach(){
+	HCN2(7, 53, 30, 45, 16);
+	textcolor(112);
+	gotoxy(57,32);cout<<"ten sach";
+	ToMau(57,33,"                              ",240,112);
+	gotoxy(57,36);cout<<"tac gia";
+	ToMau(57,37,"                              ",240,112);
+	gotoxy(57,40);cout<<"the loai";
+	ToMau(57,41,"               ",240,112);
+	gotoxy(75,40);cout<<"so luong";
+	ToMau(75,41,"  ",240,112);
+	gotoxy(57, 45);cout << "THEM";
+	gotoxy(80, 45);cout << "HUY BO";
+	int cvX[6]={55,55,55,73,55,78},cvY[6]={32,36,40,40,45,45};
+	int thoat=1,cv=0;
+	string ten="",tg="",tt="",sl="";
+	int x1=57,x2=57,x3=57,x4=75;
+	while(thoat){
+		textcolor(115);
+		gotoxy(cvX[cv],cvY[cv]);cout<<"\20\20";
+		char c = _getch();
+		int cv1 = cv;
+		if (c == 'H' || c=='K') { cv--; }
+		if (c == 'P' || c=='M') { cv++; }
+		if (cv == -1) { cv = 5; }
+		if (cv == 6) { cv = 0; }
+
+		if(cv==0 && c==13){xulichuoi(ten,'y',x1,33,25);}
+		if(cv==1 && c==13){xulichuoi(tg,'y',x2,37,20);}
+		if(cv==2 && c==13){xulichuoi(tt,'y',x3,41,14);}
+		if(cv==3 && c==13){xulichuoi(sl,'y',x4,41,1);}
+		if(cv==4 && c==13){
+			thoat=0;
+			fstream f;
+			int id=get_F_N("books_infor.txt")+1;
+			f.open("books_infor.txt",ios::app);
+				f << setw(5) << left << id<<
+				 setw(25) << left << ten<<
+				 setw(20) << left << tg <<
+				 setw(20)<<left<< tt<<
+				 setw(5)<<right<<sl<< endl;
+			f.close();
+		}
+		if((cv==5 && c==13)||c==27){thoat=0;}
+		
+		textcolor(112);
+		gotoxy(cvX[cv1],cvY[cv1]);cout<<"  ";
+	}
+	HCN2(15, 53, 30, 45, 16);
+	textcolor(240);
+}
+void xoasach(S_account A[],int N,int CSO){
+	int sosach = get_F_N("books_infor.txt"), chon = 0,flag=4;
+	S_book *SACH = new S_book[sosach];
+	int sophieu = get_F_N("abc.txt");
+	S_Book_Order *PHIEU=new S_Book_Order[sophieu];
+	int dstim[50],soluong=0;//tam thoi cho la 50
+	string fstring="";
+	GetFileBookData(SACH, sosach);
+	GetfileOrderData(PHIEU,sophieu);
+	HCN2(7, 53, 30, 45, 16);
+	textcolor(112);
+	gotoxy(57,32);cout<<"tim sach de xoa:";
+	ToMau(57,33,"                              ",240,112);
+	gotoxy(57, 45);cout << "XONG";
+	gotoxy(80, 45);cout << "HUY BO";
+	int cvX[3]={55,55,78},cvY[3]={32,45,45};
+	int thoat=1,cv=0,x1=57;
+	while(thoat){
+		textcolor(115);
+		gotoxy(cvX[cv],cvY[cv]);cout<<"\20\20";
+		char c = _getch();
+		int cv1 = cv;
+		if (c == 'H' || c=='K') { cv--; }
+		if (c == 'P' || c=='M') { cv++; }
+		if (cv == -1) { cv = 2; }
+		if (cv == 3) { cv = 0; }
+
+		if((cv==0)&& c==13){
+			xulichuoi(fstring,'y',x1,33);
+			for(int i=0;i<sosach;i++){
+				if((SACH[i].tacgia.find(fstring)!=-1)||(SACH[i].tensach.find(fstring)!=-1)||(SACH[i].theloai.find(fstring)!=-1)){
+					dstim[soluong]=SACH[i].id-1;//phai -1 no moi ra dung
+					soluong++;
+				}
+			}
+			bangtim(SACH,dstim,soluong,A[CSO],flag,false);
+			soluong=0;//reset la mang tim
+		}
+		if((cv==1)&& c==13){
+			int danh_dau[5] = { A[CSO].DS_muon[0],A[CSO].DS_muon[1],A[CSO].DS_muon[2],A[CSO].DS_muon[3],A[CSO].DS_muon[4] };
+			sapxepgiam(danh_dau,5);
+			for (int i=0;i<5;i++){
+				if(danh_dau[i]!=0){
+					for (int j=danh_dau[i];j<sosach;j++){
+						SACH[j-1]=SACH[j];
+						SACH[j-1].id--;
+					}
+					sosach--;
+					for (int j=0;j<sophieu;j++){
+						if (PHIEU[j].bookid==danh_dau[i] ){
+									for(int k=j+1;k<sophieu;k++){
+										PHIEU[k-1]=PHIEU[k];
+									}
+									sophieu--;
+								}
+					}
+					for (int j=0;j<sophieu;j++) if(PHIEU[j].bookid>danh_dau[i]) PHIEU[j].bookid--;
+					for (int j=0;j<N;j++){
+						for(int k=0;k<5;k++){
+							if (A[j].DS_muon[k]==danh_dau[i]) {A[j].DS_muon[k]=0;}
+							else if(A[j].DS_muon[k]>danh_dau[i]) {A[j].DS_muon[k]--;}
+						}
+						sapxepgiam(A[j].DS_muon,5);
+					}
+				}
+			}
+			for (int i = flag;i<5;i++) A[CSO].DS_muon[i] = 0;
+			OverWriteAccount(A,N);
+			OverWriteBook(SACH,sosach);
+			OverWriteOrder(PHIEU,sophieu);
+			thoat=0;
+		}
+		if((cv==2 && c==13)||c==27){
+			thoat=0;
+			for (int i = flag;i<5;i++) A[CSO].DS_muon[i] = 0;
+		}
+		
+		textcolor(112);
+		gotoxy(cvX[cv1],cvY[cv1]);cout<<"  ";
+	}
+
+	HCN2(15, 53, 30, 45, 16);
+	textcolor(240);
+	delete []SACH;SACH=NULL;
+	delete []PHIEU;PHIEU=NULL;
+}
