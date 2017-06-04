@@ -9,9 +9,10 @@ typedef struct {
 	short ngay, thang, nam;
 } date;
 typedef struct {
-	int id;
+	int id,idu;
 	string tendangnhap;
 	string matkhau;
+	string vaitro;
 	int DS_muon[5];
 } S_account;
 typedef struct {
@@ -21,7 +22,6 @@ typedef struct {
 	string mssv;
 	string email;
 	bool gioitinh;
-	string vaitro;
 } S_user;
 typedef struct {
 	int id;
@@ -48,4 +48,6 @@ void trasach(S_account A[],int CSO,int N);
 void doimatkhau(S_account A[], int CSO, int N);
 void bangtim(S_book A[],int a[],int n,S_account& S,int & flag);
 void timsach(S_account A[], int CSO, int N);
+void manhinhthuthu(S_account& TAIKHOAN);
+void inDSmuon(S_account A[], int N);
 #endif

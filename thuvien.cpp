@@ -54,21 +54,12 @@ void dangnhap() {
 	string TDN = "", MK = "";//bien luu ten dang va mat khau
 	indangnhap(TDN, MK);
 
-	//fstream f;
 	string data;//, ignore_str;
 	int num_of_accounts = get_F_N("accounts_infor.txt");
 	int the_choosen_one = -1;
-	//f.open("accounts_infor.txt", ios::in);
-	//getline(f, data); stringstream scin(data);
-	//scin >> ignore_str; scin >> num_of_accounts;
+	
 	S_account* list_accounts = new S_account[num_of_accounts];
-	//for (int i = 0;i < num_of_accounts;i++) {
-	//	getline(f, data); stringstream scin(data);
-	//	scin >> list_accounts[i].id;
-	//	scin >> list_accounts[i].tendangnhap;
-	//	scin >> list_accounts[i].matkhau;
-	//}
-	//f.close();
+	
 	GetFileAccountsData(list_accounts, num_of_accounts);
 
 	int x = 20, xo = 20;//vi tri bat dau nhap ten va mat khau(hoang do)
@@ -132,7 +123,13 @@ void dangnhap() {
 			hinhchunhat(32, 49, 21, 9, 2);
 		}
 	}
-	if (the_choosen_one != -1) { manhinhdocgia(list_accounts[the_choosen_one]); }
+	if (the_choosen_one != -1) { 
+		if(list_accounts[the_choosen_one].vaitro=="doc_gia"){
+			manhinhdocgia(list_accounts[the_choosen_one]); 
+		}else if(list_accounts[the_choosen_one].vaitro=="thu_thu"){
+			manhinhthuthu(list_accounts[the_choosen_one]);
+		}
+	}
 	delete[] list_accounts; list_accounts = NULL;
 }
 //ham in ra man hinh chinh
@@ -156,10 +153,7 @@ void in() {
 	HCN2(7, 19, 17, 29, 3);
 	HCN2(7, 19, 24, 29, 3);
 	HCN2(7, 19, 31, 29, 3);
-	//textcolor(14);
-	//hinhchunhat(178,18,16,29,4);
-	//hinhchunhat(178,18,23,29,4);
-	//hinhchunhat(178,18,30,29,4);
+	
 	textcolor(121);
 	//in noi dung
 	gotoxy(28, 18);
@@ -416,7 +410,8 @@ void dangki() {
 				fstream f;
 
 				A_user.id = get_F_N("users_infor.txt") + 1;
-				A_user.vaitro = "doc_gia";
+				A_account.id = get_F_N("accounts_infor.txt") + 1;
+				A_account.vaitro = "doc_gia";
 				string connect;
 				stringstream word(A_user.hovaten);
 				A_user.hovaten = "";
@@ -441,16 +436,18 @@ void dangki() {
 					<< setw(15) << left << A_user.mssv
 					<< setw(35) << left << A_user.email
 					<< setw(5) << left << A_user.gioitinh
-					<< setw(10) << left << A_user.vaitro << endl;
+					<< endl;
 
 
 				f.close();
-				A_account.id = A_user.id;
+				A_account.idu = A_user.id;
 
 				f.open("accounts_infor.txt", ios::app);
 				f << setw(5) << A_account.id
+					<<setw(5) << left << A_account.idu
 					<< setw(25) << left << A_account.tendangnhap
 					<< setw(20) << left << A_account.matkhau
+					<< setw(15) << left << A_account.vaitro
 					<< left << "0 0 0 0 0" << endl;
 
 				f.close();
@@ -524,16 +521,15 @@ void manhinhdocgia(S_account& TAIKHOAN) {
 		getline(f, data);
 		stringstream scin(data);
 		scin >> choosen_user.id;
-		if (choosen_user.id == TAIKHOAN.id) {
+		if (choosen_user.id == TAIKHOAN.idu) {
 			scin >> choosen_user.hovaten;
 			scin >> NTNS;
 			scin >> choosen_user.mssv;
 			scin >> choosen_user.email;
 			scin >> choosen_user.gioitinh;
-			scin >> choosen_user.vaitro;
 
 		}
-	} while (choosen_user.id != TAIKHOAN.id);
+	} while (choosen_user.id != TAIKHOAN.idu);
 
 	for (int i = 0;i < choosen_user.hovaten.length();i++) {
 		if (choosen_user.hovaten[i] == '_')	 choosen_user.hovaten[i] = ' ';
@@ -791,6 +787,7 @@ void trasach(S_account A[], int CSO, int N) {
 		if (c == 27) { thoat = 0;HCN2(15, 53, 30, 45, 16);}
 	}
 	delete[]SACH; SACH = NULL;
+	delete[]PHIEU;PHIEU = NULL;
 };
 
 void doimatkhau(S_account A[], int CSO, int N){
@@ -978,3 +975,143 @@ void timsach(S_account A[], int CSO, int N){
 	textcolor(240);
 	delete []SACH;SACH=NULL;
 }
+void manhinhthuthu(S_account& TAIKHOAN){
+	manhinhlamviec();
+	S_account * list_account;
+	int sotaikhoan = get_F_N("accounts_infor.txt");
+	list_account = new S_account[sotaikhoan];
+	GetFileAccountsData(list_account, sotaikhoan);
+	fstream f;
+	f.open("users_infor.txt", ios::in);
+	string data, NTNS, GT[2] = { "nu","nam" };
+	S_user choosen_user;
+	do {
+		getline(f, data);
+		stringstream scin(data);
+		scin >> choosen_user.id;
+		if (choosen_user.id == TAIKHOAN.idu) {
+			scin >> choosen_user.hovaten;
+			scin >> NTNS;
+			scin >> choosen_user.mssv;
+			scin >> choosen_user.email;
+			scin >> choosen_user.gioitinh;
+
+		}
+	} while (choosen_user.id != TAIKHOAN.idu);
+
+	for (int i = 0;i < choosen_user.hovaten.length();i++) {
+		if (choosen_user.hovaten[i] == '_')	 choosen_user.hovaten[i] = ' ';
+	}
+
+	f.close();
+	gotoxy(3, 7);cout << "Ho va ten: ";
+	gotoxy(3, 8);cout << choosen_user.hovaten;
+	gotoxy(3, 12);cout << "Ngay thang nam sinh: ";
+	gotoxy(3, 13);cout << NTNS;
+	gotoxy(3, 15);cout << "Email: ";
+	gotoxy(3, 16);cout << choosen_user.email;
+	gotoxy(3, 18);cout << "Gioi tinh: " << GT[choosen_user.gioitinh];
+	gotoxy(3, 21);cout << "MSSV: " << choosen_user.mssv;
+
+	gotoxy(15, 31);cout << "    XU LI SACH       ";
+	gotoxy(15, 35);cout << "    DANH SACH TRE    ";
+	gotoxy(15, 39);cout << "    DANH SACH MUON   ";
+	gotoxy(15, 43);cout << "    DANG XUAT        ";
+	int cv = 0, thoat = 1;
+	while (thoat) {
+		gotoxy(13, 31 + 4 * cv);
+		cout << "\20";
+		gotoxy(36, 31 + 4 * cv);
+		cout << "\21";
+
+		char c = _getch();
+		int cv1 = cv;
+		if (c == 'H' || c == 'K') { cv--; }
+		if (c == 'P' || c == 'M') { cv++; }
+		if (cv == -1) { cv = 3; }
+		if (cv == 4) { cv = 0; }
+
+		//if ((cv == 0) && (c == 13)) { timsach(list_account, TAIKHOAN.id - 1, sotaikhoan);}
+		if ((cv == 2) && (c == 13)) { inDSmuon(list_account, sotaikhoan); }
+		//if ((cv == 5) && (c == 13)) { doimatkhau(list_account, TAIKHOAN.id - 1, sotaikhoan);}
+		//if ((cv == 6) && (c == 13)) { trasach(list_account, TAIKHOAN.id - 1, sotaikhoan); }
+
+		
+		if ((c == 27) || (cv == 3) && (c == 13)) {
+			int cv2 = 0, thoat1 = 1;	
+			while (thoat1) {
+				manhinhluachon("Ban co muon dang xuat ?");
+				gotoxy(33 + cv2 * 20, 63);
+				cout << "\20";
+				gotoxy(41 + cv2 * 20, 63);
+				cout << "\21";
+
+				char c1 = _getch();
+				int cv3 = cv2;
+				if (c1 == 'H' || c1 == 'K') { cv2--; }
+				if (c1 == 'P' || c1 == 'M') { cv2++; }
+				if (cv2 == -1) { cv2 = 1; }
+				if (cv2 == 2) { cv2 = 0; }
+				if (cv2 == 0 && c1 == 13) { thoat1 = 0;thoat = 0; }
+				if ((cv2 == 1 && c1 == 13) || c1 == 27) {
+					thoat1 = 0;
+					HCN2(15, 27, 60, 40, 5);
+				}
+				textcolor(240);
+			}
+		}
+
+		gotoxy(13, 31 + 4 * cv1);
+		cout << " ";
+		gotoxy(36, 31 + 4 * cv1);
+		cout << " ";
+	}
+	delete[] list_account; list_account = NULL;
+};
+void inDS2(S_book A[],S_user B[],S_Book_Order C[],S_account D[],int pos,int n) {
+	for (int i = 0;i<MAX_cot;i++) {
+		gotoxy(31, 8 + i);cout << "                            ";
+		gotoxy(60, 8 + i);cout << "            ";
+		gotoxy(74, 8 + i);cout << "                      ";
+	}
+	for (int i = pos;i<n+pos;i++) {
+		gotoxy(31, 8 + i-pos);cout << B[D[C[i].userid-1].idu-1].hovaten;
+		gotoxy(60, 8 + i-pos);cout << C[i].day.ngay<<"/"<<C[i].day.thang<<"/"<<C[i].day.nam;
+		gotoxy(74, 8 + i-pos);cout << A[C[i].bookid-1].tensach;
+	}
+	textcolor(240);
+};
+void inDSmuon(S_account A[], int N){
+	inbang("nguoi muon","ngay muon","ten sach");
+	int sosach = get_F_N("books_infor.txt");
+	int sophieu = get_F_N("abc.txt");
+	int sond = get_F_N("users_infor.txt");
+	S_book *SACH = new S_book[sosach];
+	S_Book_Order *PHIEU=new S_Book_Order[sophieu];
+	S_user *ND=new S_user[sond];
+	GetFileBookData(SACH, sosach);
+	GetfileOrderData(PHIEU,sophieu);
+	GetFileUserData(ND,sond);
+	int  bd=0,thoat = 1,sotrang=sophieu/MAX_cot+1,n;
+	if (sophieu-bd<MAX_cot){ n=sophieu-bd;}
+	else {n=MAX_cot;}
+	while(thoat){
+		inDS2(SACH,ND,PHIEU,A,bd,n);
+		char c=_getch();
+		if (c == 'K') {
+			bd-=MAX_cot;
+			if (bd < 0) bd = (sotrang-1)*20;
+			if (sophieu-bd<MAX_cot){ n=sophieu-bd;}
+			else {n=MAX_cot;}
+		}
+		if (c == 'M') {
+			bd+=MAX_cot;
+			if (bd > sophieu) bd = 0;
+			if (sophieu-bd<MAX_cot){ n=sophieu-bd;}
+			else {n=MAX_cot;}		}
+		if (c== 27) thoat=0;
+	}
+	delete[]SACH; SACH = NULL;
+	delete[]PHIEU;PHIEU = NULL;
+	delete[]ND;ND=NULL;
+};

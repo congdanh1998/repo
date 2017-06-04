@@ -11,4 +11,5 @@
 	void OverWriteBook(S_book A[], int N);
 	void GetfileOrderData(S_Book_Order A[],int n);
 	void OverWriteOrder(S_Book_Order A[], int N);
+	void GetFileUserData(S_user A[],int N);
 #endif

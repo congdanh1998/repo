@@ -1,0 +1,16 @@
+1    1    vosontra                 999999999           doc_gia        48 28 27 3 2 
+2    2    taithan                  anh2003h            doc_gia        28 27 6 5 4 
+3    3    NQCDanh                  00000000            doc_gia        0 0 0 0 0 
+4    4    rockman                  12341234            doc_gia        20 3 2 0 0 
+5    5    protobot                 1231234             doc_gia        48 47 31 30 1 
+6    6    BASSMAN                  123123              doc_gia        13 10 8 6 4 
+7    7    NGCHTHI                  123123123           doc_gia        0 0 0 0 0 
+8    8    THONMATLAM               1231234             doc_gia        0 0 0 0 0 
+9    9    WEBSPIDER                1234123             doc_gia        25 24 4 3 2 
+10   10   MEGAMAN                  123123              doc_gia        18 14 0 0 0 
+11   11   ROLLWOMAN                123321              doc_gia        0 0 0 0 0 
+12   12   TESTMAN                  qweqweqwe           doc_gia        0 0 0 0 0 
+13   13   Mrgoku                   123123123           doc_gia        30 29 28 27 0 
+14   1    meoden                   kamehameha          thu_thu        0 0 0 0 0 
+15   14   firebot                  4321321             doc_gia        9 8 7 0 0 
+16   15   elecbot                  3214321             doc_gia        46 45 25 24 0 

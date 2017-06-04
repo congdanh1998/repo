@@ -24,8 +24,10 @@ void GetFileAccountsData(S_account A[], int &N) {
 	for (int i = 0;i <= N;i++) {
 		getline(f, data); stringstream scin(data);
 		scin >> A[i].id;
+		scin >> A[i].idu;
 		scin >> A[i].tendangnhap;
 		scin >> A[i].matkhau;
+		scin >> A[i].vaitro;
 		scin >> A[i].DS_muon[0];
 		scin >> A[i].DS_muon[1];
 		scin >> A[i].DS_muon[2];
@@ -41,8 +43,10 @@ void OverWriteAccount(S_account A[], int N) {
 	f.open("accounts_infor.txt");
 	for (int i = 0;i<N;i++) {//???????????????
 		f << setw(5) << left << A[i].id
+			<< setw(5) <<left << A[i].idu
 			<< setw(25) << left << A[i].tendangnhap
-			<< setw(20) << left << A[i].matkhau <<
+			<< setw(20) << left << A[i].matkhau 
+			<< setw(15) << left << A[i].vaitro <<
 			A[i].DS_muon[0] << " " << A[i].DS_muon[1] << " "
 			<< A[i].DS_muon[2] << " " << A[i].DS_muon[3] << " "
 			<< A[i].DS_muon[4] << " " << endl;
@@ -96,5 +100,25 @@ void OverWriteOrder(S_Book_Order A[], int N){
 			<<setw(5)<<A[i].day.thang
 			<<setw(5)<<A[i].day.nam<<endl;
 	};
+	f.close();
+};
+void GetFileUserData(S_user A[],int N){
+	fstream f;
+	f.open("users_infor.txt", ios::in);
+	string data, NTNS;
+	
+	for(int i=0;i<N;i++){
+		getline(f, data);
+		stringstream scin(data);
+		scin >> A[i].id;
+		scin >> A[i].hovaten;
+		scin >> NTNS;
+		scin >> A[i].mssv;
+		scin >> A[i].email;
+		scin >> A[i].gioitinh;
+		stringstream(NTNS.substr(0,2))>> A[i].ngaysinh.ngay;
+		stringstream(NTNS.substr(3,2))>> A[i].ngaysinh.thang;
+		stringstream(NTNS.substr(6,2))>> A[i].ngaysinh.ngay;
+	}
 	f.close();
 };

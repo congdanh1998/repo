@@ -1,0 +1,15 @@
+1    VO_SON_TRA                         09/07/1998      1613650        1613650@hcmut.edu.vn               1       
+2  Than_Duc_Tai                       21/12/1998      1610000        1610000@hcmut.edu.vn               1       
+3  Nguyen_Quang_Cong_Danh             31/01/1998      1610001        1610001@hcmut.edu.vn               1       
+4    rockman                            21/01/2000      1611611        rock@bot.com                       0       
+5    protoman                           09/09/1999      1611612        proto@bot.com                      1       
+6    forte                              12/12/2001      1611613        bass@bot.com                       0       
+7    NG_CH_THI                          03/02/1999      1231231        THONMATLI@.com                     0       
+8    T_HAM                              12/01/1997      1613166        1613166@hcmut.edu.vn               1      
+9    web_spider                         21/12/1999      1311311        WS@rockmanx.com                    0       
+10   MEGAMAN                            12/12/2002      1231231        MGM@rockmanX.com                   1      
+11   ROLL_NO_A_MAN                      23/12/2002      1231232        RC@rockmanX.com                    0       
+12   TEST_MAN                           28/05/1997      1231234        TEST@TEST.com                      1      
+13   SON_GO_KU                          03/02/2000      1411411        SGK@com.com                        1    
+14   FIRE_MAN                           03/01/1997      1233211        FIRE&@bot.com                      1    
+15   Electric_man                       12/02/2000      1233212        Eman@bot.com                       1    
