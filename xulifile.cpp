@@ -27,7 +27,9 @@ void GetFileAccountsData(S_account A[], int &N) {
 		scin >> A[i].idu;
 		scin >> A[i].tendangnhap;
 		scin >> A[i].matkhau;
-		scin >> A[i].vaitro;
+		scin >> A[i].vaitro[0];
+		scin >> A[i].vaitro[1];
+		scin >> A[i].vaitro[2];
 		scin >> A[i].DS_muon[0];
 		scin >> A[i].DS_muon[1];
 		scin >> A[i].DS_muon[2];
@@ -46,7 +48,9 @@ void OverWriteAccount(S_account A[], int N) {
 			<< setw(5) <<left << A[i].idu
 			<< setw(25) << left << A[i].tendangnhap
 			<< setw(20) << left << A[i].matkhau 
-			<< setw(15) << left << A[i].vaitro <<
+			<< setw(5) << left << A[i].vaitro[0] <<
+			setw(5) << left << A[i].vaitro[1] <<
+			setw(5) << left << A[i].vaitro[2] <<
 			A[i].DS_muon[0] << " " << A[i].DS_muon[1] << " "
 			<< A[i].DS_muon[2] << " " << A[i].DS_muon[3] << " "
 			<< A[i].DS_muon[4] << " " << endl;

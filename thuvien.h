@@ -12,7 +12,7 @@ typedef struct {
 	int id,idu;
 	string tendangnhap;
 	string matkhau;
-	string vaitro;
+	int vaitro[3];
 	int DS_muon[5];
 } S_account;
 typedef struct {
@@ -48,7 +48,6 @@ void trasach(S_account A[],int CSO,int N);
 void doimatkhau(S_account A[], int CSO, int N);
 void bangtim(S_book A[],int a[],int n,S_account& S,int & flag,bool cp=true);
 void timsach(S_account A[], int CSO, int N);
-void manhinhthuthu(S_account& TAIKHOAN);
 void inDSmuon(S_account A[], int N);
 void them_sach();
 void xoasach(S_account A[],int N,int CSO);
