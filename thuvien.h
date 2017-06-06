@@ -46,9 +46,10 @@ void luachonsach(S_account A[],int n,int CSO);
 void xulichuoi(string &s, char a, int &x, int y, int maxlen = 29);
 void trasach(S_account A[],int CSO,int N);
 void doimatkhau(S_account A[], int CSO, int N);
-void bangtim(S_book A[],int a[],int n,S_account& S,int & flag,bool cp=true);
+void bangtim(S_book A[],int a[],int n,S_account& S,int & flag,bool cp=true,bool MR=true);
 void timsach(S_account A[], int CSO, int N);
 void inDSmuon(S_account A[], int N);
 void them_sach();
 void xoasach(S_account A[],int N,int CSO);
+void chinhsuasach(S_account A[],int N,int CSO);
 #endif
