@@ -9,7 +9,9 @@
 	void OverWriteAccount(S_account A[],int N);
 	void GetFileBookData(S_book A[],int N);
 	void OverWriteBook(S_book A[], int N);
-	void GetfileOrderData(S_Book_Order A[],int n);
+	void GetfileOrderData(S_Book_Order A[],int &n,bool cp = true);
 	void OverWriteOrder(S_Book_Order A[], int N);
 	void GetFileUserData(S_user A[],int N);
+	void OverWriteUser(S_user A[], int N);
+	int songayhientai(int year, int month, int day);//cac tien boi tren mang chi day
 #endif

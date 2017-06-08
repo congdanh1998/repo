@@ -21,7 +21,7 @@ typedef struct {
 	date ngaysinh;
 	string mssv;
 	string email;
-	bool gioitinh;
+	bool gioitinh,phat;
 } S_user;
 typedef struct {
 	int id;
@@ -52,4 +52,6 @@ void inDSmuon(S_account A[], int N);
 void them_sach();
 void xoasach(S_account A[],int N,int CSO);
 void chinhsuasach(S_account A[],int N,int CSO);
+void DStre(S_account A[], int N);
+void thong_bao(S_account A[], int N, int CSO);
 #endif

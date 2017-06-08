@@ -3,6 +3,7 @@
 #include <string>
 #include <sstream>
 #include <iomanip>
+#include <time.h>
 #include "thuvien.h"
 #include "xulifile.h"
 using namespace std;
@@ -57,7 +58,13 @@ void OverWriteAccount(S_account A[], int N) {
 	};
 	f.close();
 };
-
+int songayhientai(int year, int month, int day) {
+        if (month < 3) {
+            year--;
+            month += 12;
+        }
+        return 365*year + year/4 - year/100 + year/400 + (153*month - 457)/5 + day - 306;
+   }
 void GetFileBookData(S_book A[], int N) {
 	ifstream f;
 	//A=new S_account[N];
@@ -86,13 +93,26 @@ void OverWriteBook(S_book A[], int N){
 	};
 	f.close();
 };
-void GetfileOrderData(S_Book_Order A[],int n){
+void GetfileOrderData(S_Book_Order A[],int &n, bool cp){
 	ifstream f;
 	f.open("abc.txt");
-	for (int i=0;i<n;i++){
-		f>>A[i].userid>>A[i].bookid>>A[i].day.ngay>>A[i].day.thang>>A[i].day.nam;
+	time_t baygio = time(0);
+	struct tm abc;
+	localtime_s(&abc,&baygio);
+	int ngay=abc.tm_mday,thang=abc.tm_mon+1,nam=abc.tm_year+1900;
+	int N=n,j=0;
+	for (int i=0;i<N;i++){
+		f>>A[j].userid>>A[j].bookid>>A[j].day.ngay>>A[j].day.thang>>A[j].day.nam;
+		if (cp){j++;}
+		else if(!cp){
+			int chenhlech=songayhientai(nam,thang,ngay)-songayhientai(A[j].day.nam,A[j].day.thang,A[j].day.ngay);
+			if (chenhlech>5){
+				j++;
+			}
+		}
 	}
 	f.close();
+	n=j;
 };
 void OverWriteOrder(S_Book_Order A[], int N){
 	ofstream f;
@@ -120,9 +140,29 @@ void GetFileUserData(S_user A[],int N){
 		scin >> A[i].mssv;
 		scin >> A[i].email;
 		scin >> A[i].gioitinh;
+		scin >> A[i].phat;
 		stringstream(NTNS.substr(0,2))>> A[i].ngaysinh.ngay;
 		stringstream(NTNS.substr(3,2))>> A[i].ngaysinh.thang;
-		stringstream(NTNS.substr(6,2))>> A[i].ngaysinh.ngay;
+		stringstream(NTNS.substr(6,4))>> A[i].ngaysinh.nam;
 	}
+	f.close();
+};
+void OverWriteUser(S_user A[], int N){
+	ofstream f;
+	f.open("users_infor.txt");
+	for (int i = 0;i<N;i++) {//???????????????
+		f << setw(5) << left << A[i].id
+					<< setw(35) << left << A[i].hovaten;
+				if (A[i].ngaysinh.ngay >= 10) f << A[i].ngaysinh.ngay << "/";
+				else f << "0" << A[i].ngaysinh.ngay << "/";
+				if (A[i].ngaysinh.thang >= 10)f << A[i].ngaysinh.thang << "/";
+				else f << "0" << A[i].ngaysinh.thang << "/";
+				f << setw(10) << left << A[i].ngaysinh.nam
+					<< setw(15) << left << A[i].mssv
+					<< setw(35) << left << A[i].email
+					<< setw(5) << left << A[i].gioitinh
+					<< setw(5) << left << A[i].phat
+					<< endl;
+	};
 	f.close();
 };
