@@ -571,29 +571,7 @@ void manhinhdocgia(S_account& TAIKHOAN) {
 	gotoxy(3, 16);cout << choosen_user.email;
 	gotoxy(3, 18);cout << "Gioi tinh: " << GT[choosen_user.gioitinh];
 	gotoxy(3, 21);cout << "MSSV: " << choosen_user.mssv;
-<<<<<<< HEAD
 	menu(TAIKHOAN,choosen_user);
-=======
-	textcolor(240 + ((!TAIKHOAN.vaitro[0]) || choosen_user.phat) * 7);
-	gotoxy(15, 31);cout << "    TIM SACH         ";//1
-	gotoxy(15, 32);cout << "    LUA CHON SACH    ";//2
-	textcolor(240 + (!TAIKHOAN.vaitro[0]) * 7);
-	gotoxy(15, 33);cout << "    XEM THONG BAO    ";//3
-	textcolor(240 + (!TAIKHOAN.vaitro[2]) * 7);
-	gotoxy(15, 34);cout << "    THEM TAI KHOAN   ";//4
-	textcolor(240 + ((!TAIKHOAN.vaitro[0]) || choosen_user.phat) * 7);
-	gotoxy(15, 35);cout << "    DOI MAT KHAU     ";//5
-	gotoxy(15, 36);cout << "    TRA SACH         ";//6
-	textcolor(240 + (!TAIKHOAN.vaitro[2]) * 7);
-	gotoxy(15, 37);cout << "    CHINH SUA SACH   ";//7
-	gotoxy(15, 38);cout << "    THEM SACH        ";//8
-	gotoxy(15, 39);cout << "    XOA SACH         ";//9
-	gotoxy(15, 40);cout << "    DANH SACH TRE    ";//10
-	gotoxy(15, 41);cout << "    DANH SACH MUON   ";//11
-	textcolor(240);
-	gotoxy(15, 42);cout << "    DANG XUAT        ";//12
-
->>>>>>> 753eac752c02b8fae37ec7ed2f1829a73a927507
 	int cv = 1, thoat = 1;
 	while (thoat) {
 		gotoxy(13, 30 + cv);
@@ -610,7 +588,6 @@ void manhinhdocgia(S_account& TAIKHOAN) {
 
 		if ((cv == 1) && (c == 13) && TAIKHOAN.vaitro[0] && !choosen_user.phat) { timsach(list_account, TAIKHOAN.id - 1, sotaikhoan); }
 		if ((cv == 2) && (c == 13) && TAIKHOAN.vaitro[0] && !choosen_user.phat) { luachonsach(list_account, sotaikhoan, TAIKHOAN.id - 1); }
-<<<<<<< HEAD
 		if ((cv == 3) && (c == 13)){thong_bao(list_account, sotaikhoan, TAIKHOAN.id - 1);}
 		if ((cv == 4) && (c == 13) && !choosen_user.phat) { doimatkhau(list_account, TAIKHOAN.id - 1, sotaikhoan); }
 		if ((cv == 5) && (c == 13) && TAIKHOAN.vaitro[0] && !choosen_user.phat) { trasach(list_account, TAIKHOAN.id - 1, sotaikhoan); }
@@ -622,21 +599,9 @@ void manhinhdocgia(S_account& TAIKHOAN) {
 		if ((cv == 11) && (c == 13) && TAIKHOAN.vaitro[1]) {QLND(list_account,sotaikhoan);menu(TAIKHOAN,choosen_user);}
 		if ((cv == 12) && (c == 13) && TAIKHOAN.vaitro[1]) {QLTK(list_account,sotaikhoan);menu(TAIKHOAN,choosen_user);}
 		if ((c == 27) || (cv == 13) && (c == 13)) {
-=======
-		if ((cv == 3) && (c == 13)) { thong_bao(list_account, sotaikhoan, TAIKHOAN.id - 1); }
-		if ((cv == 5) && (c == 13) && !choosen_user.phat) { doimatkhau(list_account, TAIKHOAN.id - 1, sotaikhoan); }
-		if ((cv == 6) && (c == 13) && TAIKHOAN.vaitro[0] && !choosen_user.phat) { trasach(list_account, TAIKHOAN.id - 1, sotaikhoan); }
-		if ((cv == 7) && (c == 13) && TAIKHOAN.vaitro[2]) { chinhsuasach(list_account, sotaikhoan, TAIKHOAN.id - 1); }
-		if ((cv == 8) && (c == 13) && TAIKHOAN.vaitro[2]) { them_sach(); }
-		if ((cv == 9) && (c == 13) && TAIKHOAN.vaitro[2]) { xoasach(list_account, sotaikhoan, TAIKHOAN.id - 1); }
-		if ((cv == 10) && (c == 13) && TAIKHOAN.vaitro[2]) { DStre(list_account, sotaikhoan); }
-		if ((cv == 11) && (c == 13) && TAIKHOAN.vaitro[2]) { inDSmuon(list_account, sotaikhoan); }
-
-		if ((c == 27) || (cv == 12) && (c == 13)) {
->>>>>>> 753eac752c02b8fae37ec7ed2f1829a73a927507
 			int cv2 = 0, thoat1 = 1;
 			while (thoat1) {
-				manhinhluachon(27, 48, 40, "Ban co muon dang xuat ?");
+				manhinhluachon(27,48,40,"Ban co muon dang xuat ?");
 				gotoxy(33 + cv2 * 20, 51);
 				cout << "\20";
 				gotoxy(41 + cv2 * 20, 51);
@@ -1627,7 +1592,6 @@ void conv_longlong_money(string& str, int number) {
 	} while (thuong != 0);
 	str += " VND";
 }
-<<<<<<< HEAD
 void QLND(S_account A[],int N){
 	HCN2(15,1,30,49,16);
 	textcolor(240);
@@ -2479,5 +2443,3 @@ void Khoa_or_mo(S_account AA[],int &N){
 	HCN2(15, 53, 30, 45, 16);
 	textcolor(240);
 };
-=======
->>>>>>> 753eac752c02b8fae37ec7ed2f1829a73a927507
