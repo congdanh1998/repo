@@ -57,6 +57,7 @@ void chinhsuasach(S_account A[], int N, int CSO);
 void DStre(S_account A[], int N);
 void thong_bao(S_account A[], int N, int CSO);
 void conv_longlong_money(string& str, int number);
+<<<<<<< HEAD
 void QLND(S_account A[],int N);
 void QLTK(S_account A[],int N);
 void them_user();
@@ -66,3 +67,6 @@ void themtaikhoan(int N);
 void Soataikhoan(S_account AA[],int &NN);
 void Khoa_or_mo(S_account AA[],int &N);
 #endif
+=======
+#endif
+>>>>>>> 753eac752c02b8fae37ec7ed2f1829a73a927507
