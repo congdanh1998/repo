@@ -36,6 +36,7 @@ void GetFileAccountsData(S_account A[], int &N) {
 		scin >> A[i].DS_muon[2];
 		scin >> A[i].DS_muon[3];
 		scin >> A[i].DS_muon[4];
+		scin >> A[i].khoa;
 	}
 	f.close();
 };
@@ -54,7 +55,8 @@ void OverWriteAccount(S_account A[], int N) {
 			setw(5) << left << A[i].vaitro[2] <<
 			A[i].DS_muon[0] << " " << A[i].DS_muon[1] << " "
 			<< A[i].DS_muon[2] << " " << A[i].DS_muon[3] << " "
-			<< A[i].DS_muon[4] << " " << endl;
+			<< A[i].DS_muon[4] << " " << 
+			setw(5)<<A[i].khoa<<endl;
 	};
 	f.close();
 };
