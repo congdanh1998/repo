@@ -968,7 +968,13 @@ void bangtim(S_book A[], int a[], int n, S_account& S, int & flag, bool cp, bool
 		//chon mot cuon sach o hang thu cv
 		else if (c == 13 && chon >= 5 && cp) { HCN2(15, 62, 42, 26, 2);ToMau(62, 42, "Tai mot thoi diem chi muon", 58, 240);ToMau(62, 43, " duoc toi da 5 cuon sach !", 58, 240); }
 		else if (c == 13 && (list[cv].conlai <= 0) && cp) { HCN2(15, 62, 43, 26, 1); ToMau(62, 43, "Sach nay da bi muon het  !", 58, 240); }
-		if (c == 13 && chon <5 && !cp) { gotoxy(62, 35 + chon);cout << list[cv].tensach;S.DS_muon[chon] = list[cv].id;chon++; }
+		if (c == 13 && chon <5 && !cp) { 
+			bool KT=true;
+			for(int i=0;(i<5)&&KT;i++){KT=(S.DS_muon[i]!=list[cv].id);}
+			if (KT){
+				gotoxy(62, 35 + chon);cout << list[cv].tensach; S.DS_muon[chon] = list[cv].id;chon++;
+			}else {ToMau(62, 43, "BAN DA CHON CUON NAY ROI  ", 58, 240);} 
+		}else if(c == 13 && chon >= 5 && !cp){HCN2(15, 62, 42, 26, 2);ToMau(62, 42, "Tai mot thoi diem chi chon", 58, 240);ToMau(62, 43, " duoc toi da 5 cuon sach !", 58, 240); }
 		//chon mot cuon sach o hang thu cv
 
 		if (c == 27 || (!MR && chon == 5)) {

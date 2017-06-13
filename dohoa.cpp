@@ -50,7 +50,7 @@ void ToMau(int x, int y, string a, int color, int oldcolor) // x, y là tọa đ
 	textcolor(oldcolor);
 }
 
-void hinhchunhat(char c, int x, int y, int a, int b) {
+void hinhchunhat(unsigned char c, int x, int y, int a, int b) {
 	gotoxy(x, y);
 	int a0 = x, b0 = y;
 	for (a0;a0 <= x + a;a0++) {

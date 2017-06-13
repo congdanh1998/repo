@@ -5,7 +5,7 @@ using namespace std;
 void resizeConsole(int width, int height);
 void textcolor(int x);
 void gotoxy(int x, int y);
-void hinhchunhat(char c, int x, int y, int a, int b);
+void hinhchunhat(unsigned char c, int x, int y, int a, int b);
 void HCN2(int mau, int x, int y, int a, int b);
 void ngang(int x, int y, int len);
 void doc(int x, int y, int len);
