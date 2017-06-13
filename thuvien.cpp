@@ -78,6 +78,7 @@ void dangnhap() {
 		}
 		//xu li khi nhan phim tren bang phim
 		char c = _getch();
+		HCN2(15, 15, 16, 40, 3);
 		int cv1 = cv;
 		if (c == 'H' || c == 'K') { cv--; }
 		if (c == 'P' || c == 'M') { cv++; }
@@ -95,23 +96,26 @@ void dangnhap() {
 		}
 		//xu li kiem tra xem ten dang nhap va mat khau da dung chua
 		if ((cv == 3) && (c == 13)) {
+			int check = 0;
 			bool bOutOfLoop = false;
 			for (int i = 0;i < num_of_accounts && !bOutOfLoop;i++) {
 				if ((TDN == list_accounts[i].tendangnhap) && (MK == list_accounts[i].matkhau)) {
-					if(list_accounts[i].khoa){
+					if (list_accounts[i].khoa) {
 						manhinhthongbao("DANG DANG NHAP ...");
+						Sleep(2000);
 						the_choosen_one = i;
 						thoat = 0;
 						bOutOfLoop = true;
 						break;
-					}else{
+					}
+					else {
 						manhinhthongbao("TAI KHOAN NAY DA BI KHOA ,LEU LEU ...");
+						check = 1998;
 					}
 				}
 			}
-			if (bOutOfLoop == false) {
+			if (bOutOfLoop == false && check != 1998) {
 				manhinhthongbao("SAI TEN DANG NHAP HOAC MAT KHAU");
-				indangnhap(TDN, MK);
 			}
 		}
 		//xoa cac mui ten o truoc khi chuyen sang muc khac
@@ -183,17 +187,19 @@ void xulichuoi(string &s, char a, int &x, int y, int maxlen) {
 			x--;
 			s.erase(s.length() - 1, 1);
 		}
-		else if ((ch != 13) && (ch != 9) && (ch != 11) && (ch >= 32) && (ch <= 126) && (x <= M)) {
-			//chi lay ma ASCII tu 32-126 va khi chuoi nho hon 30 ki tu
-			if (a == 'y') {
-				cout << ch;
+		else {
+			if ((ch != 13) && (ch != 9) && (ch != 11) && (ch >= 32) && (ch <= 126) && (x <= M)) {
+				//chi lay ma ASCII tu 32-126 va khi chuoi nho hon 30 ki tu
+				if (a == 'y') {
+					cout << ch;
+				}
+				else {
+					cout << "*";
+				};
+				s = s + ch;
+				x++;
+				gotoxy(x, y);
 			}
-			else {
-				cout << "*";
-			};
-			s = s + ch;
-			x++;
-			gotoxy(x, y);
 		}
 	} while ((ch != 13) && (ch != 9) && (ch != 11));
 }
@@ -244,7 +250,7 @@ void indangki() {//ham in ra man hinh dang ki
 	ToMau(12, 55, " GUI DANG KI ", 126, 7);
 	ToMau(40, 55, " TRO LAI ", 126, 7);
 }
-void nhapngay(int&x, int&y, int&z, string&a, string&b, string&d,int x1=21,int x2=36,int x3=50,int yo=15) {//ham nhap ngay thang nam sinh
+void nhapngay(int&x, int&y, int&z, string&a, string&b, string&d, int x1 = 21, int x2 = 36, int x3 = 50, int yo = 15) {//ham nhap ngay thang nam sinh
 	string ng, th, n;//cac chuoi ung voi ngay thang nam
 
 	int X[3] = { x1,x2,x3 };//vi tri nhap chuoi(da biet truoc)
@@ -258,14 +264,14 @@ void nhapngay(int&x, int&y, int&z, string&a, string&b, string&d,int x1=21,int x2
 		if (c == 'P' || c == 'M') { cv++; }
 		if (cv == 0) { cv = 3; }
 		if (cv == 4) { cv = 1; }
-		if ((cv == 3) && (c == 13)) { xulichuoi(d, 'y', z, yo, 3 - z + x3+1); }
-		if ((cv == 1) && (c == 13)) { xulichuoi(a, 'y', x, yo, 1 - x + x1+1); }
-		if ((cv == 2) && (c == 13)) { xulichuoi(b, 'y', y, yo, 1 - y + x2+1); }
+		if ((cv == 3) && (c == 13)) { xulichuoi(d, 'y', z, yo, 3 - z + x3 + 1); }
+		if ((cv == 1) && (c == 13)) { xulichuoi(a, 'y', x, yo, 1 - x + x1 + 1); }
+		if ((cv == 2) && (c == 13)) { xulichuoi(b, 'y', y, yo, 1 - y + x2 + 1); }
 		if (c == 27) { thoat = 0; }
 		gotoxy(X[cv1 - 1], yo);cout << " ";gotoxy(X[cv1 - 1] + 5, yo);cout << " ";
 	}
 };
-void GT(bool &X,int x1=49,int x2=62,int y=29) {//ham nhap gioi tinh
+void GT(bool &X, int x1 = 49, int x2 = 62, int y = 29) {//ham nhap gioi tinh
 	int thoat = 1, cv = 1;
 	int x[2] = { x1,x2 };//vi tri hoang do nhap gioi tinh
 	while (thoat) {
@@ -277,8 +283,8 @@ void GT(bool &X,int x1=49,int x2=62,int y=29) {//ham nhap gioi tinh
 		if (c == 'P' || c == 'M') { cv++; }
 		if (cv == 0) { cv = 2; }
 		if (cv == 3) { cv = 1; }
-		if ((cv == 1) && (c == 13)) { ToMau(x1+1, y, "x", 240);ToMau(x2+1, y, " ", 240, 59);X = true; }//danh dau vao o Nam bo danh dau o Nu
-		if ((cv == 2) && (c == 13)) { ToMau(x1+1, y, " ", 240);ToMau(x2+1, y, "x", 240, 59);X = false; }//danh dau vao o Nu bo danh dau o Nam
+		if ((cv == 1) && (c == 13)) { ToMau(x1 + 1, y, "x", 240);ToMau(x2 + 1, y, " ", 240, 59);X = true; }//danh dau vao o Nam bo danh dau o Nu
+		if ((cv == 2) && (c == 13)) { ToMau(x1 + 1, y, " ", 240);ToMau(x2 + 1, y, "x", 240, 59);X = false; }//danh dau vao o Nu bo danh dau o Nam
 		if (c == 27) { thoat = 0; }//thoat khi go EsC
 		gotoxy(x[cv1 - 1], y);cout << " ";gotoxy(x[cv1 - 1] + 2, y);cout << " ";//xoa vi tri con tro cu
 	}
@@ -414,17 +420,8 @@ void dangki() {
 				A_account.vaitro[0] = 1;
 				A_account.vaitro[1] = 0;
 				A_account.vaitro[2] = 0;
-				string connect;
-				stringstream word(A_user.hovaten);
-				A_user.hovaten = "";
-				int skip_1st = 0;
-				word >> connect;
-				do {
-					if (skip_1st != 0) A_user.hovaten += "_";
-					skip_1st++;
-					A_user.hovaten += connect;
-					word >> connect;
-				} while (!word.fail());
+				
+				name_to_str(A_user.hovaten);
 
 				f.open("users_infor.txt", ios::app);
 				//outfile.write(reinterpret_cast<char*>(&A_user), sizeof(S_user));//ma hoa thanh nhi phan ma ko bit co tac dung ko(chua thanh thao) co khi cu xai o duoi truoc
@@ -444,7 +441,7 @@ void dangki() {
 
 				f.close();
 				A_account.idu = A_user.id;
-				A_account.khoa=1;
+				A_account.khoa = 1;
 				f.open("accounts_infor.txt", ios::app);
 				f << setw(5) << A_account.id
 					<< setw(5) << left << A_account.idu
@@ -453,8 +450,8 @@ void dangki() {
 					<< setw(5) << left << A_account.vaitro[0]
 					<< setw(5) << left << A_account.vaitro[1]
 					<< setw(5) << left << A_account.vaitro[2]
-					<< left << "0 0 0 0 0 " << 
-					setw(5)<<A_account.khoa<<endl;
+					<< left << "0 0 0 0 0 " <<
+					setw(5) << A_account.khoa << endl;
 
 				f.close();
 				thoat = 0;
@@ -500,7 +497,6 @@ void manhinhthongbao(string s) {//in ra thong bao voi chuoi nhap san
 	textcolor(49);
 	int a = (40 - s.length()) / 2;//can le
 	gotoxy(15 + a, 17);cout << s;
-	Sleep(2000);//cho 2 giay
 };
 void manhinhlamviec() {
 	textcolor(240);
@@ -513,13 +509,13 @@ void manhinhlamviec() {
 	hinhchunhat(219, 0, 29, 50, 17);//khung chua cac chuc nang chinh
 	hinhchunhat(219, 52, 29, 45, 17);//khung thuc hien chuc nang duoc chon
 };
-void menu(S_account TAIKHOAN,S_user choosen_user ){//in ra cac chuc nang
-	textcolor(240 + ((!TAIKHOAN.vaitro[0])||choosen_user.phat) * 7);//mau xam khi khong co chuc nang doc gia hoac bi phat
+void menu(S_account TAIKHOAN, S_user choosen_user) {//in ra cac chuc nang
+	textcolor(240 + ((!TAIKHOAN.vaitro[0]) || choosen_user.phat) * 7);//mau xam khi khong co chuc nang doc gia hoac bi phat
 	gotoxy(15, 31);cout << "    TIM SACH         ";//1
 	gotoxy(15, 32);cout << "    LUA CHON SACH    ";//2
 	textcolor(240 + (!TAIKHOAN.vaitro[0]) * 7);
 	gotoxy(15, 33);cout << "    XEM THONG BAO    ";//3
-	textcolor(240 + ((!TAIKHOAN.vaitro[0])||choosen_user.phat) * 7);
+	textcolor(240 + ((!TAIKHOAN.vaitro[0]) || choosen_user.phat) * 7);
 	gotoxy(15, 34);cout << "    DOI MAT KHAU     ";//4
 	gotoxy(15, 35);cout << "    TRA SACH         ";//5
 	textcolor(240 + (!TAIKHOAN.vaitro[2]) * 7);//mau xam khi khong co chuc nang thu thu
@@ -538,7 +534,7 @@ void manhinhdocgia(S_account& TAIKHOAN) {
 	manhinhlamviec();
 	S_account * list_account;
 	int sotaikhoan = get_F_N("accounts_infor.txt");
-	list_account = new S_account[(sotaikhoan/MAX_cot+1)*MAX_cot];//se huu dung ve sau
+	list_account = new S_account[(sotaikhoan / MAX_cot + 1)*MAX_cot];//se huu dung ve sau
 	GetFileAccountsData(list_account, sotaikhoan);//lay thong tin tat ca tai khoan vao mang list
 	fstream f;
 	f.open("users_infor.txt", ios::in);
@@ -558,20 +554,16 @@ void manhinhdocgia(S_account& TAIKHOAN) {
 		}
 	} while (choosen_user.id != TAIKHOAN.idu);//chon nguoi dung tuong ung voi tai khoan duoc chon
 
-	for (int i = 0;i < choosen_user.hovaten.length();i++) {
-		if (choosen_user.hovaten[i] == '_')	 choosen_user.hovaten[i] = ' ';
-	}//bo dau "_" o ten bang dau cach " "
-
 	f.close();
 	gotoxy(3, 7);cout << "Ho va ten: ";
-	gotoxy(3, 8);cout << choosen_user.hovaten;
+	gotoxy(3, 8);cout << str_to_name(choosen_user.hovaten);
 	gotoxy(3, 12);cout << "Ngay thang nam sinh: ";
 	gotoxy(3, 13);cout << NTNS;
 	gotoxy(3, 15);cout << "Email: ";
 	gotoxy(3, 16);cout << choosen_user.email;
 	gotoxy(3, 18);cout << "Gioi tinh: " << GT[choosen_user.gioitinh];
 	gotoxy(3, 21);cout << "MSSV: " << choosen_user.mssv;//in ra thong tin nguoi dung
-	menu(TAIKHOAN,choosen_user);
+	menu(TAIKHOAN, choosen_user);
 	int cv = 1, thoat = 1;
 	while (thoat) {//bat dau cho chuc nang
 		gotoxy(13, 30 + cv);
@@ -588,20 +580,20 @@ void manhinhdocgia(S_account& TAIKHOAN) {
 		//chon chuc nang ung voi cv ,mang vaitro[] de xem tai khoan nay co thuc hien duoc chuc nang da chon hay khong
 		if ((cv == 1) && (c == 13) && TAIKHOAN.vaitro[0] && !choosen_user.phat) { timsach(list_account, TAIKHOAN.id - 1, sotaikhoan); }
 		if ((cv == 2) && (c == 13) && TAIKHOAN.vaitro[0] && !choosen_user.phat) { luachonsach(list_account, sotaikhoan, TAIKHOAN.id - 1); }
-		if ((cv == 3) && (c == 13)){thong_bao(list_account, sotaikhoan, TAIKHOAN.id - 1);}
+		if ((cv == 3) && (c == 13)) { thong_bao(list_account, sotaikhoan, TAIKHOAN.id - 1); }
 		if ((cv == 4) && (c == 13) && !choosen_user.phat) { doimatkhau(list_account, TAIKHOAN.id - 1, sotaikhoan); }
 		if ((cv == 5) && (c == 13) && TAIKHOAN.vaitro[0] && !choosen_user.phat) { trasach(list_account, TAIKHOAN.id - 1, sotaikhoan); }
 		if ((cv == 6) && (c == 13) && TAIKHOAN.vaitro[2]) { chinhsuasach(list_account, sotaikhoan, TAIKHOAN.id - 1); }
 		if ((cv == 7) && (c == 13) && TAIKHOAN.vaitro[2]) { them_sach(); }
 		if ((cv == 8) && (c == 13) && TAIKHOAN.vaitro[2]) { xoasach(list_account, sotaikhoan, TAIKHOAN.id - 1); }
-		if ((cv == 9)&& (c == 13) && TAIKHOAN.vaitro[2]) { DStre(list_account, sotaikhoan);}
+		if ((cv == 9) && (c == 13) && TAIKHOAN.vaitro[2]) { DStre(list_account, sotaikhoan); }
 		if ((cv == 10) && (c == 13) && TAIKHOAN.vaitro[2]) { inDSmuon(list_account, sotaikhoan); }
-		if ((cv == 11) && (c == 13) && TAIKHOAN.vaitro[1]) {QLND(list_account,sotaikhoan);menu(TAIKHOAN,choosen_user);}
-		if ((cv == 12) && (c == 13) && TAIKHOAN.vaitro[1]) {QLTK(list_account,sotaikhoan);menu(TAIKHOAN,choosen_user);}
+		if ((cv == 11) && (c == 13) && TAIKHOAN.vaitro[1]) { QLND(list_account, sotaikhoan);menu(TAIKHOAN, choosen_user); }
+		if ((cv == 12) && (c == 13) && TAIKHOAN.vaitro[1]) { QLTK(list_account, sotaikhoan);menu(TAIKHOAN, choosen_user); }
 		if ((c == 27) || (cv == 13) && (c == 13)) {
 			int cv2 = 0, thoat1 = 1;
 			while (thoat1) {
-				manhinhluachon(27,48,40,"Ban co muon dang xuat ?");
+				manhinhluachon(27, 48, 40, "Ban co muon dang xuat ?");
 				gotoxy(33 + cv2 * 20, 51);
 				cout << "\20";
 				gotoxy(41 + cv2 * 20, 51);
@@ -697,7 +689,7 @@ void luachonsach(S_account A[], int n, int CSO) {
 				int giatien = (5 - flag - check) * GIA_1_CUON;
 				string str = "";
 				conv_longlong_money(str, giatien);
-				ToMau(55, 43, "Da muon xong sach, thanh toan "+str, 58, 240);
+				ToMau(55, 43, "Da muon xong sach, thanh toan " + str, 58, 240);
 				_getch();
 			}
 			HCN2(15, 53, 30, 45, 16);
@@ -883,7 +875,7 @@ void doimatkhau(S_account A[], int CSO, int N) {
 		if (cv == 1 && c == 13) { xulichuoi(MKM, 'n', x2, 37); }
 		if (cv == 2 && c == 13) { xulichuoi(MKXN, 'n', x3, 41); }
 		if (cv == 3 && c == 13) {
-			bool no_error_all=true;
+			bool no_error_all = true;
 			if ((A[CSO].matkhau != MKC) || (MKM != MKXN)) {
 				no_error_all = false;
 			}
@@ -892,7 +884,7 @@ void doimatkhau(S_account A[], int CSO, int N) {
 					no_error_all = false;
 				}
 			}
-			if(no_error_all==true){
+			if (no_error_all == true) {
 				ToMau(57, 43, "DA THAY DOI MAT KHAU THANG CONG", 58, 112);
 				A[CSO].matkhau = MKM;
 				OverWriteAccount(A, N);
@@ -1079,7 +1071,7 @@ void inDS2(S_book A[], S_user B[], S_Book_Order C[], S_account D[], int pos, int
 	}
 	for (int i = pos;i<n + pos;i++) {
 		if (cp) textcolor(B[D[C[i].userid - 1].idu - 1].phat * 12 + 240);
-		gotoxy(31, 8 + i - pos);cout << B[D[C[i].userid - 1].idu - 1].hovaten;
+		gotoxy(31, 8 + i - pos);cout << str_to_name(B[D[C[i].userid - 1].idu - 1].hovaten);
 		gotoxy(60, 8 + i - pos);cout << C[i].day.ngay << "/" << C[i].day.thang << "/" << C[i].day.nam;
 		gotoxy(74, 8 + i - pos);cout << A[C[i].bookid - 1].tensach;
 	}
@@ -1360,7 +1352,7 @@ void chinhsuasach(S_account A[], int N, int CSO) {
 						S.DS_muon[4] = 0;
 						HCN2(7, 53, 32, 45, 12);
 					}
-					if ((cv2 == 5 && c1 == 13) || c1 == 27) { thoat1 = 0;S.DS_muon[4] = 0; }
+					if ((cv2 == 5 && c1 == 13) || c1 == 27) { thoat1 = 0;S.DS_muon[4] = 0;HCN2(7, 53, 32, 45, 13);}
 
 					textcolor(112);
 					gotoxy(cvX1[cv3], cvY1[cv3]);cout << "  ";
@@ -1450,7 +1442,7 @@ void DStre(S_account A[], int N) {
 			}
 			if (PHIEU[bd + cv1].bookid == -1) { cv1 = 0; }
 			textcolor(240 + ND[A[PHIEU[cv1 + bd].userid - 1].idu - 1].phat * 12);
-			gotoxy(31, 8 + cv1);cout << ND[A[PHIEU[cv1 + bd].userid - 1].idu - 1].hovaten;
+			gotoxy(31, 8 + cv1);cout << str_to_name(ND[A[PHIEU[cv1 + bd].userid - 1].idu - 1].hovaten);
 			gotoxy(60, 8 + cv1);cout << PHIEU[bd + cv1].day.ngay << "/" << PHIEU[bd + cv1].day.thang << "/" << PHIEU[bd + cv1].day.nam;
 			gotoxy(74, 8 + cv1);cout << SACH[PHIEU[cv1 + bd].bookid - 1].tensach;
 		}
@@ -1592,8 +1584,8 @@ void conv_longlong_money(string& str, int number) {
 	} while (thuong != 0);
 	str += " VND";
 }
-void QLND(S_account A[],int N){
-	HCN2(15,1,30,49,16);
+void QLND(S_account A[], int N) {
+	HCN2(15, 1, 30, 49, 16);
 	textcolor(240);
 	gotoxy(15, 36);cout << "    CHINH SUA        ";
 	gotoxy(15, 37);cout << "    THEM VAO         ";
@@ -1611,11 +1603,11 @@ void QLND(S_account A[],int N){
 		if (c == 'P' || c == 'M') { cv++; }
 		if (cv == 0) { cv = 4; }
 		if (cv == 5) { cv = 1; }
-		if ((cv == 1) && (c == 13) ) { suanguoidung(A,N); }
-		if ((cv == 2) && (c == 13) ) { them_user(); }
-		if ((cv == 3) && (c == 13)){ xoanguoidung(A,N);}
+		if ((cv == 1) && (c == 13)) { suanguoidung(A, N); }
+		if ((cv == 2) && (c == 13)) { them_user(); }
+		if ((cv == 3) && (c == 13)) { xoanguoidung(A, N); }
 		if ((c == 27) || (cv == 4) && (c == 13)) {
-			thoat=0;
+			thoat = 0;
 		}
 		gotoxy(13, 35 + cv1);
 		cout << " ";
@@ -1623,8 +1615,8 @@ void QLND(S_account A[],int N){
 		cout << " ";
 	}
 };
-void QLTK(S_account A[],int N){
-	HCN2(15,1,30,49,16);
+void QLTK(S_account A[], int N) {
+	HCN2(15, 1, 30, 49, 16);
 	textcolor(240);
 	gotoxy(15, 36);cout << "    THEM VAO         ";
 	gotoxy(15, 37);cout << "    XOA              ";
@@ -1643,12 +1635,12 @@ void QLTK(S_account A[],int N){
 		if (c == 'P' || c == 'M') { cv++; }
 		if (cv == 0) { cv = 5; }
 		if (cv == 6) { cv = 1; }
-		if ((cv == 1) && (c == 13) ) { themtaikhoan(N); }
-		if ((cv == 2) && (c == 13) ) { Soataikhoan(A,N); }
-		if ((cv == 3) && (c == 13) ) { Khoa_or_mo(A,N);}
-		if ((cv == 4) && (c == 13) ) { toogle_passwork(A,N);}
+		if ((cv == 1) && (c == 13)) { themtaikhoan(N); }
+		if ((cv == 2) && (c == 13)) { Xoataikhoan(A, N); }
+		if ((cv == 3) && (c == 13)) { Khoa_or_mo(A, N); }
+		if ((cv == 4) && (c == 13)) { toogle_passwork(A, N); }
 		if ((c == 27) || (cv == 5) && (c == 13)) {
-			thoat=0;
+			thoat = 0;
 		}
 		gotoxy(13, 35 + cv1);
 		cout << " ";
@@ -1656,28 +1648,28 @@ void QLTK(S_account A[],int N){
 		cout << " ";
 	}
 };
-void inDS3( S_user B[], int pos, int n) {
+void inDS3(S_user B[], int pos, int n) {
 	for (int i = 0;i<MAX_cot;i++) {
 		gotoxy(31, 8 + i);cout << "                            ";
 		gotoxy(60, 8 + i);cout << "            ";
 		gotoxy(74, 8 + i);cout << "                      ";
 	}
 	for (int i = pos;i<n + pos;i++) {
-		gotoxy(31, 8 + i - pos);cout << B[i].hovaten;
+		gotoxy(31, 8 + i - pos);cout << str_to_name(B[i].hovaten);
 		gotoxy(60, 8 + i - pos);cout << B[i].mssv;
 		gotoxy(74, 8 + i - pos);cout << B[i].email;
 	}
 	textcolor(240);
 };
-void them_user(){
+void them_user() {
 	S_user A_user;
 	HCN2(3, 53, 30, 45, 16);
 	string ngay, thang, nam;
 	A_user.ngaysinh.ngay = A_user.ngaysinh.thang = A_user.ngaysinh.nam = 0;
-	A_user.phat=false;
-	int x1=55,x2=55,x3=55,x4=61,x5=77,x6=91;
+	A_user.phat = false;
+	int x1 = 55, x2 = 55, x3 = 55, x4 = 61, x5 = 77, x6 = 91;
 	textcolor(62);
-	gotoxy(55,30);cout << "HO VA TEN :";
+	gotoxy(55, 30);cout << "HO VA TEN :";
 	ToMau(55, 31, "                              ", 255, 62);
 	gotoxy(55, 34);cout << "NGAY THANG NAM SINH:   ";
 	gotoxy(55, 35);cout << "ngay:          thang:          nam:        ";
@@ -1689,9 +1681,9 @@ void them_user(){
 	gotoxy(78, 40);cout << "gioi tinh: ";
 	gotoxy(78, 41);cout << "Nam:          Nu:";
 	ToMau(83, 41, " ", 255, 14);ToMau(96, 41, " ", 255, 62);
-	gotoxy(57, 45);cout<<"THEM MOI";
-	gotoxy(80, 45);cout<<"HUY BO";
-	int cvX[7]={53,53,53,53,76,55,78},cvY[7]={30,34,37,40,40,45,45};
+	gotoxy(57, 45);cout << "THEM MOI";
+	gotoxy(80, 45);cout << "HUY BO";
+	int cvX[7] = { 53,53,53,53,76,55,78 }, cvY[7] = { 30,34,37,40,40,45,45 };
 	int thoat = 1, cv = 0;
 	while (thoat) {
 		textcolor(63);
@@ -1703,40 +1695,40 @@ void them_user(){
 		if (cv == -1) { cv = 6; }
 		if (cv == 7) { cv = 0; }
 		if ((cv == 0) && (c == 13)) { xulichuoi(A_user.hovaten, 'y', x1, 31); }//nhap ten
-		if ((cv == 1) && (c == 13)) { nhapngay(x4, x5, x6, ngay, thang, nam,60,76,90,35); }//nhap ngay thang nam sinh
+		if ((cv == 1) && (c == 13)) { nhapngay(x4, x5, x6, ngay, thang, nam, 60, 76, 90, 35); }//nhap ngay thang nam sinh
 		if ((cv == 2) && (c == 13)) { xulichuoi(A_user.email, 'y', x2, 38); }//nhap email lien lac
 		if ((cv == 3) && (c == 13)) { xulichuoi(A_user.mssv, 'y', x3, 41, 19); }//nhap mssv
-		if ((cv == 4) && (c == 13)) { GT(A_user.gioitinh,82,95,41); }//nhap gioi tinh
+		if ((cv == 4) && (c == 13)) { GT(A_user.gioitinh, 82, 95, 41); }//nhap gioi tinh
 		if ((cv == 5) && (c == 13)) {
 			fstream f;
-			stringstream(ngay)>>A_user.ngaysinh.ngay;
-			stringstream(thang)>>A_user.ngaysinh.thang;
-			stringstream(nam)>>A_user.ngaysinh.nam;
+			stringstream(ngay) >> A_user.ngaysinh.ngay;
+			stringstream(thang) >> A_user.ngaysinh.thang;
+			stringstream(nam) >> A_user.ngaysinh.nam;
 			A_user.id = get_F_N("users_infor.txt") + 1;
 			f.open("users_infor.txt", ios::app);
-				f << setw(5) << left << A_user.id
+			f << setw(5) << left << A_user.id
 				<< setw(35) << left << A_user.hovaten;
-				if (A_user.ngaysinh.ngay >= 10) f << A_user.ngaysinh.ngay << "/";
-				else f << "0" << A_user.ngaysinh.ngay << "/";
-				if (A_user.ngaysinh.thang >= 10)f << A_user.ngaysinh.thang << "/";
-				else f << "0" << A_user.ngaysinh.thang << "/";
-				f << setw(10) << left << A_user.ngaysinh.nam
-					<< setw(15) << left << A_user.mssv
-					<< setw(35) << left << A_user.email
-					<< setw(5) << left << A_user.gioitinh
-					<< setw(5) << left << A_user.phat
-					<< endl;
-				f.close();
-				thoat=0;
+			if (A_user.ngaysinh.ngay >= 10) f << A_user.ngaysinh.ngay << "/";
+			else f << "0" << A_user.ngaysinh.ngay << "/";
+			if (A_user.ngaysinh.thang >= 10)f << A_user.ngaysinh.thang << "/";
+			else f << "0" << A_user.ngaysinh.thang << "/";
+			f << setw(10) << left << A_user.ngaysinh.nam
+				<< setw(15) << left << A_user.mssv
+				<< setw(35) << left << A_user.email
+				<< setw(5) << left << A_user.gioitinh
+				<< setw(5) << left << A_user.phat
+				<< endl;
+			f.close();
+			thoat = 0;
 		}
-		if ((cv == 6 && c==13)||c==27){thoat=0;}
+		if ((cv == 6 && c == 13) || c == 27) { thoat = 0; }
 		gotoxy(cvX[cv1], cvY[cv1]);cout << "  ";
 	}
 	HCN2(15, 53, 30, 45, 16);
 	textcolor(240);
 };
-void xoataikhoan(S_account A[],int &N,int CSO,S_Book_Order PHIEU[],int &sophieu){//chua ghi ra file
-	for (int j = sophieu-1;j>=0;j--) {
+void xoataikhoan(S_account A[], int &N, int CSO, S_Book_Order PHIEU[], int &sophieu) {//chua ghi ra file
+	for (int j = sophieu - 1;j >= 0;j--) {
 		if (PHIEU[j].userid == A[CSO].id) {
 			for (int k = j + 1;k<sophieu;k++) {
 				PHIEU[k - 1] = PHIEU[k];
@@ -1744,98 +1736,98 @@ void xoataikhoan(S_account A[],int &N,int CSO,S_Book_Order PHIEU[],int &sophieu)
 			sophieu--;
 		}
 	}
-	for (int j =0;j<sophieu;j++){
-		if (PHIEU[j].userid>A[CSO].id){PHIEU[j].userid--;}
+	for (int j = 0;j<sophieu;j++) {
+		if (PHIEU[j].userid>A[CSO].id) { PHIEU[j].userid--; }
 	}
-	for(int i=CSO+1;i<N;i++){
-		A[i-1]=A[i];
-		A[i-1].id--;
+	for (int i = CSO + 1;i<N;i++) {
+		A[i - 1] = A[i];
+		A[i - 1].id--;
 	}
 	N--;
 };
-void xoanguoidung(S_account AA[],int &NN){
-	int N=NN;
-	S_account *A=new S_account[(N/MAX_cot+1)*MAX_cot];
-	for (int i=0;i<N;i++) A[i]=AA[i];
+void xoanguoidung(S_account AA[], int &NN) {
+	int N = NN;
+	S_account *A = new S_account[(N / MAX_cot + 1)*MAX_cot];
+	for (int i = 0;i<N;i++) A[i] = AA[i];
 	inbang("ten nguoi dung", "ma so     ", "Email     ");
-	gotoxy(53,32);cout<<"=============================================";
-	gotoxy(53,33);cout<<"*     nhan phim Enter vao phieu de xoa       ";
-	gotoxy(53,34);cout<<"=============================================";
-	gotoxy(53,35);cout<<"     *nhan phim EsC khi da xoa xong          ";
-	gotoxy(53,36);cout<<"=============================================";
-	gotoxy(53,37);cout<<"    *chon XOA de xoa tat ca User vua chon    ";
-	gotoxy(53,38);cout<<"=============================================";
-	gotoxy(57, 45);cout<<"XOA";
-	gotoxy(80, 45);cout<<"HUY BO";
+	gotoxy(53, 32);cout << "=============================================";
+	gotoxy(53, 33);cout << "*     nhan phim Enter vao phieu de xoa       ";
+	gotoxy(53, 34);cout << "=============================================";
+	gotoxy(53, 35);cout << "     *nhan phim EsC khi da xoa xong          ";
+	gotoxy(53, 36);cout << "=============================================";
+	gotoxy(53, 37);cout << "    *chon XOA de xoa tat ca User vua chon    ";
+	gotoxy(53, 38);cout << "=============================================";
+	gotoxy(57, 45);cout << "XOA";
+	gotoxy(80, 45);cout << "HUY BO";
 	int sophieu = get_F_N("abc.txt");
 	int sond = get_F_N("users_infor.txt");
-	int  bd = 0, thoat = 1, sotrang = sond / MAX_cot + 1, n,cv=0;
-	
+	int  bd = 0, thoat = 1, sotrang = sond / MAX_cot + 1, n, cv = 0;
+
 	S_Book_Order *PHIEU = new S_Book_Order[sophieu];
 	S_user *ND = new S_user[sotrang*MAX_cot];
-	
+
 	GetfileOrderData(PHIEU, sophieu);
 	GetFileUserData(ND, sond);
-	for(int i=sond;i<sotrang*MAX_cot;i++){
-		ND[i].id=-1;
+	for (int i = sond;i<sotrang*MAX_cot;i++) {
+		ND[i].id = -1;
 	}
 	if (sond - bd<MAX_cot) { n = sond - bd; }
 	else { n = MAX_cot; }
-	inDS3(ND,bd,n);
-	sotrang=sond/MAX_cot+1;
+	inDS3(ND, bd, n);
+	sotrang = sond / MAX_cot + 1;
 	gotoxy(31, 4);cout << "Nhan phim mui ten <- hoac -> de chuyen trang";
-	if (sond==0){gotoxy(60,8);cout<<"dummy";_getch();}
-	else{
-	while (thoat) {
+	if (sond == 0) { gotoxy(60, 8);cout << "dummy";_getch(); }
+	else {
+		while (thoat) {
 			textcolor(250);
-			if (ND[bd+cv].id==-1){cv=0;}
-			gotoxy(31, 8 + cv);cout << ND[bd+cv].hovaten;
-			gotoxy(60, 8 + cv);cout << ND[bd+cv].mssv;
-			gotoxy(74, 8 + cv);cout << ND[bd+cv].email;
+			if (ND[bd + cv].id == -1) { cv = 0; }
+			gotoxy(31, 8 + cv);cout << str_to_name(ND[bd + cv].hovaten);
+			gotoxy(60, 8 + cv);cout << ND[bd + cv].mssv;
+			gotoxy(74, 8 + cv);cout << ND[bd + cv].email;
 			char c = _getch();
 			int cv1 = cv;
 			if (c == 'H') { cv--; }
 			if (c == 'P') { cv++; }
 			if (cv == -1) { cv = 19; }
 			if (cv == 20) { cv = 0; }
-			
+
 			textcolor(240);
 			if (c == 'K') {
-			bd -= MAX_cot;
-			if (bd < 0) bd = (sotrang - 1) * 20;
-			if (sond - bd<MAX_cot) { n = sond - bd; }
-			else { n = MAX_cot; }
-			inDS3(ND,bd,n);
-		}
-		if (c == 'M') {
-			bd += MAX_cot;
-			if (bd > sond) bd = 0;
-			if (sond - bd<MAX_cot) { n = sond - bd; }
-			else { n = MAX_cot; }
-			inDS3(ND,bd,n);
-		}
-		if (c == 13){
-			for (int i=N-1;i>=0;i--){
-				if (A[i].idu==ND[bd+cv].id){xoataikhoan(A,N,i,PHIEU,sophieu);}
+				bd -= MAX_cot;
+				if (bd < 0) bd = (sotrang - 1) * 20;
+				if (sond - bd<MAX_cot) { n = sond - bd; }
+				else { n = MAX_cot; }
+				inDS3(ND, bd, n);
 			}
-			for (int i=N-1;i>=0;i--){
-				if (A[i].idu>ND[bd+cv].id){A[i].idu--;}
+			if (c == 'M') {
+				bd += MAX_cot;
+				if (bd > sond) bd = 0;
+				if (sond - bd<MAX_cot) { n = sond - bd; }
+				else { n = MAX_cot; }
+				inDS3(ND, bd, n);
 			}
-			for (int i=bd+cv+1;i<sond;i++){
-				ND[i-1]=ND[i];
-				ND[i-1].id--;
-			}
-			ND[sond-1].id=-1;
-			sond--;
-			if (bd > sond) bd = 0;
-			if (sond - bd<MAX_cot) { n = sond - bd; }
-			else { n = MAX_cot; }
-			inDS3(ND,bd,n);
-		};
-		if (c == 27) {
+			if (c == 13) {
+				for (int i = N - 1;i >= 0;i--) {
+					if (A[i].idu == ND[bd + cv].id) { xoataikhoan(A, N, i, PHIEU, sophieu); }
+				}
+				for (int i = N - 1;i >= 0;i--) {
+					if (A[i].idu>ND[bd + cv].id) { A[i].idu--; }
+				}
+				for (int i = bd + cv + 1;i<sond;i++) {
+					ND[i - 1] = ND[i];
+					ND[i - 1].id--;
+				}
+				ND[sond - 1].id = -1;
+				sond--;
+				if (bd > sond) bd = 0;
+				if (sond - bd<MAX_cot) { n = sond - bd; }
+				else { n = MAX_cot; }
+				inDS3(ND, bd, n);
+			};
+			if (c == 27) {
 				thoat = 0;
 				gotoxy(58, 43);cout << "Viet lai file nguoi dung ?";
-				
+
 				int cv2 = 0, thoat1 = 1;
 				while (thoat1) {
 					gotoxy(56 + 23 * cv2, 45);cout << "\20";
@@ -1849,56 +1841,56 @@ void xoanguoidung(S_account AA[],int &NN){
 					if (cv2 == 0 && c1 == 13) {
 						thoat1 = 0;
 						OverWriteAccount(A, N);
-						if (N<NN) AA[N].id=-1;
-						NN=N;
-						for(int k=0;k<NN;k++) AA[k]=A[k];
-						OverWriteUser(ND,sond);
+						if (N<NN) AA[N].id = -1;
+						NN = N;
+						for (int k = 0;k<NN;k++) AA[k] = A[k];
+						OverWriteUser(ND, sond);
 						OverWriteOrder(PHIEU, sophieu);
 						gotoxy(58, 44);cout << "DA XOA XONG!";
 						_getch();
 					}
-					if ((cv2 == 1 && c1 == 13)|| c1==27){ thoat1=0;}
+					if ((cv2 == 1 && c1 == 13) || c1 == 27) { thoat1 = 0; }
 					gotoxy(56 + 23 * cv3, 45);cout << " ";
 					gotoxy(61 + 27 * cv3, 45);cout << " ";
 				}
+			}
+			if (ND[bd + cv1].id == -1) { cv1 = 0; }
+			textcolor(240);
+			gotoxy(31, 8 + cv1);cout << str_to_name(ND[bd + cv1].hovaten);
+			gotoxy(60, 8 + cv1);cout << ND[bd + cv1].mssv;
+			gotoxy(74, 8 + cv1);cout << ND[bd + cv1].email;
 		}
-		if (ND[bd+cv1].id==-1){cv1=0;}
-		textcolor(240);
-		gotoxy(31, 8 + cv1);cout << ND[bd+cv1].hovaten;
-		gotoxy(60, 8 + cv1);cout << ND[bd+cv1].mssv;
-		gotoxy(74, 8 + cv1);cout << ND[bd+cv1].email;
-	}
-	HCN2(15, 31, 8, 28, 20);
-	HCN2(15, 60, 8, 13, 20);
-	HCN2(15, 74, 8, 21, 20);
-	delete[]PHIEU;PHIEU = NULL;
-	delete[]ND;ND = NULL;
-	delete[]A;A = NULL;
+		HCN2(15, 31, 8, 28, 20);
+		HCN2(15, 60, 8, 13, 20);
+		HCN2(15, 74, 8, 21, 20);
+		delete[]PHIEU;PHIEU = NULL;
+		delete[]ND;ND = NULL;
+		delete[]A;A = NULL;
 	}
 	HCN2(15, 53, 30, 45, 16);
 	textcolor(240);
 };
-void kaguroo(S_user A[],int N,S_user B[],int &b,string s){
+void kaguroo(S_user A[], int N, S_user B[], int &b, string s) {
 	for (int i = 0;i<N;i++) {
-		if ((A[i].hovaten.find(s) != -1) || (A[i].email.find(s) != -1) || (A[i].mssv.find(s) != -1)) {
-			B[b]=A[i];
+		if ((str_to_name(A[i].hovaten).find(s) != -1) || (A[i].email.find(s) != -1) || (A[i].mssv.find(s) != -1)) {
+			B[b] = A[i];
 			b++;
 		}
 	}
 };
-void suanguoidung(S_account A[],int &N){
+void suanguoidung(S_account A[], int &N) {
 	inbang("ten nguoi dung", "   ma so   ", "   Email    ");
 	HCN2(3, 53, 30, 45, 16);
 	textcolor(62);
 	gotoxy(57, 30);cout << "tim nguoi dung:";
 	ToMau(57, 31, "                              ", 240, 62);
-	gotoxy(57, 45);cout<<"XONG";
-	gotoxy(80, 45);cout<<"HUY BO";
-	int sond=0,sond1=get_F_N("users_infor.txt"),bd=0,sotrang=sond1/MAX_cot+1,n;
-	S_user *ND=new S_user[sotrang*MAX_cot],*ND1=new S_user[sotrang*MAX_cot];
+	gotoxy(57, 45);cout << "XONG";
+	gotoxy(80, 45);cout << "HUY BO";
+	int sond = 0, sond1 = get_F_N("users_infor.txt"), bd = 0, sotrang = sond1 / MAX_cot + 1, n;
+	S_user *ND = new S_user[sotrang*MAX_cot], *ND1 = new S_user[sotrang*MAX_cot];
 	string fstring;
-	string A0[10]={"0","1","2","3","4","5","6","7","8","9"};
-	GetFileUserData(ND1,sond1);
+	string A0[10] = { "0","1","2","3","4","5","6","7","8","9" };
+	GetFileUserData(ND1, sond1);
 	int cvX[3] = { 55,55,78 }, cvY[3] = { 30,45,45 };
 	int thoat1 = 1, cvo = 0, x1 = 57;
 	while (thoat1) {
@@ -1913,126 +1905,127 @@ void suanguoidung(S_account A[],int &N){
 
 		if ((cvo == 0) && c == 13) {
 			xulichuoi(fstring, 'y', x1, 31);
-			kaguroo(ND1,sond1,ND,sond,fstring);
-			sotrang=sond/MAX_cot+1;
-			for(int i=sond;i<sotrang*MAX_cot;i++){
-				ND[i].id=-1;
+			kaguroo(ND1, sond1, ND, sond, fstring);
+			sotrang = sond / MAX_cot + 1;
+			for (int i = sond;i<sotrang*MAX_cot;i++) {
+				ND[i].id = -1;
 			}
 			if (sond - bd<MAX_cot) { n = sond - bd; }
 			else { n = MAX_cot; }
-			inDS3(ND,bd,n);
-			sotrang=sond/MAX_cot+1;
+			inDS3(ND, bd, n);
+			sotrang = sond / MAX_cot + 1;
 			gotoxy(31, 4);cout << "Nhan phim mui ten <- hoac -> de chuyen trang";
-			if (sond==0){gotoxy(60,8);cout<<"dummy";_getch();}
-			else{
-			int thoat=1,cv=0;
-			while (thoat) {
+			if (sond == 0) { gotoxy(60, 8);cout << "dummy";_getch(); }
+			else {
+				int thoat = 1, cv = 0;
+				while (thoat) {
 					textcolor(250);
-					if (ND[bd+cv].id==-1){cv=0;}
-					gotoxy(31, 8 + cv);cout << ND[bd+cv].hovaten;
-					gotoxy(60, 8 + cv);cout << ND[bd+cv].mssv;
-					gotoxy(74, 8 + cv);cout << ND[bd+cv].email;
+					if (ND[bd + cv].id == -1) { cv = 0; }
+					gotoxy(31, 8 + cv);cout << str_to_name(ND[bd + cv].hovaten);
+					gotoxy(60, 8 + cv);cout << ND[bd + cv].mssv;
+					gotoxy(74, 8 + cv);cout << ND[bd + cv].email;
 					char c = _getch();
 					int cv1 = cv;
 					if (c == 'H') { cv--; }
 					if (c == 'P') { cv++; }
 					if (cv == -1) { cv = 19; }
 					if (cv == 20) { cv = 0; }
-			
+
 					textcolor(240);
 					if (c == 'K') {
-					bd -= MAX_cot;
-					if (bd < 0) bd = (sotrang - 1) * 20;
-					if (sond - bd<MAX_cot) { n = sond - bd; }
-					else { n = MAX_cot; }
-					inDS3(ND,bd,n);
-				}
-				if (c == 'M') {
-					bd += MAX_cot;
-					if (bd > sond) bd = 0;
-					if (sond - bd<MAX_cot) { n = sond - bd; }
-					else { n = MAX_cot; }
-					inDS3(ND,bd,n);
-				}
-				if (c == 13){
-					textcolor(62);
-					gotoxy(55,32);cout << "HO VA TEN :";
-					ToMau(55, 33, "                              ", 255, 62);
-					gotoxy(55, 36);cout << "NGAY THANG NAM SINH:   ";
-					gotoxy(55, 37);cout << "ngay:          thang:          nam:        ";
-					ToMau(61, 37, "    ", 255, 62);ToMau(77, 37, "    ", 255, 62);ToMau(91, 37, "    ", 255, 62);
-					gotoxy(55, 39);cout << "Email: ";
-					ToMau(55, 40, "                              ", 255, 62);
-					gotoxy(55, 42);cout << "Ma so sinh vien: ";
-					ToMau(55, 43, "                    ", 255, 62);
-					gotoxy(78, 42);cout << "gioi tinh: ";
-					gotoxy(78, 43);cout << "Nam:          Nu:";
-					ToMau(83, 43, " ", 255, 14);ToMau(96, 43, " ", 255, 62);
-					string ngay=A0[ND[bd+cv].ngaysinh.ngay/10]+A0[ND[bd+cv].ngaysinh.ngay%10];
-					string thang=A0[ND[bd+cv].ngaysinh.thang/10]+A0[ND[bd+cv].ngaysinh.thang%10];
-					string nam=A0[ND[bd+cv].ngaysinh.nam/1000]+A0[(ND[bd+cv].ngaysinh.nam%1000)/100]+A0[(ND[bd+cv].ngaysinh.nam%100)/10]+A0[ND[bd+cv].ngaysinh.nam%10];
-					textcolor(240);
-					gotoxy(55,33);cout<<ND[bd+cv].hovaten;
-					gotoxy(55,40);cout<<ND[bd+cv].email;
-					gotoxy(55,43);cout<<ND[bd+cv].mssv;
-					gotoxy(61,37);cout<<ngay;gotoxy(77,37);cout<<thang;gotoxy(91,37);cout<<nam;
-					if(ND[bd+cv].gioitinh) {gotoxy(83,43);cout<<"x";}else{gotoxy(96,43);cout<<"x";}
-					int thoat0 = 1, cv2 = 0;
-					int cvX1[7] = { 53,53,53,53,76,55,78 }, cvY1[7] = { 32,36,39,42,42,45,45 };
-					int x2 = 55 + ND[bd+cv].hovaten.length(), x3 = 55 + ND[bd+cv].email.length(), x4 = 55 + ND[bd+cv].mssv.length();
-					int x5 = 61 + ngay.length(),x6 = 77 + thang.length(),x7 = 91 + nam.length();
-					while (thoat0) {
-					textcolor(63);
-					gotoxy(cvX1[cv2], cvY1[cv2]);cout << "\20\20";
-					char c1 = _getch();
-					int cv3 = cv2;
-					if (c1 == 'H' || c1 == 'K') { cv2--; }
-					if (c1 == 'P' || c1 == 'M') { cv2++; }
-					if (cv2 == -1) { cv2 = 6; }
-					if (cv2 == 7) { cv2 = 0; }
+						bd -= MAX_cot;
+						if (bd < 0) bd = (sotrang - 1) * 20;
+						if (sond - bd<MAX_cot) { n = sond - bd; }
+						else { n = MAX_cot; }
+						inDS3(ND, bd, n);
+					}
+					if (c == 'M') {
+						bd += MAX_cot;
+						if (bd > sond) bd = 0;
+						if (sond - bd<MAX_cot) { n = sond - bd; }
+						else { n = MAX_cot; }
+						inDS3(ND, bd, n);
+					}
+					if (c == 13) {
+						textcolor(62);
+						gotoxy(55, 32);cout << "HO VA TEN :";
+						ToMau(55, 33, "                              ", 255, 62);
+						gotoxy(55, 36);cout << "NGAY THANG NAM SINH:   ";
+						gotoxy(55, 37);cout << "ngay:          thang:          nam:        ";
+						ToMau(61, 37, "    ", 255, 62);ToMau(77, 37, "    ", 255, 62);ToMau(91, 37, "    ", 255, 62);
+						gotoxy(55, 39);cout << "Email: ";
+						ToMau(55, 40, "                              ", 255, 62);
+						gotoxy(55, 42);cout << "Ma so sinh vien: ";
+						ToMau(55, 43, "                    ", 255, 62);
+						gotoxy(78, 42);cout << "gioi tinh: ";
+						gotoxy(78, 43);cout << "Nam:          Nu:";
+						ToMau(83, 43, " ", 255, 14);ToMau(96, 43, " ", 255, 62);
+						string ngay = A0[ND[bd + cv].ngaysinh.ngay / 10] + A0[ND[bd + cv].ngaysinh.ngay % 10];
+						string thang = A0[ND[bd + cv].ngaysinh.thang / 10] + A0[ND[bd + cv].ngaysinh.thang % 10];
+						string nam = A0[ND[bd + cv].ngaysinh.nam / 1000] + A0[(ND[bd + cv].ngaysinh.nam % 1000) / 100] + A0[(ND[bd + cv].ngaysinh.nam % 100) / 10] + A0[ND[bd + cv].ngaysinh.nam % 10];
+						textcolor(240);
+						gotoxy(55, 33);cout << ND[bd + cv].hovaten;
+						gotoxy(55, 40);cout << ND[bd + cv].email;
+						gotoxy(55, 43);cout << ND[bd + cv].mssv;
+						gotoxy(61, 37);cout << ngay;gotoxy(77, 37);cout << thang;gotoxy(91, 37);cout << nam;
+						if (ND[bd + cv].gioitinh) { gotoxy(83, 43);cout << "x"; }
+						else { gotoxy(96, 43);cout << "x"; }
+						int thoat0 = 1, cv2 = 0;
+						int cvX1[7] = { 53,53,53,53,76,55,78 }, cvY1[7] = { 32,36,39,42,42,45,45 };
+						int x2 = 55 + ND[bd + cv].hovaten.length(), x3 = 55 + ND[bd + cv].email.length(), x4 = 55 + ND[bd + cv].mssv.length();
+						int x5 = 61 + ngay.length(), x6 = 77 + thang.length(), x7 = 91 + nam.length();
+						while (thoat0) {
+							textcolor(63);
+							gotoxy(cvX1[cv2], cvY1[cv2]);cout << "\20\20";
+							char c1 = _getch();
+							int cv3 = cv2;
+							if (c1 == 'H' || c1 == 'K') { cv2--; }
+							if (c1 == 'P' || c1 == 'M') { cv2++; }
+							if (cv2 == -1) { cv2 = 6; }
+							if (cv2 == 7) { cv2 = 0; }
 
-					if ((cv2 == 0) && (c1 == 13)) { xulichuoi(ND[bd+cv].hovaten, 'y', x2, 33); }//nhap ten
-					if ((cv2 == 1) && (c1 == 13)) { nhapngay(x5, x6, x7, ngay, thang, nam,60,76,90,37); }//nhap ngay thang nam sinh
-					if ((cv2 == 2) && (c1 == 13)) { xulichuoi(ND[bd+cv].email, 'y', x3, 40); }//nhap email lien lac
-					if ((cv2 == 3) && (c1 == 13)) { xulichuoi(ND[bd+cv].mssv, 'y', x4, 43, 19); }//nhap mssv
-					if ((cv2 == 4) && (c1 == 13)) { GT(ND[bd+cv].gioitinh,82,95,43); }//nhap gioi tinh
-					stringstream(ngay)>>ND[bd+cv].ngaysinh.ngay;
-					stringstream(thang)>>ND[bd+cv].ngaysinh.thang;
-					stringstream(nam)>>ND[bd+cv].ngaysinh.nam;
-					if ((cv2 == 5) && (c1 == 13)) {
-						thoat0=0;
-						int j=0;
-						while (j<sond1 && ND1[j].id!=ND[bd+cv].id){
-							j++;
+							if ((cv2 == 0) && (c1 == 13)) { xulichuoi(ND[bd + cv].hovaten, 'y', x2, 33); }//nhap ten
+							if ((cv2 == 1) && (c1 == 13)) { nhapngay(x5, x6, x7, ngay, thang, nam, 60, 76, 90, 37); }//nhap ngay thang nam sinh
+							if ((cv2 == 2) && (c1 == 13)) { xulichuoi(ND[bd + cv].email, 'y', x3, 40); }//nhap email lien lac
+							if ((cv2 == 3) && (c1 == 13)) { xulichuoi(ND[bd + cv].mssv, 'y', x4, 43, 19); }//nhap mssv
+							if ((cv2 == 4) && (c1 == 13)) { GT(ND[bd + cv].gioitinh, 82, 95, 43); }//nhap gioi tinh
+							stringstream(ngay) >> ND[bd + cv].ngaysinh.ngay;
+							stringstream(thang) >> ND[bd + cv].ngaysinh.thang;
+							stringstream(nam) >> ND[bd + cv].ngaysinh.nam;
+							if ((cv2 == 5) && (c1 == 13)) {
+								thoat0 = 0;
+								int j = 0;
+								while (j<sond1 && ND1[j].id != ND[bd + cv].id) {
+									j++;
+								}
+								ND1[j] = ND[bd + cv];
+							}
+							if ((cv2 == 6) && (c1 == 13)) {
+								thoat0 = 0;
+								int j = 0;
+								while (j<sond1 && ND1[j].id != ND[bd + cv].id) {
+									j++;
+								}
+								ND[bd + cv] = ND1[j];
+							}
+							textcolor(63);
+							gotoxy(cvX1[cv3], cvY1[cv3]);cout << "  ";
 						}
-						ND1[j]=ND[bd+cv];
+					};
+					if (c == 27) {
+						thoat = 0;
 					}
-					if ((cv2 == 6) && (c1 == 13)) {
-						thoat0=0;
-						int j=0;
-						while (j<sond1 && ND1[j].id!=ND[bd+cv].id){
-							j++;
-						}
-						ND[bd+cv]=ND1[j];
-					}
-					textcolor(63);
-					gotoxy(cvX1[cv3], cvY1[cv3]);cout << "  ";
+					if (ND[bd + cv1].id == -1) { cv1 = 0; }
+					textcolor(240);
+					gotoxy(31, 8 + cv1);cout << str_to_name(ND[bd + cv1].hovaten);
+					gotoxy(60, 8 + cv1);cout << ND[bd + cv1].mssv;
+					gotoxy(74, 8 + cv1);cout << ND[bd + cv1].email;
 				}
-				};
-				if (c == 27) {
-					thoat=0;	
-				}
-				if (ND[bd+cv1].id==-1){cv1=0;}
-				textcolor(240);
-				gotoxy(31, 8 + cv1);cout << ND[bd+cv1].hovaten;
-				gotoxy(60, 8 + cv1);cout << ND[bd+cv1].mssv;
-				gotoxy(74, 8 + cv1);cout << ND[bd+cv1].email;
+				sond = 0;
 			}
-			sond=0;
-		 }
 		}
 		if ((cvo == 1) && c == 13) {
-			OverWriteUser(ND1,sond1);
+			OverWriteUser(ND1, sond1);
 			thoat1 = 0;
 		}
 		if ((cvo == 2 && c == 13) || c == 27) {
@@ -2050,12 +2043,12 @@ void suanguoidung(S_account A[],int &N){
 	HCN2(15, 53, 30, 45, 16);
 	textcolor(240);
 };
-void VT(int X[],int x1=66,int x2=80,int x3=94,int y=39) {//ham nhap gioi tinh
+void VT(int X[], int x1 = 66, int x2 = 80, int x3 = 94, int y = 39) {//ham nhap gioi tinh
 	int thoat = 1, cv = 1;
 	int x[3] = { x1,x2,x3 };//vi tri hoang do nhap gioi tinh
 	while (thoat) {
 		textcolor(115);
-		char a[2]={' ','x'};
+		char a[2] = { ' ','x' };
 		gotoxy(x[cv - 1], y);cout << "\20";gotoxy(x[cv - 1] + 2, y);cout << "\21";//in con tro danh dau
 		char c = _getch();//nhan tin hieu dieu khien
 		int cv1 = cv;//luu tin hieu dieu khien cu
@@ -2064,173 +2057,173 @@ void VT(int X[],int x1=66,int x2=80,int x3=94,int y=39) {//ham nhap gioi tinh
 		if (cv == 0) { cv = 3; }
 		if (cv == 4) { cv = 1; }
 		textcolor(240);
-		if ((cv == 1) && (c == 13)) { X[0] = !X[0];gotoxy(x1+1,y);cout<<a[X[0]]; }
-		if ((cv == 2) && (c == 13)) { X[1] = !X[1];gotoxy(x2+1,y);cout<<a[X[1]]; }
-		if ((cv == 3) && (c == 13)) { X[2] = !X[2];gotoxy(x3+1,y);cout<<a[X[2]]; }
+		if ((cv == 1) && (c == 13)) { X[0] = !X[0];gotoxy(x1 + 1, y);cout << a[X[0]]; }
+		if ((cv == 2) && (c == 13)) { X[1] = !X[1];gotoxy(x2 + 1, y);cout << a[X[1]]; }
+		if ((cv == 3) && (c == 13)) { X[2] = !X[2];gotoxy(x3 + 1, y);cout << a[X[2]]; }
 		if (c == 27) { thoat = 0; }//thoat khi go EsC
 		textcolor(112);
 		gotoxy(x[cv1 - 1], y);cout << " ";gotoxy(x[cv1 - 1] + 2, y);cout << " ";//xoa vi tri con tro cu
 	}
 };
-void themtaikhoan(int N){//N la do dai cua file tai khoan truoc khi them
+void themtaikhoan(int N) {//N la do dai cua file tai khoan truoc khi them
 	inbang("ten nguoi dung", "ma so     ", "Email     ");
 	int sond = get_F_N("users_infor.txt");
-	int  bd = 0, thoat = 1, sotrang = sond / MAX_cot + 1, n,cv=0;
+	int  bd = 0, thoat = 1, sotrang = sond / MAX_cot + 1, n, cv = 0;
 	S_user *ND = new S_user[sotrang*MAX_cot];
 	GetFileUserData(ND, sond);
-	for(int i=sond;i<sotrang*MAX_cot;i++){
-		ND[i].id=-1;
+	for (int i = sond;i<sotrang*MAX_cot;i++) {
+		ND[i].id = -1;
 	}
 	if (sond - bd<MAX_cot) { n = sond - bd; }
 	else { n = MAX_cot; }
-	inDS3(ND,bd,n);
-	sotrang=sond/MAX_cot+1;
+	inDS3(ND, bd, n);
+	sotrang = sond / MAX_cot + 1;
 	gotoxy(31, 4);cout << "Chon nguoi dung can them tai khoan:";
-	if (sond==0){gotoxy(60,8);cout<<"dummy";_getch();}
-	else{
-	while (thoat) {
+	if (sond == 0) { gotoxy(60, 8);cout << "dummy";_getch(); }
+	else {
+		while (thoat) {
 			textcolor(250);
-			if (ND[bd+cv].id==-1){cv=0;}
-			gotoxy(31, 8 + cv);cout << ND[bd+cv].hovaten;
-			gotoxy(60, 8 + cv);cout << ND[bd+cv].mssv;
-			gotoxy(74, 8 + cv);cout << ND[bd+cv].email;
+			if (ND[bd + cv].id == -1) { cv = 0; }
+			gotoxy(31, 8 + cv);cout << str_to_name(ND[bd + cv].hovaten);
+			gotoxy(60, 8 + cv);cout << ND[bd + cv].mssv;
+			gotoxy(74, 8 + cv);cout << ND[bd + cv].email;
 			char c = _getch();
 			int cv1 = cv;
 			if (c == 'H') { cv--; }
 			if (c == 'P') { cv++; }
 			if (cv == -1) { cv = 19; }
 			if (cv == 20) { cv = 0; }
-			
+
 			textcolor(240);
-		if (c == 'K') {
-			bd -= MAX_cot;
-			if (bd < 0) bd = (sotrang - 1) * 20;
-			if (sond - bd<MAX_cot) { n = sond - bd; }
-			else { n = MAX_cot; }
-			inDS3(ND,bd,n);
-		}
-		if (c == 'M') {
-			bd += MAX_cot;
-			if (bd > sond) bd = 0;
-			if (sond - bd<MAX_cot) { n = sond - bd; }
-			else { n = MAX_cot; }
-			inDS3(ND,bd,n);
-		}
-		if (c == 13){
-			HCN2(7, 53, 30, 45, 16);
-			textcolor(112);
-			gotoxy(57, 32);cout << "Ten Dang Nhap: ";
-			ToMau(57, 33, "                              ", 240, 112);
-			gotoxy(57, 35);cout << "Mat Khau";
-			ToMau(57, 36, "                              ", 240, 112);
-			gotoxy(57, 38);cout << "Lua Chon Chuc Nang";
-			char a=219;
-			gotoxy(57, 39);textcolor(112);cout << "DOC GIA:      QUAN LI:      THU THU:    ";
-			textcolor(255);gotoxy(67,39);cout<<" ";gotoxy(81,39);cout<<" ";gotoxy(95,39);cout<<" ";
-			textcolor(112);
-			gotoxy(57, 43);cout << "XONG";
-			gotoxy(80, 43);cout << "HUY BO";
-			int cvX[5] = { 55,55,55,55,78 }, cvY[5] = { 32,35,38,43,43 };
-			int thoat1 = 1, cv2 = 0;
-			S_account S;
-			S.id=N+1;
-			S.idu=ND[bd+cv].id;
-			S.vaitro[0]=0;S.vaitro[1]=0;S.vaitro[2]=0;
-			S.DS_muon[0]=0;S.DS_muon[1]=0;S.DS_muon[2]=0;S.DS_muon[3]=0;S.DS_muon[4]=0;
-			S.khoa=1;
-			int x1 = 57, x2 = 57, x3 = 57;
-			while (thoat1) {
-				textcolor(115);
-				gotoxy(cvX[cv2], cvY[cv2]);cout << "\20\20";
-				char c1 = _getch();
-				int cv3 = cv2;
-				if (c1 == 'H' || c1 == 'K') { cv2--; }
-				if (c1 == 'P' || c1 == 'M') { cv2++; }
-				if (cv2 == -1) { cv2 = 4; }
-				if (cv2 == 5) { cv2 = 0; }
-				if ((cv2 == 0) && (c1 == 13)) { xulichuoi(S.tendangnhap, 'y', x1, 33); }//nhap ten
-				if ((cv2 == 1) && (c1 == 13)) { xulichuoi(S.matkhau, 'y', x2, 36); }//nhap ngay thang nam sinh
-				if ((cv2 == 2) && (c1 == 13)) { VT(S.vaitro); }//nhap email lien lac
-				if ((cv2 == 3) && (c1 == 13)) {
-					fstream f;
-					f.open("accounts_infor.txt", ios::app);
+			if (c == 'K') {
+				bd -= MAX_cot;
+				if (bd < 0) bd = (sotrang - 1) * 20;
+				if (sond - bd<MAX_cot) { n = sond - bd; }
+				else { n = MAX_cot; }
+				inDS3(ND, bd, n);
+			}
+			if (c == 'M') {
+				bd += MAX_cot;
+				if (bd > sond) bd = 0;
+				if (sond - bd<MAX_cot) { n = sond - bd; }
+				else { n = MAX_cot; }
+				inDS3(ND, bd, n);
+			}
+			if (c == 13) {
+				HCN2(7, 53, 30, 45, 16);
+				textcolor(112);
+				gotoxy(57, 32);cout << "Ten Dang Nhap: ";
+				ToMau(57, 33, "                              ", 240, 112);
+				gotoxy(57, 35);cout << "Mat Khau";
+				ToMau(57, 36, "                              ", 240, 112);
+				gotoxy(57, 38);cout << "Lua Chon Chuc Nang";
+				char a = 219;
+				gotoxy(57, 39);textcolor(112);cout << "DOC GIA:      QUAN LI:      THU THU:    ";
+				textcolor(255);gotoxy(67, 39);cout << " ";gotoxy(81, 39);cout << " ";gotoxy(95, 39);cout << " ";
+				textcolor(112);
+				gotoxy(57, 43);cout << "XONG";
+				gotoxy(80, 43);cout << "HUY BO";
+				int cvX[5] = { 55,55,55,55,78 }, cvY[5] = { 32,35,38,43,43 };
+				int thoat1 = 1, cv2 = 0;
+				S_account S;
+				S.id = N + 1;
+				S.idu = ND[bd + cv].id;
+				S.vaitro[0] = 0;S.vaitro[1] = 0;S.vaitro[2] = 0;
+				S.DS_muon[0] = 0;S.DS_muon[1] = 0;S.DS_muon[2] = 0;S.DS_muon[3] = 0;S.DS_muon[4] = 0;
+				S.khoa = 1;
+				int x1 = 57, x2 = 57, x3 = 57;
+				while (thoat1) {
+					textcolor(115);
+					gotoxy(cvX[cv2], cvY[cv2]);cout << "\20\20";
+					char c1 = _getch();
+					int cv3 = cv2;
+					if (c1 == 'H' || c1 == 'K') { cv2--; }
+					if (c1 == 'P' || c1 == 'M') { cv2++; }
+					if (cv2 == -1) { cv2 = 4; }
+					if (cv2 == 5) { cv2 = 0; }
+					if ((cv2 == 0) && (c1 == 13)) { xulichuoi(S.tendangnhap, 'y', x1, 33); }//nhap ten
+					if ((cv2 == 1) && (c1 == 13)) { xulichuoi(S.matkhau, 'y', x2, 36); }//nhap ngay thang nam sinh
+					if ((cv2 == 2) && (c1 == 13)) { VT(S.vaitro); }//nhap email lien lac
+					if ((cv2 == 3) && (c1 == 13)) {
+						fstream f;
+						f.open("accounts_infor.txt", ios::app);
 						f << setw(5) << left << S.id
-							<< setw(5) <<left << S.idu
+							<< setw(5) << left << S.idu
 							<< setw(25) << left << S.tendangnhap
-							<< setw(20) << left << S.matkhau 
+							<< setw(20) << left << S.matkhau
 							<< setw(5) << left << S.vaitro[0] <<
 							setw(5) << left << S.vaitro[1] <<
 							setw(5) << left << S.vaitro[2] <<
 							S.DS_muon[0] << " " << S.DS_muon[1] << " "
 							<< S.DS_muon[2] << " " << S.DS_muon[3] << " "
-							<< S.DS_muon[4] << " " 
-							<< setw(5)<<S.khoa<<endl;
+							<< S.DS_muon[4] << " "
+							<< setw(5) << S.khoa << endl;
 						f.close();
-					thoat1=0;
+						thoat1 = 0;
+					}
+					if ((cv2 == 4 && c1 == 13) || c1 == 27) { thoat1 = 0; }
+					gotoxy(cvX[cv3], cvY[cv3]);cout << "  ";
 				}
-				if ((cv2 == 4 && c1==13)||c1==27){thoat1=0;}
-				gotoxy(cvX[cv3], cvY[cv3]);cout << "  ";
-			}
-		};
-		if (c == 27) {thoat = 0;}
-		
-		if (ND[bd+cv1].id==-1){cv1=0;}
-		textcolor(240);
-		gotoxy(31, 8 + cv1);cout << ND[bd+cv1].hovaten;
-		gotoxy(60, 8 + cv1);cout << ND[bd+cv1].mssv;
-		gotoxy(74, 8 + cv1);cout << ND[bd+cv1].email;
-	}
-	HCN2(15, 31, 8, 28, 20);
-	HCN2(15, 60, 8, 13, 20);
-	HCN2(15, 74, 8, 21, 20);
-	delete[]ND;ND = NULL;
+			};
+			if (c == 27) { thoat = 0; }
+
+			if (ND[bd + cv1].id == -1) { cv1 = 0; }
+			textcolor(240);
+			gotoxy(31, 8 + cv1);cout << str_to_name(ND[bd + cv1].hovaten);
+			gotoxy(60, 8 + cv1);cout << ND[bd + cv1].mssv;
+			gotoxy(74, 8 + cv1);cout << ND[bd + cv1].email;
+		}
+		HCN2(15, 31, 8, 28, 20);
+		HCN2(15, 60, 8, 13, 20);
+		HCN2(15, 74, 8, 21, 20);
+		delete[]ND;ND = NULL;
 	}
 	HCN2(15, 53, 30, 45, 16);
 	textcolor(240);
 }
-void inDS4( S_user B[] ,S_account D[], int pos, int n,bool cp=true) {
+void inDS4(S_user B[], S_account D[], int pos, int n, bool cp = true) {
 	for (int i = 0;i<MAX_cot;i++) {
 		gotoxy(31, 8 + i);cout << "                            ";
 		gotoxy(60, 8 + i);cout << "            ";
 		gotoxy(74, 8 + i);cout << "                      ";
 	}
-	string s[2]={"khoa"," mo "};
+	string s[2] = { "khoa"," mo " };
 	for (int i = pos;i<n + pos;i++) {
 		gotoxy(31, 8 + i - pos);cout << D[i].tendangnhap;
-		gotoxy(60, 8 + i - pos);cout << s[D[i].khoa]<<"       ";
-		if (!cp && D[i].matkhau=="dummy") {gotoxy(68,8+i-pos);cout<<"X";}
-		gotoxy(74, 8 + i - pos);cout << B[D[i].idu-1].hovaten;
+		gotoxy(60, 8 + i - pos);cout << s[D[i].khoa] << "       ";
+		if (!cp && D[i].matkhau == "dummy") { gotoxy(68, 8 + i - pos);cout << "X"; }
+		gotoxy(74, 8 + i - pos);cout << B[D[i].idu - 1].hovaten;
 	}
 	textcolor(240);
 };
-void kaguroo2(S_user A[],S_account B[],int N,S_account C[],int &b,string s){
+void kaguroo2(S_user A[], S_account B[], int N, S_account C[], int &b, string s) {
 	for (int i = 0;i<N;i++) {
-		if ((A[B[i].idu-1].hovaten.find(s) != -1) || (B[i].tendangnhap.find(s) != -1) ) {
-			C[b]=B[i];
+		if ((A[B[i].idu - 1].hovaten.find(s) != -1) || (B[i].tendangnhap.find(s) != -1)) {
+			C[b] = B[i];
 			b++;
 		}
 	}
 };
 
-void Soataikhoan(S_account AA[],int &NN){
-	int N=NN;
-	S_account *A=new S_account[(N/MAX_cot+1)*MAX_cot];
-	for (int i=0;i<N;i++) A[i]=AA[i];
+void Xoataikhoan(S_account AA[], int &NN) {
+	int N = NN;
+	S_account *A = new S_account[(N / MAX_cot + 1)*MAX_cot];
+	for (int i = 0;i<N;i++) A[i] = AA[i];
 	inbang("ten tai khoan", "tinh trang", "ten nguoi dung");
 	HCN2(3, 53, 30, 45, 16);
 	textcolor(62);
 	gotoxy(57, 30);cout << "tim tai khoan:";
 	ToMau(57, 31, "                              ", 240, 62);
-	gotoxy(57, 45);cout<<"XONG";
-	gotoxy(80, 45);cout<<"HUY BO";
-	int sophieu=get_F_N("abc.txt");
-	int sond=get_F_N("users_infor.txt"),bd=0,sotrang=N/MAX_cot+1,n,N2=0;
-	S_account *S=new S_account[(N/MAX_cot+1)*MAX_cot];
-	S_user *ND=new S_user[sond];
-	S_Book_Order *PHIEU=new S_Book_Order[sophieu];
-	string fstring,A2[2]={"khoa"," mo "};
-	GetfileOrderData(PHIEU,sophieu);
-	GetFileUserData(ND,sond);
+	gotoxy(57, 45);cout << "XONG";
+	gotoxy(80, 45);cout << "HUY BO";
+	int sophieu = get_F_N("abc.txt");
+	int sond = get_F_N("users_infor.txt"), bd = 0, sotrang = N / MAX_cot + 1, n, N2 = 0;
+	S_account *S = new S_account[(N / MAX_cot + 1)*MAX_cot];
+	S_user *ND = new S_user[sond];
+	S_Book_Order *PHIEU = new S_Book_Order[sophieu];
+	string fstring, A2[2] = { "khoa"," mo " };
+	GetfileOrderData(PHIEU, sophieu);
+	GetFileUserData(ND, sond);
 	int cvX[3] = { 55,55,78 }, cvY[3] = { 30,45,45 };
 	int thoat1 = 1, cvo = 0, x1 = 57;
 	while (thoat1) {
@@ -2245,315 +2238,316 @@ void Soataikhoan(S_account AA[],int &NN){
 
 		if ((cvo == 0) && c == 13) {
 			xulichuoi(fstring, 'y', x1, 31);
-			kaguroo2(ND,A,N,S,N2,fstring);
-			sotrang=N2/MAX_cot+1;
-			for(int i=N2;i<sotrang*MAX_cot;i++){
-				S[i].id=-1;
+			kaguroo2(ND, A, N, S, N2, fstring);
+			sotrang = N2 / MAX_cot + 1;
+			for (int i = N2;i<sotrang*MAX_cot;i++) {
+				S[i].id = -1;
 			}
 			if (N2 - bd<MAX_cot) { n = N2 - bd; }
 			else { n = MAX_cot; }
-			inDS4(ND,S,bd,n);
-			sotrang=N2/MAX_cot+1;
+			inDS4(ND, S, bd, n);
+			sotrang = N2 / MAX_cot + 1;
 			gotoxy(31, 4);cout << "Nhan phim mui ten <- hoac -> de chuyen trang";
-			if (N2==0){gotoxy(60,8);cout<<"dummy";_getch();}
-			else{
-			int thoat=1,cv=0;
-			while (thoat) {
+			if (N2 == 0) { gotoxy(60, 8);cout << "dummy";_getch(); }
+			else {
+				int thoat = 1, cv = 0;
+				while (thoat) {
 					textcolor(250);
-					if (S[bd+cv].id==-1){cv=0;}
-					gotoxy(31, 8 + cv);cout << S[bd+cv].tendangnhap;
-					gotoxy(60, 8 + cv);cout << A2[S[bd+cv].khoa];
-					gotoxy(74, 8 + cv);cout << ND[S[bd+cv].idu-1].hovaten;
+					if (S[bd + cv].id == -1) { cv = 0; }
+					gotoxy(31, 8 + cv);cout << S[bd + cv].tendangnhap;
+					gotoxy(60, 8 + cv);cout << A2[S[bd + cv].khoa];
+					gotoxy(74, 8 + cv);cout << str_to_name(ND[S[bd + cv].idu - 1].hovaten);
 					char c = _getch();
 					int cv1 = cv;
 					if (c == 'H') { cv--; }
 					if (c == 'P') { cv++; }
 					if (cv == -1) { cv = 19; }
 					if (cv == 20) { cv = 0; }
-			
+
 					textcolor(240);
 					if (c == 'K') {
-					bd -= MAX_cot;
-					if (bd < 0) bd = (sotrang - 1) * 20;
-					if (N2 - bd<MAX_cot) { n = N2 - bd; }
-					else { n = MAX_cot; }
-					inDS4(ND,S,bd,n);
-				}
-				if (c == 'M') {
-					bd += MAX_cot;
-					if (bd > N2) bd = 0;
-					if (N2 - bd<MAX_cot) { n = N2 - bd; }
-					else { n = MAX_cot; }
-					inDS4(ND,S,bd,n);
-				}
-				if (c == 13){
-					xoataikhoan(A,N,S[bd+cv].id-1,PHIEU,sophieu);
-					for (int i=bd+cv+1;i<N2;i++) {S[i-1]=S[i];S[i-1].id--;}
-					N2--;
-					if (N2 - bd<MAX_cot) { n = N2 - bd; }
-					else { n = MAX_cot; }
-					S[N2].id=-1;
-					inDS4(ND,S,bd,n);
-				};
-				if (c == 27||N2==0) {
-					thoat=0;	
-				}
-				if (S[bd+cv1].id==-1){cv1=0;}
-				textcolor(240);
-				gotoxy(31, 8 + cv1);cout << S[bd+cv1].tendangnhap;
-				gotoxy(60, 8 + cv1);cout << A2[S[bd+cv1].khoa];
-				gotoxy(74, 8 + cv1);cout << ND[S[bd+cv1].idu-1].hovaten;
-			}
-			N2=0;
-		 }
-		}
-		gotoxy(58,41);cout<<"Luu Thay doi vao File ?";
-		if ((cvo == 1) && c == 13) {
-			OverWriteAccount(A,N);
-			if (N<NN) AA[N].id=-1;
-			NN=N;
-			for(int k=0;k<NN;k++) AA[k]=A[k];
-			OverWriteOrder(PHIEU,sophieu);
-			thoat1 = 0;
-		}
-		if ((cvo == 2 && c == 13) || c == 27) {
-			thoat1 = 0;
-		}
-
-		textcolor(63);
-		gotoxy(cvX[cvo1], cvY[cvo1]);cout << "  ";
-	}
-	HCN2(15, 31, 8, 28, 20);
-	HCN2(15, 60, 8, 13, 20);
-	HCN2(15, 74, 8, 21, 20);
-	delete[]ND;ND = NULL;
-	delete[]S;S =NULL;
-	delete[]PHIEU;PHIEU=NULL;
-	delete[]A;A=NULL;
-	HCN2(15, 53, 30, 45, 16);
-	textcolor(240);
-};
-void Khoa_or_mo(S_account AA[],int &N){
-	S_account *A=new S_account[(N/MAX_cot+1)*MAX_cot];
-	for (int i=0;i<N;i++) A[i]=AA[i];
-	inbang("ten tai khoan", "tinh trang", "ten nguoi dung");
-	HCN2(3, 53, 30, 45, 16);
-	textcolor(62);
-	gotoxy(57, 30);cout << "tim tai khoan:";
-	ToMau(57, 31, "                              ", 240, 62);
-	gotoxy(57, 45);cout<<"XONG";
-	gotoxy(80, 45);cout<<"HUY BO";
-	
-	int sond=get_F_N("users_infor.txt"),bd=0,sotrang=N/MAX_cot+1,n,N2=0;
-	S_account *S=new S_account[(N/MAX_cot+1)*MAX_cot];
-	S_user *ND=new S_user[sond];
-	
-	string fstring,A2[2]={"khoa"," mo "};
-	
-	GetFileUserData(ND,sond);
-	int cvX[3] = { 55,55,78 }, cvY[3] = { 30,45,45 };
-	int thoat1 = 1, cvo = 0, x1 = 57;
-	while (thoat1) {
-		textcolor(63);
-		gotoxy(cvX[cvo], cvY[cvo]);cout << "\20\20";
-		char c = _getch();
-		int cvo1 = cvo;
-		if (c == 'H' || c == 'K') { cvo--; }
-		if (c == 'P' || c == 'M') { cvo++; }
-		if (cvo == -1) { cvo = 2; }
-		if (cvo == 3) { cvo = 0; }
-
-		if ((cvo == 0) && c == 13) {
-			xulichuoi(fstring, 'y', x1, 31);
-			kaguroo2(ND,A,N,S,N2,fstring);
-			sotrang=N2/MAX_cot+1;
-			for(int i=N2;i<sotrang*MAX_cot;i++){
-				S[i].id=-1;
-			}
-			if (N2 - bd<MAX_cot) { n = N2 - bd; }
-			else { n = MAX_cot; }
-			inDS4(ND,S,bd,n);
-			sotrang=N2/MAX_cot+1;
-			gotoxy(31, 4);cout << "Nhan phim mui ten <- hoac -> de chuyen trang";
-			if (N2==0){gotoxy(60,8);cout<<"dummy";_getch();}
-			else{
-			int thoat=1,cv=0;
-			while (thoat) {
-					textcolor(250);
-					if (S[bd+cv].id==-1){cv=0;}
-					gotoxy(31, 8 + cv);cout << S[bd+cv].tendangnhap;
-					gotoxy(60, 8 + cv);cout << A2[S[bd+cv].khoa];
-					gotoxy(74, 8 + cv);cout << ND[S[bd+cv].idu-1].hovaten;
-					char c = _getch();
-					int cv1 = cv;
-					if (c == 'H') { cv--; }
-					if (c == 'P') { cv++; }
-					if (cv == -1) { cv = 19; }
-					if (cv == 20) { cv = 0; }
-			
-					textcolor(240);
-					if (c == 'K') {
-					bd -= MAX_cot;
-					if (bd < 0) bd = (sotrang - 1) * 20;
-					if (N2 - bd<MAX_cot) { n = N2 - bd; }
-					else { n = MAX_cot; }
-					inDS4(ND,S,bd,n);
-				}
-				if (c == 'M') {
-					bd += MAX_cot;
-					if (bd > N2) bd = 0;
-					if (N2 - bd<MAX_cot) { n = N2 - bd; }
-					else { n = MAX_cot; }
-					inDS4(ND,S,bd,n);
-				}
-				if (c == 13){
-					S[bd+cv].khoa=!S[bd+cv].khoa;
-					A[S[bd+cv].id-1].khoa=!A[S[bd+cv].id-1].khoa;
-					textcolor(250);
-					gotoxy(60,8+cv);cout<<A2[S[bd+cv].khoa];
-				};
-				if (c == 27) {
-					thoat=0;	
-				}
-				if (S[bd+cv1].id==-1){cv1=0;}
-				textcolor(240);
-				gotoxy(31, 8 + cv1);cout << S[bd+cv1].tendangnhap;
-				gotoxy(60, 8 + cv1);cout << A2[S[bd+cv1].khoa];
-				gotoxy(74, 8 + cv1);cout << ND[S[bd+cv1].idu-1].hovaten;
-			}
-			N2=0;
-		 }
-		}
-		gotoxy(58,41);cout<<"Luu Thay doi vao File ?";
-		if ((cvo == 1) && c == 13) {
-			OverWriteAccount(A,N);
-			for(int k=0;k<N;k++) AA[k]=A[k];
-			thoat1 = 0;
-		}
-		if ((cvo == 2 && c == 13) || c == 27) {
-			thoat1 = 0;
-		}
-
-		textcolor(63);
-		gotoxy(cvX[cvo1], cvY[cvo1]);cout << "  ";
-	}
-	HCN2(15, 31, 8, 28, 20);
-	HCN2(15, 60, 8, 13, 20);
-	HCN2(15, 74, 8, 21, 20);
-	delete[]ND;ND = NULL;
-	delete[]S;S =NULL;
-	delete[]A;A=NULL;
-	HCN2(15, 53, 30, 45, 16);
-	textcolor(240);
-};
-void toogle_passwork(S_account AA[],int &N){//ham reset mat khau
-	S_account *A=new S_account[(N/MAX_cot+1)*MAX_cot];
-	for (int i=0;i<N;i++) A[i]=AA[i];
-	inbang("ten tai khoan", "tinh trang", "ten nguoi dung");
-	HCN2(3, 53, 30, 45, 16);
-	textcolor(62);
-	gotoxy(57, 30);cout << "tim tai khoan:";
-	ToMau(57, 31, "                              ", 240, 62);
-	gotoxy(53,36);cout<<"=============================================";
-	gotoxy(53,37);cout<<"   Tai khoan da chon de se duoc danh dau X   ";
-	gotoxy(53,38);cout<<"=============================================";
-	gotoxy(57, 45);cout<<"XONG";
-	gotoxy(80, 45);cout<<"HUY BO";
-	
-	int sond=get_F_N("users_infor.txt"),bd=0,sotrang=N/MAX_cot+1,n,N2=0;
-	S_account *S=new S_account[(N/MAX_cot+1)*MAX_cot];
-	S_user *ND=new S_user[sond];
-	
-	string fstring,A2[2]={"khoa"," mo "};
-	
-	GetFileUserData(ND,sond);
-	int cvX[3] = { 55,55,78 }, cvY[3] = { 30,45,45 };
-	int thoat1 = 1, cvo = 0, x1 = 57;
-	while (thoat1) {
-		textcolor(63);
-		gotoxy(cvX[cvo], cvY[cvo]);cout << "\20\20";
-		char c = _getch();
-		int cvo1 = cvo;
-		if (c == 'H' || c == 'K') { cvo--; }
-		if (c == 'P' || c == 'M') { cvo++; }
-		if (cvo == -1) { cvo = 2; }
-		if (cvo == 3) { cvo = 0; }
-
-		if ((cvo == 0) && c == 13) {
-			xulichuoi(fstring, 'y', x1, 31);
-			kaguroo2(ND,A,N,S,N2,fstring);
-			sotrang=N2/MAX_cot+1;
-			for(int i=N2;i<sotrang*MAX_cot;i++){
-				S[i].id=-1;
-			}
-			if (N2 - bd<MAX_cot) { n = N2 - bd; }
-			else { n = MAX_cot; }
-			inDS4(ND,S,bd,n);
-			sotrang=N2/MAX_cot+1;
-			gotoxy(31, 4);cout << "Nhan phim mui ten <- hoac -> de chuyen trang";
-			if (N2==0){gotoxy(60,8);cout<<"dummy";_getch();}
-			else{
-			int thoat=1,cv=0;
-			while (thoat) {
-					textcolor(250);
-					if (S[bd+cv].id==-1){cv=0;}
-					gotoxy(31, 8 + cv);cout << S[bd+cv].tendangnhap;
-					gotoxy(60, 8 + cv);cout << A2[S[bd+cv].khoa];
-					gotoxy(74, 8 + cv);cout << ND[S[bd+cv].idu-1].hovaten;
-					char c = _getch();
-					int cv1 = cv;
-					if (c == 'H') { cv--; }
-					if (c == 'P') { cv++; }
-					if (cv == -1) { cv = 19; }
-					if (cv == 20) { cv = 0; }
-			
-					textcolor(240);
-					if (c == 'K') {
-					bd -= MAX_cot;
-					if (bd < 0) bd = (sotrang - 1) * 20;
-					if (N2 - bd<MAX_cot) { n = N2 - bd; }
-					else { n = MAX_cot; }
-					inDS4(ND,S,bd,n,false);
-				}
-				if (c == 'M') {
-					bd += MAX_cot;
-					if (bd > N2) bd = 0;
-					if (N2 - bd<MAX_cot) { n = N2 - bd; }
-					else { n = MAX_cot; }
-					inDS4(ND,S,bd,n,false);
-				}
-				if (c == 13){
-					if(S[bd+cv].matkhau=="dummy"){
-						S[bd+cv].matkhau=A[S[bd+cv].id-1].matkhau;
-						textcolor(250);
-						gotoxy(68,8+cv);cout<<" ";
-					}else{ 
-						S[bd+cv].matkhau="dummy";
-						textcolor(250);
-						gotoxy(68,8+cv);cout<<"X";
+						bd -= MAX_cot;
+						if (bd < 0) bd = (sotrang - 1) * 20;
+						if (N2 - bd<MAX_cot) { n = N2 - bd; }
+						else { n = MAX_cot; }
+						inDS4(ND, S, bd, n);
 					}
-				};
-				if (c == 27) {
-					for (int i=0;i<N2;i++){
-						if (S[i].matkhau=="dummy"){
-							A[S[i].id-1].matkhau="00000000";
+					if (c == 'M') {
+						bd += MAX_cot;
+						if (bd > N2) bd = 0;
+						if (N2 - bd<MAX_cot) { n = N2 - bd; }
+						else { n = MAX_cot; }
+						inDS4(ND, S, bd, n);
+					}
+					if (c == 13) {
+						xoataikhoan(A, N, S[bd + cv].id - 1, PHIEU, sophieu);
+						for (int i = bd + cv + 1;i<N2;i++) { S[i - 1] = S[i];S[i - 1].id--; }
+						N2--;
+						if (N2 - bd<MAX_cot) { n = N2 - bd; }
+						else { n = MAX_cot; }
+						S[N2].id = -1;
+						inDS4(ND, S, bd, n);
+					};
+					if (c == 27 || N2 == 0) {
+						thoat = 0;
+					}
+					if (S[bd + cv1].id == -1) { cv1 = 0; }
+					textcolor(240);
+					gotoxy(31, 8 + cv1);cout << S[bd + cv1].tendangnhap;
+					gotoxy(60, 8 + cv1);cout << A2[S[bd + cv1].khoa];
+					gotoxy(74, 8 + cv1);cout << str_to_name(ND[S[bd + cv1].idu - 1].hovaten);
+				}
+				N2 = 0;
+			}
+		}
+		gotoxy(58, 41);cout << "Luu Thay doi vao File ?";
+		if ((cvo == 1) && c == 13) {
+			OverWriteAccount(A, N);
+			if (N<NN) AA[N].id = -1;
+			NN = N;
+			for (int k = 0;k<NN;k++) AA[k] = A[k];
+			OverWriteOrder(PHIEU, sophieu);
+			thoat1 = 0;
+		}
+		if ((cvo == 2 && c == 13) || c == 27) {
+			thoat1 = 0;
+		}
+
+		textcolor(63);
+		gotoxy(cvX[cvo1], cvY[cvo1]);cout << "  ";
+	}
+	HCN2(15, 31, 8, 28, 20);
+	HCN2(15, 60, 8, 13, 20);
+	HCN2(15, 74, 8, 21, 20);
+	delete[]ND;ND = NULL;
+	delete[]S;S = NULL;
+	delete[]PHIEU;PHIEU = NULL;
+	delete[]A;A = NULL;
+	HCN2(15, 53, 30, 45, 16);
+	textcolor(240);
+};
+void Khoa_or_mo(S_account AA[], int &N) {
+	S_account *A = new S_account[(N / MAX_cot + 1)*MAX_cot];
+	for (int i = 0;i<N;i++) A[i] = AA[i];
+	inbang("ten tai khoan", "tinh trang", "ten nguoi dung");
+	HCN2(3, 53, 30, 45, 16);
+	textcolor(62);
+	gotoxy(57, 30);cout << "tim tai khoan:";
+	ToMau(57, 31, "                              ", 240, 62);
+	gotoxy(57, 45);cout << "XONG";
+	gotoxy(80, 45);cout << "HUY BO";
+
+	int sond = get_F_N("users_infor.txt"), bd = 0, sotrang = N / MAX_cot + 1, n, N2 = 0;
+	S_account *S = new S_account[(N / MAX_cot + 1)*MAX_cot];
+	S_user *ND = new S_user[sond];
+
+	string fstring, A2[2] = { "khoa"," mo " };
+
+	GetFileUserData(ND, sond);
+	int cvX[3] = { 55,55,78 }, cvY[3] = { 30,45,45 };
+	int thoat1 = 1, cvo = 0, x1 = 57;
+	while (thoat1) {
+		textcolor(63);
+		gotoxy(cvX[cvo], cvY[cvo]);cout << "\20\20";
+		char c = _getch();
+		int cvo1 = cvo;
+		if (c == 'H' || c == 'K') { cvo--; }
+		if (c == 'P' || c == 'M') { cvo++; }
+		if (cvo == -1) { cvo = 2; }
+		if (cvo == 3) { cvo = 0; }
+
+		if ((cvo == 0) && c == 13) {
+			xulichuoi(fstring, 'y', x1, 31);
+			kaguroo2(ND, A, N, S, N2, fstring);
+			sotrang = N2 / MAX_cot + 1;
+			for (int i = N2;i<sotrang*MAX_cot;i++) {
+				S[i].id = -1;
+			}
+			if (N2 - bd<MAX_cot) { n = N2 - bd; }
+			else { n = MAX_cot; }
+			inDS4(ND, S, bd, n);
+			sotrang = N2 / MAX_cot + 1;
+			gotoxy(31, 4);cout << "Nhan phim mui ten <- hoac -> de chuyen trang";
+			if (N2 == 0) { gotoxy(60, 8);cout << "dummy";_getch(); }
+			else {
+				int thoat = 1, cv = 0;
+				while (thoat) {
+					textcolor(250);
+					if (S[bd + cv].id == -1) { cv = 0; }
+					gotoxy(31, 8 + cv);cout << S[bd + cv].tendangnhap;
+					gotoxy(60, 8 + cv);cout << A2[S[bd + cv].khoa];
+					gotoxy(74, 8 + cv);cout << str_to_name(ND[S[bd + cv].idu - 1].hovaten);
+					char c = _getch();
+					int cv1 = cv;
+					if (c == 'H') { cv--; }
+					if (c == 'P') { cv++; }
+					if (cv == -1) { cv = 19; }
+					if (cv == 20) { cv = 0; }
+
+					textcolor(240);
+					if (c == 'K') {
+						bd -= MAX_cot;
+						if (bd < 0) bd = (sotrang - 1) * 20;
+						if (N2 - bd<MAX_cot) { n = N2 - bd; }
+						else { n = MAX_cot; }
+						inDS4(ND, S, bd, n);
+					}
+					if (c == 'M') {
+						bd += MAX_cot;
+						if (bd > N2) bd = 0;
+						if (N2 - bd<MAX_cot) { n = N2 - bd; }
+						else { n = MAX_cot; }
+						inDS4(ND, S, bd, n);
+					}
+					if (c == 13) {
+						S[bd + cv].khoa = !S[bd + cv].khoa;
+						A[S[bd + cv].id - 1].khoa = !A[S[bd + cv].id - 1].khoa;
+						textcolor(250);
+						gotoxy(60, 8 + cv);cout << A2[S[bd + cv].khoa];
+					};
+					if (c == 27) {
+						thoat = 0;
+					}
+					if (S[bd + cv1].id == -1) { cv1 = 0; }
+					textcolor(240);
+					gotoxy(31, 8 + cv1);cout << S[bd + cv1].tendangnhap;
+					gotoxy(60, 8 + cv1);cout << A2[S[bd + cv1].khoa];
+					gotoxy(74, 8 + cv1);cout << str_to_name(ND[S[bd + cv1].idu - 1].hovaten);
+				}
+				N2 = 0;
+			}
+		}
+		gotoxy(58, 41);cout << "Luu Thay doi vao File ?";
+		if ((cvo == 1) && c == 13) {
+			OverWriteAccount(A, N);
+			for (int k = 0;k<N;k++) AA[k] = A[k];
+			thoat1 = 0;
+		}
+		if ((cvo == 2 && c == 13) || c == 27) {
+			thoat1 = 0;
+		}
+
+		textcolor(63);
+		gotoxy(cvX[cvo1], cvY[cvo1]);cout << "  ";
+	}
+	HCN2(15, 31, 8, 28, 20);
+	HCN2(15, 60, 8, 13, 20);
+	HCN2(15, 74, 8, 21, 20);
+	delete[]ND;ND = NULL;
+	delete[]S;S = NULL;
+	delete[]A;A = NULL;
+	HCN2(15, 53, 30, 45, 16);
+	textcolor(240);
+};
+void toogle_passwork(S_account AA[], int &N) {//ham reset mat khau
+	S_account *A = new S_account[(N / MAX_cot + 1)*MAX_cot];
+	for (int i = 0;i<N;i++) A[i] = AA[i];
+	inbang("ten tai khoan", "tinh trang", "ten nguoi dung");
+	HCN2(3, 53, 30, 45, 16);
+	textcolor(62);
+	gotoxy(57, 30);cout << "tim tai khoan:";
+	ToMau(57, 31, "                              ", 240, 62);
+	gotoxy(53, 36);cout << "=============================================";
+	gotoxy(53, 37);cout << "   Tai khoan da chon de se duoc danh dau X   ";
+	gotoxy(53, 38);cout << "=============================================";
+	gotoxy(57, 45);cout << "XONG";
+	gotoxy(80, 45);cout << "HUY BO";
+
+	int sond = get_F_N("users_infor.txt"), bd = 0, sotrang = N / MAX_cot + 1, n, N2 = 0;
+	S_account *S = new S_account[(N / MAX_cot + 1)*MAX_cot];
+	S_user *ND = new S_user[sond];
+
+	string fstring, A2[2] = { "khoa"," mo " };
+
+	GetFileUserData(ND, sond);
+	int cvX[3] = { 55,55,78 }, cvY[3] = { 30,45,45 };
+	int thoat1 = 1, cvo = 0, x1 = 57;
+	while (thoat1) {
+		textcolor(63);
+		gotoxy(cvX[cvo], cvY[cvo]);cout << "\20\20";
+		char c = _getch();
+		int cvo1 = cvo;
+		if (c == 'H' || c == 'K') { cvo--; }
+		if (c == 'P' || c == 'M') { cvo++; }
+		if (cvo == -1) { cvo = 2; }
+		if (cvo == 3) { cvo = 0; }
+
+		if ((cvo == 0) && c == 13) {
+			xulichuoi(fstring, 'y', x1, 31);
+			kaguroo2(ND, A, N, S, N2, fstring);
+			sotrang = N2 / MAX_cot + 1;
+			for (int i = N2;i<sotrang*MAX_cot;i++) {
+				S[i].id = -1;
+			}
+			if (N2 - bd<MAX_cot) { n = N2 - bd; }
+			else { n = MAX_cot; }
+			inDS4(ND, S, bd, n);
+			sotrang = N2 / MAX_cot + 1;
+			gotoxy(31, 4);cout << "Nhan phim mui ten <- hoac -> de chuyen trang";
+			if (N2 == 0) { gotoxy(60, 8);cout << "dummy";_getch(); }
+			else {
+				int thoat = 1, cv = 0;
+				while (thoat) {
+					textcolor(250);
+					if (S[bd + cv].id == -1) { cv = 0; }
+					gotoxy(31, 8 + cv);cout << S[bd + cv].tendangnhap;
+					gotoxy(60, 8 + cv);cout << A2[S[bd + cv].khoa];
+					gotoxy(74, 8 + cv);cout << str_to_name(ND[S[bd + cv].idu - 1].hovaten);
+					char c = _getch();
+					int cv1 = cv;
+					if (c == 'H') { cv--; }
+					if (c == 'P') { cv++; }
+					if (cv == -1) { cv = 19; }
+					if (cv == 20) { cv = 0; }
+
+					textcolor(240);
+					if (c == 'K') {
+						bd -= MAX_cot;
+						if (bd < 0) bd = (sotrang - 1) * 20;
+						if (N2 - bd<MAX_cot) { n = N2 - bd; }
+						else { n = MAX_cot; }
+						inDS4(ND, S, bd, n, false);
+					}
+					if (c == 'M') {
+						bd += MAX_cot;
+						if (bd > N2) bd = 0;
+						if (N2 - bd<MAX_cot) { n = N2 - bd; }
+						else { n = MAX_cot; }
+						inDS4(ND, S, bd, n, false);
+					}
+					if (c == 13) {
+						if (S[bd + cv].matkhau == "dummy") {
+							S[bd + cv].matkhau = A[S[bd + cv].id - 1].matkhau;
+							textcolor(250);
+							gotoxy(68, 8 + cv);cout << " ";
 						}
+						else {
+							S[bd + cv].matkhau = "dummy";
+							textcolor(250);
+							gotoxy(68, 8 + cv);cout << "X";
+						}
+					};
+					if (c == 27) {
+						for (int i = 0;i<N2;i++) {
+							if (S[i].matkhau == "dummy") {
+								A[S[i].id - 1].matkhau = "00000000";
+							}
+						}
+						thoat = 0;
 					}
-					thoat=0;	
+					if (S[bd + cv1].id == -1) { cv1 = 0; }
+					textcolor(240);
+					gotoxy(31, 8 + cv1);cout << S[bd + cv1].tendangnhap;
+					gotoxy(60, 8 + cv1);cout << A2[S[bd + cv1].khoa];
+					gotoxy(74, 8 + cv1);cout << str_to_name(ND[S[bd + cv1].idu - 1].hovaten);
 				}
-				if (S[bd+cv1].id==-1){cv1=0;}
-				textcolor(240);
-				gotoxy(31, 8 + cv1);cout << S[bd+cv1].tendangnhap;
-				gotoxy(60, 8 + cv1);cout << A2[S[bd+cv1].khoa];
-				gotoxy(74, 8 + cv1);cout << ND[S[bd+cv1].idu-1].hovaten;
+				N2 = 0;
 			}
-			N2=0;
-		 }
 		}
-		gotoxy(58,41);cout<<"Luu Thay doi vao File ?";
+		gotoxy(58, 41);cout << "Luu Thay doi vao File ?";
 		if ((cvo == 1) && c == 13) {
-			OverWriteAccount(A,N);
-			for(int k=0;k<N;k++) AA[k]=A[k];
+			OverWriteAccount(A, N);
+			for (int k = 0;k<N;k++) AA[k] = A[k];
 			thoat1 = 0;
 		}
 		if ((cvo == 2 && c == 13) || c == 27) {
@@ -2567,8 +2561,27 @@ void toogle_passwork(S_account AA[],int &N){//ham reset mat khau
 	HCN2(15, 60, 8, 13, 20);
 	HCN2(15, 74, 8, 21, 20);
 	delete[]ND;ND = NULL;
-	delete[]S;S =NULL;
-	delete[]A;A=NULL;
+	delete[]S;S = NULL;
+	delete[]A;A = NULL;
 	HCN2(15, 53, 30, 45, 16);
 	textcolor(240);
 };
+string str_to_name(string s) {
+	for (int i = 0;i < s.length();i++) {
+		if (s[i] == '_') s[i] = ' ';
+	}
+	return s;
+}
+void name_to_str(string& s) {
+	string connect;
+	stringstream word(s);
+	s = "";
+	int skip_1st = 0;
+	word >> connect;
+	do {
+		if (skip_1st != 0) s += "_";
+		skip_1st++;
+		s += connect;
+		word >> connect;
+	} while (!word.fail());
+}
