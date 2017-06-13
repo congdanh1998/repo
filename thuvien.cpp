@@ -36,7 +36,7 @@ void indangnhap(string TDN, string MK) {
 	HCN2(15, 20, 13, 30, 1);
 	textcolor(240);
 	gotoxy(20, 8);cout << TDN;
-	gotoxy(20, 13);for (int i = 1;i <= MK.length();i++) cout << "*";
+	gotoxy(20, 13);for (unsigned int i = 1;i <= MK.length();i++) cout << "*";
 	textcolor(7 * 16 + 14);
 	gotoxy(20, 7);
 	cout << "TEN DANG NHAP:";
@@ -398,14 +398,14 @@ void dangki() {
 				gotoxy(0, 61);
 				cout << "* XAC NHAN SAI MAT KHAU";
 			}
-			for (int i = 0;i < A_account.matkhau.length();i++) {
+			for (unsigned int i = 0;i < A_account.matkhau.length();i++) {
 				if (A_account.matkhau.length() < 5 || A_account.matkhau.length() > 15 || ((int)A_account.matkhau[i] < 48) || ((int)A_account.matkhau[i] > 57 && (int)A_account.matkhau[i] < 65) || ((int)A_account.matkhau[i] > 90 && (int)A_account.matkhau[i] < 97) || ((int)A_account.matkhau[i] > 122)) {
 					no_error_all = false;
 					gotoxy(0, 62);
 					cout << "* MAT KHAU PHAI DAI TU 5 DEN 15 KI TU CHI CHUA CHU CAI HOAC SO";
 				}
 			}
-			for (int i = 0;i < A_account.tendangnhap.length();i++) {
+			for (unsigned int i = 0;i < A_account.tendangnhap.length();i++) {
 				if (A_account.tendangnhap.length() < 5 || A_account.tendangnhap.length() > 20 || ((int)A_account.tendangnhap[i] < 48) || ((int)A_account.tendangnhap[i] > 57 && (int)A_account.tendangnhap[i] < 65) || ((int)A_account.tendangnhap[i] > 90 && (int)A_account.tendangnhap[i] < 97) || ((int)A_account.tendangnhap[i] > 122)) {
 					no_error_all = false;
 					gotoxy(0, 63);
@@ -879,7 +879,7 @@ void doimatkhau(S_account A[], int CSO, int N) {
 			if ((A[CSO].matkhau != MKC) || (MKM != MKXN)) {
 				no_error_all = false;
 			}
-			for (int i = 0;i < MKM.length();i++) {
+			for (unsigned int i = 0;i < MKM.length();i++) {
 				if (MKM.length() < 5 || MKM.length() > 15 || ((int)MKM[i] < 48) || ((int)MKM[i] > 57 && (int)MKM[i] < 65) || ((int)MKM[i] > 90 && (int)MKM[i] < 97) || ((int)MKM[i] > 122)) {
 					no_error_all = false;
 				}
@@ -925,6 +925,7 @@ void bangtim(S_book A[], int a[], int n, S_account& S, int & flag, bool cp, bool
 		textcolor(240);
 		gotoxy(31, 4);cout << "Nhan phim mui ten <- hoac -> de chuyen trang";
 		textcolor(250);
+		if(list[cv].id==0){cv=0;}
 		gotoxy(31, 8 + cv);cout << list[cv].tensach;
 		gotoxy(74, 8 + cv);cout << list[cv].tacgia;
 		char c = _getch();
@@ -957,7 +958,13 @@ void bangtim(S_book A[], int a[], int n, S_account& S, int & flag, bool cp, bool
 			inDS(list, MAX_cot);
 		}
 
-		if (c == 13 && chon <5 && (list[cv].conlai>0) && cp) { gotoxy(62, 35 + chon);cout << list[cv].tensach; S.DS_muon[chon] = list[cv].id;chon++; }
+		if (c == 13 && chon <5 && (list[cv].conlai>0) && cp) { 
+			bool KT=true;
+			for(int i=0;(i<5)&&KT;i++){KT=(S.DS_muon[i]!=list[cv].id);}
+			if (KT){
+				gotoxy(62, 35 + chon);cout << list[cv].tensach; S.DS_muon[chon] = list[cv].id;chon++;
+			}else {ToMau(62, 43, "BAN DA MUON CUON NAY ROI  ", 58, 240);} 
+		}
 		//chon mot cuon sach o hang thu cv
 		else if (c == 13 && chon >= 5 && cp) { HCN2(15, 62, 42, 26, 2);ToMau(62, 42, "Tai mot thoi diem chi muon", 58, 240);ToMau(62, 43, " duoc toi da 5 cuon sach !", 58, 240); }
 		else if (c == 13 && (list[cv].conlai <= 0) && cp) { HCN2(15, 62, 43, 26, 1); ToMau(62, 43, "Sach nay da bi muon het  !", 58, 240); }
@@ -967,6 +974,7 @@ void bangtim(S_book A[], int a[], int n, S_account& S, int & flag, bool cp, bool
 		if (c == 27 || (!MR && chon == 5)) {
 			thoat = 0;
 		}
+		if(list[cv1].id==0){cv1=0;}
 		textcolor(240 + (list[cv1].conlai <= 0) * 12);
 		gotoxy(31, 8 + cv1);cout << list[cv1].tensach;
 		gotoxy(74, 8 + cv1);cout << list[cv1].tacgia;
@@ -2117,7 +2125,7 @@ void themtaikhoan(int N) {//N la do dai cua file tai khoan truoc khi them
 				gotoxy(57, 35);cout << "Mat Khau";
 				ToMau(57, 36, "                              ", 240, 112);
 				gotoxy(57, 38);cout << "Lua Chon Chuc Nang";
-				char a = 219;
+				unsigned char a = 219;
 				gotoxy(57, 39);textcolor(112);cout << "DOC GIA:      QUAN LI:      THU THU:    ";
 				textcolor(255);gotoxy(67, 39);cout << " ";gotoxy(81, 39);cout << " ";gotoxy(95, 39);cout << " ";
 				textcolor(112);
@@ -2567,7 +2575,7 @@ void toogle_passwork(S_account AA[], int &N) {//ham reset mat khau
 	textcolor(240);
 };
 string str_to_name(string s) {
-	for (int i = 0;i < s.length();i++) {
+	for (unsigned int i = 0;i < s.length();i++) {
 		if (s[i] == '_') s[i] = ' ';
 	}
 	return s;
