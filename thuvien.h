@@ -57,13 +57,15 @@ void chinhsuasach(S_account A[], int N, int CSO);//chinh sua thong tin ve mot cu
 void DStre(S_account A[], int N);//danh sach cac phieu muon sach qua 5 ngay
 void thong_bao(S_account A[], int N, int CSO);//xem cac sach da muon,thong bao ve phat tra sach...
 void conv_longlong_money(string& str, int number);//doi so thang chuoi co don vi tien o sau
-void QLND(S_account A[],int N);//in chuc nang ve quan li nguoi dung
-void QLTK(S_account A[],int N);//in chuc nang ve quan li tai khoan
+void QLND(S_account A[], int N);//in chuc nang ve quan li nguoi dung
+void QLTK(S_account A[], int N);//in chuc nang ve quan li tai khoan
 void them_user();//them mot user moi,chuc nang cua QUAN LI
-void xoanguoidung(S_account A[],int &N);//xoa mot user va tai khoan cua user do
-void suanguoidung(S_account A[],int &N);//sua lai cac thong tin cua mot nguoi dung(co the tim vao xem thong tin voi chuc nang nay)
+void xoanguoidung(S_account A[], int &N);//xoa mot user va tai khoan cua user do
+void suanguoidung(S_account A[], int &N);//sua lai cac thong tin cua mot nguoi dung(co the tim vao xem thong tin voi chuc nang nay)
 void themtaikhoan(int N);//them mot tai khoan ung voi mot nguoi dung duoc chon
-void Soataikhoan(S_account AA[],int &NN);//Xoa mot hay mot vai tai khoan khoi he thong
-void Khoa_or_mo(S_account AA[],int &N);//Khoa hay mo mot tai khoan duoc chon
-void toogle_passwork(S_account AA[],int &N);//reset lai mat khau
+void Xoataikhoan(S_account AA[], int &NN);//Xoa mot hay mot vai tai khoan khoi he thong
+void Khoa_or_mo(S_account AA[], int &N);//Khoa hay mo mot tai khoan duoc chon
+void toogle_passwork(S_account AA[], int &N);//reset lai mat khau
+string str_to_name(string s);//chuyen "_" thanh " " trong ten
+void name_to_str(string& s);//chuyen " " thanh "_" trong ten
 #endif
