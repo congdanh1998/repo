@@ -60,7 +60,7 @@ void OverWriteAccount(S_account A[], int N) {
 	};
 	f.close();
 };
-int songayhientai(int year, int month, int day) {
+int songayhientai(int year, int month, int day) {//doi so ngay/thang/nam---->so ngay tu 1/1/0000
 	if (month < 3) {
 		year--;
 		month += 12;
@@ -95,11 +95,11 @@ void OverWriteBook(S_book A[], int N) {
 	};
 	f.close();
 };
-void GetfileOrderData(S_Book_Order A[], int &n, bool cp) {
+void GetfileOrderData(S_Book_Order A[], int &n, bool cp) {//neu cp==false thi chi lay phieu qua han
 	ifstream f;
 	f.open("abc.txt");
 	time_t baygio = time(0);
-	struct tm abc;
+	struct tm abc;//tim ngay hien tai
 	localtime_s(&abc, &baygio);
 	int ngay = abc.tm_mday, thang = abc.tm_mon + 1, nam = abc.tm_year + 1900;
 	int N = n, j = 0;
